@@ -19,7 +19,7 @@ const incidents = [{}, {}];
 ### adjective = Bool
 
 ```
-const validated = true;
+const valid = true;
 const person.tall = false;
 ```
 
@@ -29,14 +29,4 @@ this allows for nice to read code such as
 if (person.tall) {
 	greet('hows the weather up there?')
 }
-```
-
-or even better
-
-```
-greet(
-	person.tall
-		? 'hows the weather up there'
-		: 'heres a normal greeting'
-);
 ```
