@@ -11,21 +11,21 @@ if you are working with dynamic data, you might want the jinja template renderin
 solving this is:
 
 ```python
-from jinja2 import Undefined, Template, Environment
+    from jinja2 import Undefined, Template, Environment
 
-from flask import (
-    Flask,
-    request,
-    render_template,
-    json,
-)
+    from flask import (
+        Flask,
+        request,
+        render_template,
+        json,
+    )
 
-class SilentUndefined(Undefined):
-    def _fail_with_undefined_error(self, *args, **kwargs):
-        return
-app = Flask(__name__, template_folder='../templates/')
+    class SilentUndefined(Undefined):
+        def _fail_with_undefined_error(self, *args, **kwargs):
+            return
+    app = Flask(__name__, template_folder='../templates/')
 
-app.jinja_env.undefined = SilentUndefined
+    app.jinja_env.undefined = SilentUndefined
 ```
 
 now you can reference variables that don't exist.
