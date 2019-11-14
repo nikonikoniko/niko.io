@@ -6,7 +6,7 @@ then operate on them.
 
 example:
 
-```
+```js
 getfromApi = item => {
 	const {
 		id, version

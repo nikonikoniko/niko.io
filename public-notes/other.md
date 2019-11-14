@@ -1,0 +1,3 @@
+Such matchless behavior risks instilling in people feelings of guilt and self-loathing. Marx and Nietzsche described how utopian ideals rotted people from the inside by giving them a “bad conscience” when those ideals could not be realized. Marx called the ideal of heavenly perfection “alienation.” Nietzsche called the ideal of the perfectly altruistic society “nihilism.” Whole societies collapsed in the violence these ideals promoted through people’s worship of them, and in the wallowing of self-doubt and confusion they prompted when people fell short of them.
+
+https://www.the-american-interest.com/2019/10/08/artificial-intelligence-whats-to-fear/
