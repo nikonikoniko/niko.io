@@ -36,3 +36,8 @@ show me a better way to do this:
             for part in obj.part_set.all()
         ]))
 ```
+
+
+
+this type of stuff:
+https://gist.github.com/perrygeo/ee7c65bb1541ff6ac770
