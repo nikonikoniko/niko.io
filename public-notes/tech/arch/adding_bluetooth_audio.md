@@ -75,3 +75,55 @@ ctl.!default {
 switch out the device number for the device number found in the bluetooth connection gui.
 
 use the gui to actually connect to the device.
+
+The same config file with a little built in preamp:
+
+```
+defaults.bluealsa.service "org.bluealsa"
+defaults.bluealsa.device "00:13:EF:FE:00:FD"
+defaults.bluealsa.profile "a2dp"
+defaults.bluealsa.delay 10000
+defaults.bluealsa.mixer_device "blue"
+pcm.btspeaker {
+ type plug
+  slave {
+    pcm {
+      type bluealsa
+      #interface hci0
+      device 00:13:EF:FE:00:FD
+      profile "a2dp"
+    }
+  }
+  hint {
+    show on
+    description "blue"
+  }
+}
+pcm.softvol {
+        type softvol
+        slave {
+                pcm 'btspeaker'
+        }
+        control {
+                name 'Pre-Amp'
+                card 0
+        }
+        min_dB -5.0
+        max_dB 20.0
+        resolution 6
+}
+
+# Instruct ALSA to use pcm.duplex as the default device
+pcm.!default {
+    type plug
+    slave.pcm "softvol"
+}
+
+# tell ALSA to use hw:0 to control the default device (alsamixer and so on)
+ctl.!default {
+    type hw
+    # A adapter en fonction de la config de reconnaissance
+    # par Pi, il se peut que l'ordre ne soit pas le m  me
+    card 0
+}
+```
