@@ -1,87 +1,54 @@
 <!doctype html>
 <head>
 <title>niko.io</title>
-<script src="/jquery.js"></script>
-
-
+<link rel="stylesheet" href="grid.css">
 <style>
+    @font-face
+    {
+    font-family: 'Inconsolata';
+    src: url('font/Inconsolata-Regular.ttf');
+    }
 
-@font-face
-{
-font-family: 'Inconsolata';
-src: url('font/Inconsolata-Regular.ttf');
-}
+    *{-webkit-transition:all 0.1s ease-in-out;-moz-transition:all 0.1s ease-in-out;-o-transition:all 0.1s ease-in-out;-ms-transition:all 0.1s ease-in-out;transition:all 0.1s ease-in-out;-webkit-transition:color .4s ease-in;-moz-transition:color .4s ease-in;-o-transition:color .4s ease-in;transition:color .4s ease-in;}
 
-*{-webkit-transition:all 0.1s ease-in-out;-moz-transition:all 0.1s ease-in-out;-o-transition:all 0.1s ease-in-out;-ms-transition:all 0.1s ease-in-out;transition:all 0.1s ease-in-out;-webkit-transition:color .4s ease-in;-moz-transition:color .4s ease-in;-o-transition:color .4s ease-in;transition:color .4s ease-in;}
-
-
-body,html{
-	min-height:100%;
-	width:100%;
-	padding:0;
-	margin:0;
-}
+ h1, h2, h3, h4, h5, h3 {
+    font-weight: normal;
+   margin-top: 0em;
+   }
 
 
-.rappa{
-	color:red;
-	font-family: 'Inconsolata', sans-serif;
-	font-size:20px;
-	width:80%;
-}
-
-.blackme{
-	color:#000 !important;
-}
-
-.mother{
-display:block;
-margin-top:1em;
-padding-left:1em;
-}
-
-.hiddenchildren{
-	display:block;
+    body,html{
+    	min-height:100%;
+    	width:100%;
+    	padding:0;
+    	margin:0;
+    }
+ p{
+   margin-top:0em;
+   }
+ hr {
+   border: 0;
+   height: 1px;
+   background: #333;
+   background-image: linear-gradient(to right, #fb8520, #2a98b7, #fb8520);
+   margin-top: 2rem;
+   margin-bottom: 2rem; }
 
 
+    .rappa{
+    	font-family: 'Inconsolata', sans-serif;
+    	font-size:20px;
+    }
 
-	font-size:12px;
-	color:#aaa;
-	padding-left:3em;
-	font-weight: bold;
 
-}
+    .rappa a{
+    	color:red;
+    	text-decoration: none;
+    }
 
-.hiddenchildren li{
-list-style: none;
-	}
-
-.hiddenchildren a{
-color:#aaa !important;
-	}
-
-.hiddenchildren a:hover{
-color:#555 !important;
-}
-
-.mother:hover .hiddenchildren{
-
-}
-
-.rappa a{
-	color:red;
-	text-decoration: none;
-}
-
-.rappa a:hover{
-color:black;
-	}
-
-ol{
-margin:0;
-padding:0;
-padding-left:1em;
-}
+    .rappa a:hover{
+    color:black;
+    	}
 
 </style>
 
@@ -89,113 +56,113 @@ padding-left:1em;
 
 
 <body>
-<span class="wrappa">
-<span class="rappa"><blink><marquee><pre>
-      ___                       ___           ___                       ___     
-     /__/\        ___          /__/|         /  /\        ___          /  /\    
-     \  \:\      /  /\        |  |:|        /  /::\      /  /\        /  /::\   
-      \  \:\    /  /:/        |  |:|       /  /:/\:\    /  /:/       /  /:/\:\  
-  _____\__\:\  /__/::\      __|  |:|      /  /:/  \:\  /__/::\      /  /:/  \:\ 
- /__/::::::::\ \__\/\:\__  /__/\_|:|____ /__/:/ \__\:\ \__\/\:\__  /__/:/ \__\:\
- \  \:\~~\~~\/    \  \:\/\ \  \:\/:::::/ \  \:\ /  /:/    \  \:\/\ \  \:\ /  /:/
-  \  \:\  ~~~      \__\::/  \  \::/~~~~   \  \:\  /:/      \__\::/  \  \:\  /:/ 
-   \  \:\          /__/:/    \  \:\        \  \:\/:/       /__/:/    \  \:\/:/  
-    \  \:\         \__\/      \  \:\        \  \::/        \__\/      \  \::/   
-     \__\/                     \__\/         \__\/                     \__\/    
-		</pre></marquee></blink>
-	<span class="mother">
-		<a id="fff" href="#">niko.io </a> 
-		<span class="hiddenchildren">
-		</span>
-	</span>
-
-	<span class="mother">
-		<span id="boo"></span> 
-		<span class="hiddenchildren">
-
-
-		</span>
-	</span>
-
-
-
+    <div class="wrappa">
+      <div class="rappa">
+        <blink>
+          <marquee>
+            <pre>
+          ___                       ___           ___                       ___
+         /__/\        ___          /__/|         /  /\        ___          /  /\
+         \  \:\      /  /\        |  |:|        /  /::\      /  /\        /  /::\
+          \  \:\    /  /:/        |  |:|       /  /:/\:\    /  /:/       /  /:/\:\
+      _____\__\:\  /__/::\      __|  |:|      /  /:/  \:\  /__/::\      /  /:/  \:\
+     /__/::::::::\ \__\/\:\__  /__/\_|:|____ /__/:/ \__\:\ \__\/\:\__  /__/:/ \__\:\
+     \  \:\~~\~~\/    \  \:\/\ \  \:\/:::::/ \  \:\ /  /:/    \  \:\/\ \  \:\ /  /:/
+      \  \:\  ~~~      \__\::/  \  \::/~~~~   \  \:\  /:/      \__\::/  \  \:\  /:/
+       \  \:\          /__/:/    \  \:\        \  \:\/:/       /__/:/    \  \:\/:/
+        \  \:\         \__\/      \  \:\        \  \::/        \__\/      \  \::/
+         \__\/                     \__\/         \__\/                     \__\/
+    		    </pre>
+          </marquee>
+        </blink>
+        <div class="grid-container">
+          <div class="column-8">
+            <p>
+              I am a developer and technologist living between Berlin, Germany and Massachusetts, usa.
+            </p>
+            <p>
+              I am interested in functional programming, data journalism, open source code and open source investigations.
+            </p>
+          </div>
 
 
+          <div class="column-8">
 
-        <span class="mother">
-                <a href="/publickey.txt">0xD71C934B</a> 
-                <span class="hiddenchildren">
-                        fingerprint:
-<br />
-<h2>
-F60D F99C 0232 51BA CA17  D8C5 9507 253F D71C 934B
-</h2>
-<a href="/publickey.txt"> >> public key</a>
+            <h3>contact</h3>
 
+            i'm not on much social media, but feel free to send me an email:
 
+            <div class="mother">
+              <div id="boo"></div>
+            </div>
 
-	<span class="mother">
-		<a href="https://github.com/nikonikoniko">github</a> 
-		<span class="hiddenchildren">
-	</span>
-	<span class="mother">
-		<a href="https://twitter.com/allthatisair">@allthatisair</a> 
-		<span class="hiddenchildren">
-	</span>
+            <div class="mother">
+              <a href="publickey.txt">0xD71C934B >> public key</a>
+            </div>
 
-	</span>
+            <hr/>
 
-	<span class="mother">
-		<a href="https://gitlab.com/nikonikoniko">gitlab</a> 
-		<span class="hiddenchildren">
-	</span>
-	</span>
+            or learn more about me here:
 
 
+            <div class="mother">
+              <a href="https://github.com/nikonikoniko">github</a>
+            </div>
+            <div class="mother">
+              <a href="cv2020_niko.pdf">cv</a>
+            </div>
 
-	
+            <hr/>
 
-		<span class="mother">
-		<a href="#">work</a> 
-		<span class="hiddenchildren">
-				
-		</span>
-	</span>
+          </div>
+
+          <div class="column-8">
+            <h2>public code</h2>
+
+            <div class="project">
+              <h3>relaxng-web-forms</h3>
+              <p>
+                a js library for converting relaxng schemas into webforms, and then into XML in an (attempted and evolving) sane way
+              </p>
+              <a href="http://niko.io/projects/relaxNg-forms/demo/">
+                demo
+              </a>
+              | <a href="https://github.com/nikonikoniko/relaxng-web-forms">
+                github
+              </a>
+            </div>
+
+            <hr />
+
+            <div class="project">
+              <h3>eventObserverMap</h3>
+              <p>
+                Map and filter events by time and date from a json file, google sheets, or an api. customize the look of events.
+                </p>
+              <a href="http://niko.io/projects/eventObserverMap/_dist/">
+                demo
+              </a>
+              | <a href="https://github.com/nikonikoniko/eventObserverMap">
+                github
+              </a>
+
+            </div>
+
+            <hr />
+          </div>
+        </div>
+
+
+      </div>
+    </div>
 
 
 
-<span class="mother">
-                <a href="//blog.niko.io">blog</a> 
-                <span class="hiddenchildren">
-        </span>
-
-        </span>
-
-
-
-</span>
-</span>
-
-
-
-<script language="JavaScript">
-var hdf = "niko";
-var qrz = "niko.io";
-var kks = hdf + "@" + qrz ;
-document.getElementById('boo').innerHTML="<a href='" + "mail" + "to:" + kks + "'>" + kks + "</a>";
-
-//$('.hiddenchildren').hide();
-
-//$('.mother').hover(function(){
-//	$('.hiddenchildren').hide();
-//	$(this).find('.hiddenchildren').stop().fadeIn();
-//	$(this).find('a').first().addClass('blackme');
-//	console.log('aaaa');
-//},function(){
-//	$(this).find('.hiddenchildren').stop().fadeOut('slow');
-//	$(this).find('a').first().removeClass('blackme');
-//});
-
-</script>
+    <script>
+      var hdf = "niko";
+      var qrz = "niko.io";
+      var kks = hdf + "@" + qrz ;
+      document.getElementById('boo').innerHTML="<a href='" + "mail" + "to:" + kks + "'>" + kks + "</a>";
+    </script>
 
 </body>
