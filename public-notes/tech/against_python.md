@@ -41,3 +41,20 @@ show me a better way to do this:
 
 this type of stuff:
 https://gist.github.com/perrygeo/ee7c65bb1541ff6ac770
+
+
+---------------------------------
+
+you can't even use the directory structure you want in models because of things like this:
+
+https://github.com/pypa/setuptools/issues/230
+https://github.com/pypa/setuptools/issues/230
+https://github.com/pypa/pip/issues/3160
+most comprehensive on this issue:
+
+https://stackoverflow.com/questions/19602582/pip-install-editable-links-to-wrong-path
+two different behaviours for pip depending on some random thing.
+
+please notice this isn't covered anywhere in the official documentation of `setup.py` here:
+https://docs.python.org/3.8/distutils/setupscript.html
+
