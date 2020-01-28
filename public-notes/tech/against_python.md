@@ -58,3 +58,18 @@ two different behaviours for pip depending on some random thing.
 please notice this isn't covered anywhere in the official documentation of `setup.py` here:
 https://docs.python.org/3.8/distutils/setupscript.html
 
+------------------------------------------------------------
+
+```
+In [49]: base64.urlsafe_b64encode(b'hi')                                                                                      
+Out[49]: b'aGk='
+
+In [50]: base64.urlsafe_b64decode(b'==========aGk==========')                                                                 
+Out[50]: b'hi'
+
+In [51]: base64.urlsafe_b64decode(b'aGk')  
+Error: Incorrect padding
+```
+
+----------------------------------------------
+
