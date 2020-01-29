@@ -61,15 +61,41 @@ https://docs.python.org/3.8/distutils/setupscript.html
 ------------------------------------------------------------
 
 ```
-In [49]: base64.urlsafe_b64encode(b'hi')                                                                                      
+In [49]: base64.urlsafe_b64encode(b'hi')
 Out[49]: b'aGk='
 
-In [50]: base64.urlsafe_b64decode(b'==========aGk==========')                                                                 
+In [50]: base64.urlsafe_b64decode(b'==========aGk==========')
 Out[50]: b'hi'
 
-In [51]: base64.urlsafe_b64decode(b'aGk')  
+In [51]: base64.urlsafe_b64decode(b'aGk')
 Error: Incorrect padding
 ```
 
 ----------------------------------------------
 
+Inconsistent capitalization and abbreviations
+
+in core:
+
+It makes (a lot) of sense that classes are uppercase, and everything alse is in snake case.
+
+but then between the python keywords there is serious inconsistencies, like `False`
+
+just look at how confusing this list of keywords is, some are abbreviated, some are full words. there might be 'a good reason' behind all of these, but it really reduces the developer experience when you can't apply a consistent rule to the capitalization of things.  if i see `tuple` and `list` as full words, i expect `string` and `boolean` and also `none` instead of `None`
+
+
+```python
+
+from typing import List
+
+: List[List[tuple]]
+list
+str
+None
+bool
+False
+tuple
+dict
+
+
+```
