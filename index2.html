@@ -1,0 +1,115 @@
+<!doctype html>
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>niko.io</title>
+  <style>
+   @font-face {
+     font-family: 'Source Serif Pro';
+     font-style: normal;
+     font-weight: 400;
+     src: url(source-serif.woff2) format('woff2');
+     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+   body {
+     font-family: "Source Serif Pro";
+     background-color: #fbf8ef;
+     color: #222;
+     line-height: 1.2em;
+   }
+   a, a:visited {
+     text-decoration: none;
+     color: teal;
+   }
+   .content {
+     max-width: 30em;
+     margin: 0 auto;
+   }
+   .mono {
+     font-family: "monospace";
+     color: #999;
+     font-size: .6em;
+   }
+   marquee pre {
+     font-size: 8px;
+     line-height: 8px;
+     font-color: #999;
+   }
+   prefix {
+     float: left;
+     color: #999;
+     font-size: .8em;
+   }
+   i {
+     color: #000;
+   }
+  </style>
+</head>
+<body>
+
+          <marquee>
+            <pre>
+          ___                       ___           ___                       ___
+         /__/\        ___          /__/|         /  /\        ___          /  /\
+         \  \:\      /  /\        |  |:|        /  /::\      /  /\        /  /::\
+          \  \:\    /  /:/        |  |:|       /  /:/\:\    /  /:/       /  /:/\:\
+      _____\__\:\  /__/::\      __|  |:|      /  /:/  \:\  /__/::\      /  /:/  \:\
+     /__/::::::::\ \__\/\:\__  /__/\_|:|____ /__/:/ \__\:\ \__\/\:\__  /__/:/ \__\:\
+     \  \:\~~\~~\/    \  \:\/\ \  \:\/:::::/ \  \:\ /  /:/    \  \:\/\ \  \:\ /  /:/
+      \  \:\  ~~~      \__\::/  \  \::/~~~~   \  \:\  /:/      \__\::/  \  \:\  /:/
+       \  \:\          /__/:/    \  \:\        \  \:\/:/       /__/:/    \  \:\/:/
+        \  \:\         \__\/      \  \:\        \  \::/        \__\/      \  \::/
+         \__\/                     \__\/         \__\/                     \__\/
+        </pre>
+          </marquee>
+
+
+  <div class="content">
+    <prefix>about:</prefix><h1>Niko Para</h1>
+
+    <p>
+      I am a <b>programmer</b>, <b>musician</b>, and <i>occasional</i> <b>writer</b>.
+    </p>
+
+    <!--
+    <p>
+      I am currently working on the <a href="https://innovation.dw.com/">innovation team</a> at <a href ="https://www.dw.com/">Deutsche Welle</a>, bringing innovative ideas in digital journalism to fruition.
+    </p>
+    -->
+
+    <p>
+      I was one of the first technical employees at <a href="https://syrianarchive.org/">Syrian Archive</a>, developing tools and workflows to help teams <i>verify</i> and <i>archive</i> data, and had a large part in designing the tech systems and data architecture they still use today.
+      </p>
+      <p>
+      Through my experience in this work I was also able to co-author a chapter to the book <a href="https://opil.ouplaw.com/view/10.1093/law/9780198836063.001.0001/law-9780198836063">Digital Witness</a>, published by the Oxford University Press.
+    </p>
+    <p>
+      I have also worked with a variety of startups - helping them come up with technical solutions to their needs and developing <i>user focused</i> applications.
+    </p>
+
+    <p>
+As a programmer, I have a strong interest in functional programming and software architecture.  At the moment I am enjoying lisps (clojure, elisp) and typescript, as well as adventures in emacs.
+    </p>
+
+    <p>
+Find me on <a href="https://github.com/nikonikoniko">github</a>, and <a href="https://twitter.com/niko__para">twitter</a>, or send me an <a id="emailme" href="#">email</a>, using my <a href="publickey.txt">gpg public key</a>.
+    </p>
+
+    <small class="mono">(This website does not track you or record your visit)</small>
+
+    </div>
+
+    <script type="text/javascript">
+      const front = "niko";
+      const back = "io";
+      document
+        .getElementById("emailme")
+        .setAttribute(
+          'href',
+          'ma' + 'ilto:' + front + '@' + front + '.' + 'io'
+        );
+    </script>
+
+</body>
