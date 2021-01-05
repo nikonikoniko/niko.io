@@ -1,0 +1,114 @@
+   @font-face {
+     font-family: 'Source Serif Pro';
+     font-style: normal;
+     font-weight: 400;
+     src: url(source-serif.woff2) format('woff2');
+     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+   body {
+     font-family: "Source Serif Pro";
+     background-color: #fbf8ef;
+     color: #222;
+   }
+   body p {
+     line-height: 1.2em;
+   }
+   a, a:visited {
+     text-decoration: none;
+     color: teal;
+   }
+   .content, #content {
+     max-width: 30em;
+     margin: 0 auto;
+     border-left: 1px solid rgba(0,0,0,.05);
+   }
+   .mono {
+     font-family: "monospace";
+     color: #999;
+     font-size: .6em;
+   }
+   marquee pre {
+     font-size: 8px;
+     line-height: 8px;
+     font-color: #999;
+   }
+
+   p i {
+     color: #000;
+   }
+
+   .sitetitle:before {
+       content: "about";
+       position: absolute;
+       font-size: 1rem;
+       margin-left: -3em;
+       color: #999;
+       margin-top: .4em;
+   }
+
+
+
+.org-src-container pre.src, pre {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: 0 0 0 0;
+    border-top: 1px solid rgba(0,0,0,.05);
+    border-bottom: 1px solid rgba(0,0,0,.05);
+}
+
+/* the results */
+pre.example {
+    color: orange;
+    overflow: visible;
+}
+
+.section-number-1, .section-number-2, .section-number-3, .section-number-4 {
+    color: #aaa;
+    font-size: .6em;
+}
+.section-number-2 {
+    margin-left: -.7em;
+}
+.section-number-3 {
+    margin-left: -1.6em;
+}
+.section-number-4 {
+    margin-left: -2.4em;
+}
+.title {
+    font-size: 1em;
+    text-align: left;
+    font-weight: normal;
+    color: #999;
+}
+#table-of-contents {
+    font-family: monospace;
+    font-size: .8em;
+}
+
+#table-of-contents h2{
+    font-size: .8em;
+    font-weight: normal;
+    color: #999;
+    display: none;
+}
+#table-of-contents a{
+    color:#999;
+}
+#table-of-contents ul {
+    margin: 0;
+    padding: 0;
+}
+#table-of-contents li{
+    list-style: none;
+}
+#org-div-home-and-up {
+    position: fixed;
+}
+
+h1,h2,h3,h4,h5,h6{
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    font-weight:normal;
+}
