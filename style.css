@@ -23,6 +23,7 @@
      text-rendering: optimizeLegibility;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
+margin-top: 1.5em;
    }
    a, a:visited {
      text-decoration: none;
@@ -60,13 +61,22 @@
 
 
 
-.org-src-container pre.src, pre {
+.org-src-container pre.src {
     margin: 0;
     padding: 0;
     border: 0;
     box-shadow: 0 0 0 0;
     border-top: 1px solid rgba(0,0,0,.05);
-    border-bottom: 1px solid rgba(0,0,0,.05);
+}
+pre.example {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: 0 0 0 0;
+    padding-top: .5em;
+}
+pre.example:before {
+    content: "→ ";
 }
 
 /* the results */
