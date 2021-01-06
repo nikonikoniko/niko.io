@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-01-06 Wed 04:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>typescript</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="John Doe" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel='stylesheet' href='../style.css' />
+<link rel='stylesheet' href='/../res/main.css' />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href=""> UP </a>
+ |
+ <a accesskey="H" href="/"> HOME </a>
+</div><div id="content">
+<h1 class="title">typescript</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9b36813">1. .typescript</a></li>
+</ul>
+</div>
+</div>
+<p>
+25.5.20
+</p>
+<div id="outline-container-org9b36813" class="outline-2">
+<h2 id="org9b36813"><span class="section-number-2">1</span> .typescript</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<ol class="org-ol">
+<li><a id="orgeb74203"></a>tuples<br />
+<div class="outline-text-5" id="text-1-0-0-1">
+<p>
+It is possible to use a sort of tuple like the following:
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript">  <span style="color: #666;">const</span> <span style="color: #333;">a</span> = <span style="color: #ccc8bc;">()</span>: <span style="color: #ccc8bc;">[</span><span style="color: #666;">string</span>, <span style="color: #666;">string</span>, <span style="color: #666;">number</span><span style="color: #ccc8bc;">]</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">[</span><span style="color: teal;">'a'</span>, <span style="color: #ffa500;">3</span>, <span style="color: #ffa500;">4</span><span style="color: #ccc8bc;">]</span>;
+</pre>
+</div>
+<p>
+and typescript will complain about the `3` in there.
+</p>
+</div>
+</li>
+
+<li><a id="org922acd3"></a>tuples of particular length<br />
+<div class="outline-text-5" id="text-1-0-0-2">
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #666;">const</span> <span style="color: #333;">hey</span> = <span style="color: #ccc8bc;">(</span>n: <span style="color: #bbb8ab;">[</span><span style="color: #666;">number</span>, ...<span style="color: #666;">number</span><span style="color: #666;">[]</span><span style="color: #bbb8ab;">]</span> &amp; <span style="color: #bbb8ab;">{</span>length: <span style="color: #ffa500;">3</span><span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span>n<span style="color: #ccc8bc;">)</span>;
+<span style="color: #111; font-style: italic;">hey</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">[</span><span style="color: #ffa500;">1</span>, <span style="color: #ffa500;">2</span>, <span style="color: #ffa500;">3</span>, <span style="color: #ffa500;">4</span><span style="color: #bbb8ab;">]</span><span style="color: #ccc8bc;">)</span> <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">this will complain very loud that it is too long</span>
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org50c0b9f"></a>data as types<br />
+<div class="outline-text-5" id="text-1-0-0-3">
+<p>
+<a href="https://blog.logrocket.com/const-assertions-are-the-killer-new-typescript-feature-b73451f35802/">https://blog.logrocket.com/const-assertions-are-the-killer-new-typescript-feature-b73451f35802/</a>  [[<a href="articles.html">articles</a>]]
+</p>
+
+<p>
+there is a way to distinguish minimum things as types nicely
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">import an object matching function that says { type: "person" } 'matches' { type: "person", and: "other data" }</span>
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">similar to pattern matching</span>
+<span style="color: #666;">import</span> <span style="color: #ccc8bc;">{</span> matches <span style="color: #ccc8bc;">}</span> <span style="color: #666;">from</span> <span style="color: teal;">"lodash/fp"</span>;
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">you can define a 'type const like this'</span>
+<span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">type</span>: <span style="color: teal;">"person"</span> <span style="color: #ccc8bc;">}</span>;
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">and typescript also allows you to</span>
+<span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">type</span>: <span style="color: teal;">"person"</span> <span style="color: #ccc8bc;">}</span> <span style="color: #666;">as</span> <span style="color: #666;">const</span>;
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">then, you can construct a type out of this data</span>
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">Person</span> = <span style="color: #666;">typeof</span> person &amp; <span style="color: #ccc8bc;">{</span> <span style="color: #666;">any</span>: <span style="color: teal;">"other fields"</span> <span style="color: #ccc8bc;">}</span>;
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">you can then use the type to assert types in functions</span>
+<span style="color: #666;">const</span> <span style="color: #333;">func</span> = <span style="color: #ccc8bc;">(</span>p: <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span>: <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">doSomething</span><span style="color: #ccc8bc;">(</span>p<span style="color: #ccc8bc;">)</span>;
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">but also use the const as data in other ways</span>
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">such as asserting and checking arbitrary data</span>
+<span style="color: #666;">const</span> <span style="color: #333;">isPerson</span> = <span style="color: #ccc8bc;">(</span>o: <span style="color: #666;">object</span><span style="color: #ccc8bc;">)</span>: <span style="color: #666;">boolean</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">matches</span><span style="color: #ccc8bc;">(</span>person, o<span style="color: #ccc8bc;">)</span>;
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org91ca056"></a>exhaustive check in <code>switch</code> statement, check all cases covered<br />
+<div class="outline-text-5" id="text-1-0-0-4">
+<p>
+in case you want to make sure all cases of a union type are abgedeckt, then you can do something as follows:
+</p>
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #666;">interface</span> <span style="color: #bbb8ab;">Christmas</span> <span style="color: #ccc8bc;">{</span> name: <span style="color: teal;">"Christmas"</span> <span style="color: #ccc8bc;">}</span>
+<span style="color: #666;">interface</span> <span style="color: #bbb8ab;">Birthday</span> <span style="color: #ccc8bc;">{</span> name: <span style="color: teal;">"Birthday"</span> <span style="color: #ccc8bc;">}</span>
+<span style="color: #666;">interface</span> <span style="color: #bbb8ab;">Wedding</span> <span style="color: #ccc8bc;">{</span> name: <span style="color: teal;">"Wedding"</span> <span style="color: #ccc8bc;">}</span>
+
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">Event</span> = Christmas | Birthday | Wedding
+
+<span style="color: #666;">const</span> <span style="color: #333;">t</span>: <span style="color: #bbb8ab;">Event</span> = data.event;
+
+<span style="color: #111; font-style: italic;">switch</span> <span style="color: #ccc8bc;">(</span>t.name<span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">{</span>
+  <span style="color: #666;">case</span> <span style="color: teal;">"Christmas"</span>: <span style="color: #666;">return</span> <span style="color: teal;">"we wish you a merry christmas"</span>
+  <span style="color: #666;">case</span> <span style="color: teal;">"Birthday"</span>: <span style="color: #666;">return</span> <span style="color: teal;">"it's your birthday, you can cry if you want to"</span>
+  <span style="color: #666;">default</span>:
+    <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">this default ensures that if you add a new Event or forgot to check one,</span>
+    <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">the compiler will catch here that you must add a message</span>
+    <span style="color: #bbb8ab;">(</span><span style="color: #666;">(</span>x: <span style="color: teal;">`failed to handle this type`</span><span style="color: #666;">)</span>: <span style="color: #666;">never</span> <span style="color: #666;">=&gt;</span> <span style="color: #666;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`${x} was unhandled in body creation`</span><span style="color: #ccc8bc;">)</span>;
+    <span style="color: #666;">}</span><span style="color: #bbb8ab;">)(</span>t<span style="color: #bbb8ab;">)</span>;
+<span style="color: #ccc8bc;">}</span>
+</pre>
+</div>
+
+<p>
+this should result in the error: <code>error TS2345: Argument of type 'Wedding' is not assignable to parameter of type '"failed to handle this type"'.</code>
+</p>
+
+<p>
+note, this <span class="underline">only</span> works when you switch on <code>t.name</code> and not set name to a const beforehand
+</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: John Doe</p>
+<p class="date">Created: 2021-01-06 Wed 04:41</p>
+</div>
+</body>
+</html>
