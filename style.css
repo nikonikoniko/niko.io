@@ -76,7 +76,7 @@ pre.example {
     padding-top: .5em;
 }
 pre.example:before {
-    content: "→ ";
+    content: "\2192  ";
 }
 
 /* the results */
