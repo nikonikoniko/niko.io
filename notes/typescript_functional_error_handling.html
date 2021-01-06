@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-06 Wed 03:20 -->
+<!-- 2021-01-06 Wed 03:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Typescript typed error handling</title>
@@ -237,7 +237,8 @@
 <ul>
 <li><a href="#orgb3f280b">1.0.1. TLDR</a></li>
 <li><a href="#org1e3fc11">1.0.2. Introduction</a></li>
-<li><a href="#org7fa72a7">1.0.3. Api function, first draft</a></li>
+<li><a href="#orge3aa39a">1.0.3. Lay the groundwork</a></li>
+<li><a href="#org7fa72a7">1.0.4. Api function, first draft</a></li>
 </ul>
 </li>
 <li><a href="#org371e613">1.1. Handling Known Errors</a>
@@ -289,10 +290,11 @@ First, we should be able to split the type of error into two camps: <i>expected<
 Different clients of the function <code>getUser</code> might want to handle different failures differently.  In a case of <code>NotFound</code>, a frontend client displaying the user&rsquo;s profile might want to direct to a page saying the user was not found.  Getting a list of users, however, might simply want to not include the user&rsquo;s which were not found.  Furthermore, our function <code>getUser</code> might want to throw an error specifically stating that the input of the function was not valid.  In <i>theory</i>, the typescript compiler should catch this last sort of error for us, but in <i>practice</i>, in a world of side effects, a client might send complete bullshit data to the <code>getUser</code> function.
 </p>
 </div>
+</div>
 
-<ol class="org-ol">
-<li><a id="orge3aa39a"></a>Lay the groundwork<br />
-<div class="outline-text-5" id="text-1-0-2-1">
+<div id="outline-container-orge3aa39a" class="outline-4">
+<h4 id="orge3aa39a"><span class="section-number-4">1.0.3</span> Lay the groundwork</h4>
+<div class="outline-text-4" id="text-1-0-3">
 <p>
 Let&rsquo;s put together a barebones, fake database application to run the rest of our code:
 (this isn&rsquo;t so important, we are just laying the groundwork)
@@ -354,14 +356,12 @@ and will also return <code>undefined</code> when you query with &rsquo;bad&rsquo
 undefined
 </pre>
 </div>
-</li>
-</ol>
 </div>
 
 
 <div id="outline-container-org7fa72a7" class="outline-4">
-<h4 id="org7fa72a7"><span class="section-number-4">1.0.3</span> Api function, first draft</h4>
-<div class="outline-text-4" id="text-1-0-3">
+<h4 id="org7fa72a7"><span class="section-number-4">1.0.4</span> Api function, first draft</h4>
+<div class="outline-text-4" id="text-1-0-4">
 <p>
 We could let our business logic touch the database directly, but better application design would have us create an <i>api</i> layer to abstract the database layer.  This <i>api</i> layer can add naming, sanitize inputs, change data on getting or setting, and in general include the logic our application needs for the database layer.  Today, we will focus on throwing different errors when you gave the function <i>bad</i> data versus when the database returns <i>no</i> data.
 </p>
@@ -699,7 +699,7 @@ this would require our new <code>doThing</code> function to look a lot closer to
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-06 Wed 03:20</p>
+<p class="date">Created: 2021-01-06 Wed 03:22</p>
 </div>
 </body>
 </html>
