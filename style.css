@@ -19,8 +19,9 @@
      color: teal;
    }
    .content, #content {
-     max-width: 30em;
+     max-width: 32em;
      margin: 0 auto;
+     background-color: #fbf8ef;
      border-left: 1px solid rgba(0,0,0,.05);
    }
    .mono {
@@ -85,7 +86,7 @@ pre.example {
 }
 #table-of-contents {
     font-family: monospace;
-    font-size: .8em;
+    font-size: .5em;
 }
 
 #table-of-contents h2{
