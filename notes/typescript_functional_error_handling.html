@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-05 Tue 23:25 -->
+<!-- 2021-01-06 Wed 03:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Typescript Functional Error Handling</title>
+<title>Typescript typed error handling</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="John Doe" />
 <style type="text/css">
@@ -226,42 +226,42 @@
  |
  <a accesskey="H" href="/"> HOME </a>
 </div><div id="content">
-<h1 class="title">Typescript Functional Error Handling</h1>
+<h1 class="title">Typescript typed error handling</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf0ec0f9">1. typescript typed error handling, using Monads</a>
+<li><a href="#org6728124">1. Typescript typed error handling</a>
 <ul>
-<li><a href="#org1617502">1.1. TL;DR</a></li>
-<li><a href="#orgabdba05">1.2. Background, introduction</a>
+<li>
 <ul>
-<li><a href="#org475ce37">1.2.1. Fake Database</a></li>
+<li><a href="#orgb3f280b">1.0.1. TLDR</a></li>
+<li><a href="#org1e3fc11">1.0.2. Introduction</a></li>
+<li><a href="#org7fa72a7">1.0.3. Api function, first draft</a></li>
 </ul>
 </li>
-<li><a href="#org7fa72a7">1.3. Api function, first draft</a></li>
+<li><a href="#org371e613">1.1. Handling Known Errors</a>
+<ul>
+<li><a href="#orgdf9e3da">1.1.1. Error Types</a></li>
+<li><a href="#orgdc20385">1.1.2. Rewrite the API function</a></li>
+<li><a href="#org136ae80">1.1.3. <i>monads</i> to the rescue!</a></li>
 </ul>
 </li>
-<li><a href="#org371e613">2. Handling Known Errors</a>
-<ul>
-<li><a href="#orgdf9e3da">2.1. Error Types</a></li>
-<li><a href="#org58777ce">2.2. Rewrite the API function with error types</a></li>
-<li><a href="#org136ae80">2.3. <i>monads</i> to the rescue!</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf0ec0f9" class="outline-2">
-<h2 id="orgf0ec0f9"><span class="section-number-2">1</span> typescript typed error handling, using Monads</h2>
+<div id="outline-container-org6728124" class="outline-2">
+<h2 id="org6728124"><span class="section-number-2">1</span> Typescript typed error handling</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org1617502" class="outline-3">
-<h3 id="org1617502"><span class="section-number-3">1.1</span> TL;DR</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-orgb3f280b" class="outline-4">
+<h4 id="orgb3f280b"><span class="section-number-4">1.0.1</span> TLDR</h4>
+<div class="outline-text-4" id="text-1-0-1">
 <p>
-get a typescript function, as part of it&rsquo;s type definition, to define the <i>types</i> of errors it might return.  Note, you cannot, in ts, <i>throw</i> these errors from the function, as they will lose their types.
+Given a typescript function, we want to define the <i>types</i> of errors it might encounter as part of the function&rsquo;s <i>type definition</i>. This will help consumers of the function reason about it&rsquo;s result, and separate the idea of <i>expected</i> errors, which may arise out of changes outside of the application, from <i>unexpected</i> ones, which we do not have a case to handle.
 </p>
 
 <p>
@@ -270,9 +270,9 @@ We will implement a <i>monad</i> similar to <code>Promise.then/catch</code> that
 </div>
 </div>
 
-<div id="outline-container-orgabdba05" class="outline-3">
-<h3 id="orgabdba05"><span class="section-number-3">1.2</span> Background, introduction</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-org1e3fc11" class="outline-4">
+<h4 id="org1e3fc11"><span class="section-number-4">1.0.2</span> Introduction</h4>
+<div class="outline-text-4" id="text-1-0-2">
 <p>
 Why do applications fail?  Recently I spent a long time working on a very large multi-user application.  It was my first time using typescript, after a long time of using python (django) and javascript for application design.
 </p>
@@ -290,9 +290,9 @@ Different clients of the function <code>getUser</code> might want to handle diff
 </p>
 </div>
 
-<div id="outline-container-org475ce37" class="outline-4">
-<h4 id="org475ce37"><span class="section-number-4">1.2.1</span> Fake Database</h4>
-<div class="outline-text-4" id="text-1-2-1">
+<ol class="org-ol">
+<li><a id="orge3aa39a"></a>Lay the groundwork<br />
+<div class="outline-text-5" id="text-1-0-2-1">
 <p>
 Let&rsquo;s put together a barebones, fake database application to run the rest of our code:
 (this isn&rsquo;t so important, we are just laying the groundwork)
@@ -305,7 +305,7 @@ Let&rsquo;s put together a barebones, fake database application to run the rest 
 <span style="color: #666;">const</span> <span style="color: #333;">fakeDb</span>: <span style="color: #bbb8ab;">DB</span> = <span style="color: #ccc8bc;">{</span>
   <span style="color: teal;">"1"</span>: <span style="color: #bbb8ab;">{</span> name: <span style="color: teal;">"pablo"</span> <span style="color: #bbb8ab;">}</span>,
   <span style="color: teal;">"2"</span>: <span style="color: #bbb8ab;">{</span> name: <span style="color: teal;">"kristina"</span> <span style="color: #bbb8ab;">}</span>,
-  <span style="color: teal;">"4"</span>: <span style="color: #bbb8ab;">{</span> name: <span style="color: teal;">"hildegard von bingen"</span> <span style="color: #bbb8ab;">}</span>,
+  <span style="color: teal;">"3"</span>: <span style="color: #bbb8ab;">{</span> name: <span style="color: teal;">"hildegard von bingen"</span> <span style="color: #bbb8ab;">}</span>,
 <span style="color: #ccc8bc;">}</span>
 
 <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">fake a database getter function as a promise</span>
@@ -313,36 +313,65 @@ Let&rsquo;s put together a barebones, fake database application to run the rest 
   <span style="color: #666;">get</span>: <span style="color: #bbb8ab;">(</span>id: <span style="color: #666;">string</span><span style="color: #bbb8ab;">)</span>: <span style="color: #bbb8ab;">Promise</span>&lt;<span style="color: #bbb8ab;">User</span> | <span style="color: #bbb8ab;">undefined</span>&gt; <span style="color: #666;">=&gt;</span>
     Promise.<span style="color: #111; font-style: italic;">resolve</span><span style="color: #bbb8ab;">(</span>fakeDb<span style="color: #666;">[</span>id<span style="color: #666;">]</span><span style="color: #bbb8ab;">)</span>,
 <span style="color: #ccc8bc;">}</span>
-
-<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">log a few examples:</span>
-
-db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"1"</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
-db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"3"</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
-db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
-
 </pre>
 </div>
-
-<pre class="example">
-Promise { &lt;pending&gt; }
-{ name: 'pablo' }
-undefined
-undefined
-</pre>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-org7fa72a7" class="outline-3">
-<h3 id="org7fa72a7"><span class="section-number-3">1.3</span> Api function, first draft</h3>
-<div class="outline-text-3" id="text-1-3">
 <p>
-It&rsquo;s good application design to not allow client modules to touch the database directly, and instead a layer should be built that can do precisely things such as handle errors, deal with known cases, sanitize inputs, and in the future, map db types to application types.  But this is all something for later.  Today, we want to look at errors.  Specifically, errors in our <code>getUser</code> function.
+Now, we should be able to use our fake database like so:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"1"</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
+</pre>
+</div>
+<pre class="example">
+{ name: 'pablo' }
+</pre>
+
+
+<p>
+In a real world application, the <i>state</i> of the database would be constantly changing, so it could happen that you query a user who no longer exists.  In our case, we know that the users <code>1</code>, <code>2</code>, and <code>3</code> exist.
 </p>
 
 <p>
-Especially coming from a python world, <i>throwing</i> errors and catching them becomes the norm.  Let&rsquo;s take a look at that approach here (we will be rewriting this as the purpose of this article):
+Our &rsquo;database&rsquo; will return <code>undefined</code> when queried for a user who does not exist:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"4"</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
+</pre>
+</div>
+<pre class="example">
+undefined
+</pre>
+
+
+<p>
+and will also return <code>undefined</code> when you query with &rsquo;bad&rsquo; data:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
+</pre>
+</div>
+<pre class="example">
+undefined
+</pre>
+</div>
+</li>
+</ol>
+</div>
+
+
+<div id="outline-container-org7fa72a7" class="outline-4">
+<h4 id="org7fa72a7"><span class="section-number-4">1.0.3</span> Api function, first draft</h4>
+<div class="outline-text-4" id="text-1-0-3">
+<p>
+We could let our business logic touch the database directly, but better application design would have us create an <i>api</i> layer to abstract the database layer.  This <i>api</i> layer can add naming, sanitize inputs, change data on getting or setting, and in general include the logic our application needs for the database layer.  Today, we will focus on throwing different errors when you gave the function <i>bad</i> data versus when the database returns <i>no</i> data.
+</p>
+
+<p>
+To do this, we will make our api function <code>getUser</code>.
+</p>
+
+<p>
+Especially coming from a python world, <i>throwing</i> errors and catching them in the consuming function is the norm.  Let&rsquo;s take a look at a similar approach in typescript here (the purpose of the article is rewriting this function, so this is our <i>first draft</i>):
 </p>
 
 <div class="org-src-container">
@@ -351,10 +380,13 @@ Especially coming from a python world, <i>throwing</i> errors and catching them 
 <span style="color: #666;">const</span> <span style="color: #333;">getUser</span>
   : <span style="color: #ccc8bc;">(</span>id: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> Promise&lt;<span style="color: #bbb8ab;">User</span>&gt; <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">type definition</span>
   = <span style="color: #111; font-style: italic;">async</span> <span style="color: #ccc8bc;">(</span>id<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!<span style="color: #666;">(</span><span style="color: #666;">typeof</span> id === <span style="color: teal;">`string`</span><span style="color: #666;">)</span><span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #666;">(</span><span style="color: teal;">`bad query parameter`</span><span style="color: #666;">)</span>
+    <span style="color: #bbb8ab;">}</span>
     <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!isLoggedIn<span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
       <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #666;">(</span><span style="color: teal;">`bad user! that's illegal`</span><span style="color: #666;">)</span>;
     <span style="color: #bbb8ab;">}</span>
-        <span style="color: #666;">const</span> <span style="color: #333;">user</span> = <span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #bbb8ab;">(</span>id<span style="color: #bbb8ab;">)</span>;
+    <span style="color: #666;">const</span> <span style="color: #333;">user</span> = <span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #bbb8ab;">(</span>id<span style="color: #bbb8ab;">)</span>;
 
     <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!user<span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
       <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #666;">(</span><span style="color: teal;">`user ${id} not found`</span><span style="color: #666;">)</span>;
@@ -362,111 +394,153 @@ Especially coming from a python world, <i>throwing</i> errors and catching them 
     <span style="color: #666;">return</span> user
   <span style="color: #ccc8bc;">}</span>
 
-<span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"1"</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
-<span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"77"</span><span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`this wont happen`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span> <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">77 fails, so we catch it</span>
-  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`caught: ${e}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>;
+</pre>
+</div>
+<p>
+as we can see, the function will now throw a certain error when we hand it bad data:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #ccc8bc;">)</span>
+  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`caught: ${e}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>;
 </pre>
 </div>
 <pre class="example">
-Promise { &lt;pending&gt; }
-{ name: 'pablo' }
-caught: Error: user 77 not found
+caught: Error: bad query parameter
 </pre>
 
 
 <p>
-From the above results, you can see that we have now handed <i>very</i> userful information back from <code>getUser</code> about <i>why</i> the error failed.
+and will throw a different error when the user was not found:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">'76'</span><span style="color: #ccc8bc;">)</span>
+  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`caught: ${e}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>;
+</pre>
+</div>
+<pre class="example">
+caught: Error: user 76 not found
+</pre>
+
+
+<p>
+the code will also throw a completely separate error when the <i>requesting user is not logged in.</i>
+</p>
+
+<p>
+All three of these <i>error cases</i> are expected errors.  They can happen when something in the environment changed, or when a client library is misusing the function in an expected way.
+</p>
+
+<p>
+From the above results, we can see that we have now been handed <i>very</i> userful information back from <code>getUser</code> about <i>why</i> the function failed.
 </p>
 
 <p>
 However, it is still difficult for the client application to <i>act</i> on the different types of errors.  What we would like to do, in pseudo-Code, is this:
 </p>
 
-<pre class="example">
-// pseudo-code
-getUser(id)
-  .then(processResult)
-  .catch((e) =&gt; {
-    if (e === notFoundError) goToNotFound();
-    if (e === notLoggedInError) goToLogin();
-  });
+<div class="org-src-container">
+<pre class="src src-typescript"><span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">pseudo-code</span>
+<span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span>id<span style="color: #ccc8bc;">)</span>
+  .<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span>processResult<span style="color: #ccc8bc;">)</span>
+  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">{</span>
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #666;">(</span>e === notFoundError<span style="color: #666;">)</span> <span style="color: #111; font-style: italic;">goToNotFound</span><span style="color: #666;">()</span>;
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #666;">(</span>e === notLoggedInError<span style="color: #666;">)</span> <span style="color: #111; font-style: italic;">goToLogin</span><span style="color: #666;">()</span>;
+  <span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>;
 </pre>
+</div>
 
 <p>
-To do this, we deffinitely need better error types.
+To do this, we deffinitely need better error types, that are not just defined as strings in the function throwing them.
 </p>
 </div>
 </div>
-</div>
 
-<div id="outline-container-org371e613" class="outline-2">
-<h2 id="org371e613"><span class="section-number-2">2</span> Handling Known Errors</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org371e613" class="outline-3">
+<h3 id="org371e613"><span class="section-number-3">1.1</span> Handling Known Errors</h3>
+<div class="outline-text-3" id="text-1-1">
 <p>
 The advantage of typescript is in the name: typing.  We can easily make a few error types to test our results against.
 </p>
 </div>
 
-<div id="outline-container-orgdf9e3da" class="outline-3">
-<h3 id="orgdf9e3da"><span class="section-number-3">2.1</span> Error Types</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-orgdf9e3da" class="outline-4">
+<h4 id="orgdf9e3da"><span class="section-number-4">1.1.1</span> Error Types</h4>
+<div class="outline-text-4" id="text-1-1-1">
 <p>
-The first thing we need to do is define a few error types.  In keeping with our very simple example, let&rsquo;s define two types, <code>NotFoundError</code> and <code>NoAuthError</code>.  What I am actually doing below is using the <code>ReturnType</code> of the <i>error creator</i> functions (as const) to create the types, but this doesn&rsquo;t need to be worried about now, it simply reduces boilerplate.  At the end of the day you have two types of errors, and these can be tested against
+The first thing we need to do is define a few error types.  In keeping with our very simple example, let&rsquo;s define three types, <code>BadInputError,</code> <code>NotFoundError</code> and <code>NoAuthError</code>.
+</p>
+
+<p>
+What I am actually doing below is using the <code>ReturnType</code> of the <i>error creator</i> functions (as const) to create the types, but this doesn&rsquo;t need to be worried about now, it simply reduces boilerplate.  At the end of the day you have two types of errors, and these can be tested against
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">create a very generic error type</span>
-<span style="color: #666;">type</span> <span style="color: #bbb8ab;">Err</span> = <span style="color: #ccc8bc;">{</span>
-  msg: <span style="color: #666;">string</span>;
-  <span style="color: #666;">readonly</span> _type: <span style="color: #666;">string</span>;
-<span style="color: #ccc8bc;">}</span>;
+<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">NotFoundError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type: <span style="color: teal;">"NotFoundError"</span>; msg: <span style="color: #666;">string</span>; <span style="color: #ccc8bc;">}</span>;
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">BadInputError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type: <span style="color: teal;">"BadInputError"</span>; msg: <span style="color: #666;">string</span>; <span style="color: #ccc8bc;">}</span>;
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">NoAuthError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type: <span style="color: teal;">"NoAuthError"</span>; msg: <span style="color: #666;">string</span> <span style="color: #ccc8bc;">}</span>;
 
-<span style="color: #666;">const</span> <span style="color: #333;">makeErr</span> =
-  <span style="color: #ccc8bc;">(</span>_type: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
-    <span style="color: #ccc8bc;">(</span>msg: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
-      &lt;<span style="color: #666;">const</span>&gt;<span style="color: #ccc8bc;">{</span>
-        _type,
-        msg,
-      <span style="color: #ccc8bc;">}</span>
-
-<span style="color: #666;">const</span> <span style="color: #333;">notFoundError</span> = <span style="color: #111; font-style: italic;">makeErr</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"NotFoundError"</span><span style="color: #ccc8bc;">)</span>
-
-<span style="color: #666;">type</span> <span style="color: #bbb8ab;">NotFoundError</span> = ReturnType&lt;<span style="color: #bbb8ab;">typeof</span> <span style="color: #bbb8ab;">notFoundError</span>&gt;
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">Err</span> = NotFoundError | BadInputError | NoAuthError
 
 <span style="color: #666;">const</span> <span style="color: #333;">isNotFoundError</span> =
   <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>: e is NotFoundError <span style="color: #666;">=&gt;</span>
     e._type === <span style="color: teal;">"NotFoundError"</span>;
 
-
-<span style="color: #666;">const</span> <span style="color: #333;">noAuthError</span> = <span style="color: #111; font-style: italic;">makeErr</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"NoAuthError"</span><span style="color: #ccc8bc;">)</span>
-
-<span style="color: #666;">type</span> <span style="color: #bbb8ab;">NoAuthError</span> = ReturnType&lt;<span style="color: #bbb8ab;">typeof</span> <span style="color: #bbb8ab;">noAuthError</span>&gt;
-
 <span style="color: #666;">const</span> <span style="color: #333;">isNoAuthError</span> =
   <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>: e is NoAuthError <span style="color: #666;">=&gt;</span>
     e._type === <span style="color: teal;">"NoAuthError"</span>;
 
+<span style="color: #666;">const</span> <span style="color: #333;">isBadInputError</span> =
+  <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>: e is BadInputError <span style="color: #666;">=&gt;</span>
+    e._type === <span style="color: teal;">"BadInputError"</span>;
 
-<span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">notFoundError</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`shake it off, shake it off oh oh oh`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>; <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">the type of notFoundError(x) is NotFoundError</span>
+</pre>
+</div>
+<p>
+We should also define some <i>error creators</i>, that will pass additional information along to the client about our error types.  This allows our errors to be re-used by multiple functions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">notFoundError</span>
+  : <span style="color: #ccc8bc;">(</span>msg: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> NotFoundError
+  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">{</span> _type: <span style="color: teal;">"NotFoundError"</span>, msg <span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">noAuthError</span>
+  : <span style="color: #ccc8bc;">(</span>msg: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> NoAuthError
+  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">{</span> _type: <span style="color: teal;">"NoAuthError"</span>, msg <span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">badInputError</span>
+  : <span style="color: #ccc8bc;">(</span>msg: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> BadInputError
+  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">{</span> _type: <span style="color: teal;">"BadInputError"</span>, msg <span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+<p>
+(sidenote:  there are more DRY ways to accomplish the error creators and types, which I will talk about in another article.  We are keeping it simple here because we are illustrating something else)
+</p>
+
+<p>
+We should now be able to create an error using one of the error creator functions:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #111; font-style: italic;">badInputError</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`bad user! bad!`</span><span style="color: #ccc8bc;">)</span>;
 </pre>
 </div>
 <pre class="example">
-{ _type: 'NotFoundError', msg: 'shake it off, shake it off oh oh oh' }
+{ _type: 'BadInputError', msg: 'bad user! bad!' }
 </pre>
 
 
 <p>
-Note: Notice that we will not include a stack any more in our errors.  With <i>expected</i> errors, the stack should no longer be important.
+Note: Notice that we will not include a stack any more in our errors.  With <i>expected</i> errors, the stack should no longer be important, as we (the function), know why it failed, and just want to tell the consumer how <i>they</i> mest up.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org58777ce" class="outline-3">
-<h3 id="org58777ce"><span class="section-number-3">2.2</span> Rewrite the API function with error types</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-orgdc20385" class="outline-4">
+<h4 id="orgdc20385"><span class="section-number-4">1.1.2</span> Rewrite the API function</h4>
+<div class="outline-text-4" id="text-1-1-2">
 <p>
-Now, let&rsquo;s rewrite our little api <code>getUser</code> function to actually throw these errors, and then re-implement the client pseudo-code as real code
+Now, let&rsquo;s rewrite our little <code>getUser</code> function to actually throw these errors, and then re-implement the client pseudo-code as real code. The function does not look so different than before, exept now it throws errors that have <i>types</i>.
 </p>
 
 <div class="org-src-container">
@@ -474,8 +548,11 @@ Now, let&rsquo;s rewrite our little api <code>getUser</code> function to actuall
 <span style="color: #666;">const</span> <span style="color: #333;">getUser</span>
   : <span style="color: #ccc8bc;">(</span>id: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> Promise&lt;<span style="color: #bbb8ab;">User</span> | <span style="color: #666;">never</span>&gt; <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">type definition</span>
   = <span style="color: #111; font-style: italic;">async</span> <span style="color: #ccc8bc;">(</span>id<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!<span style="color: #666;">(</span><span style="color: #666;">typeof</span> id === <span style="color: teal;">`string`</span><span style="color: #666;">)</span><span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">badInputError</span><span style="color: #666;">(</span><span style="color: teal;">`bad query parameter`</span><span style="color: #666;">)</span>
+    <span style="color: #bbb8ab;">}</span>
     <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!isLoggedIn<span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
-      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">noAuthError</span><span style="color: #666;">(</span><span style="color: teal;">`stop, citizen! you are doing something which is not allowed!`</span><span style="color: #666;">)</span>
+      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">noAuthError</span><span style="color: #666;">(</span><span style="color: teal;">`not logged in`</span><span style="color: #666;">)</span>
     <span style="color: #bbb8ab;">}</span>
     <span style="color: #666;">const</span> <span style="color: #333;">user</span> = <span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #bbb8ab;">(</span>id<span style="color: #bbb8ab;">)</span>;
 
@@ -485,37 +562,59 @@ Now, let&rsquo;s rewrite our little api <code>getUser</code> function to actuall
     <span style="color: #666;">return</span> user
   <span style="color: #ccc8bc;">}</span>
 
-<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">use, and test against those error types</span>
-
-<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">first, against a user we know exists</span>
-<span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"2"</span><span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span>
-    <span style="color: #bbb8ab;">(</span>u<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`got user ${u.name}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
-
-<span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"666"</span><span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span>
-    <span style="color: #bbb8ab;">(</span>u<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`got user ${u.name}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span> <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">this won't happen</span>
-  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>
-    <span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span>
-      <span style="color: #111; font-style: italic;">isNotFoundError</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span>
-        ? <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span>
-          <span style="color: teal;">`user 666 not found, but we know that from here now!`</span><span style="color: #bbb8ab;">)</span>
-        : <span style="color: #111; font-style: italic;">isNoAuthError</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span>
-          ? <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`you are not logged in, caught it`</span><span style="color: #bbb8ab;">)</span>
-          : <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`something truly unexpected happened`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
-
 </pre>
 </div>
-
+<p>
+we can still get a user that exists:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"2"</span><span style="color: #ccc8bc;">)</span>
+  .<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span>u <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`got user ${u.name}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
 <pre class="example">
-Promise { &lt;pending&gt; }
 got user kristina
-user 666 not found, but we know that from here now!
 </pre>
 
 
 <p>
-Success!  we are now able to distinguish between errors and act on them accordingly.
+and a failed try will still throw:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"27"</span><span style="color: #ccc8bc;">)</span>
+  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`caught: ${e._type}: ${e.msg}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+<pre class="example">
+caught: NotFoundError: this user id: 27 not found. silly you!
+</pre>
+
+
+<p>
+however, because the <i>thrown</i> errors are now <i>typed</i>, we can easily test them:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"666"</span><span style="color: #ccc8bc;">)</span>
+  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>
+    <span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span>
+      <span style="color: #111; font-style: italic;">isNotFoundError</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span>
+      ? <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`do /something/ on not found`</span><span style="color: #bbb8ab;">)</span>
+      : <span style="color: #111; font-style: italic;">isNoAuthError</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span>
+      ? <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`you are not logged in, caught it`</span><span style="color: #bbb8ab;">)</span>
+      : <span style="color: #111; font-style: italic;">isBadInputError</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span>
+      ? <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`bad input`</span><span style="color: #bbb8ab;">)</span>
+      : <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`something truly unexpected happened`</span><span style="color: #bbb8ab;">)</span>
+  <span style="color: #ccc8bc;">)</span>
+
+</pre>
+</div>
+<pre class="example">
+do /something/ on not found
+</pre>
+
+
+<p>
+Success!  we are now able to distinguish between errors and act on them accordingly. In the above code, we catch the function we knew was going to fail, and then did something different depending on the type of error that it was, using the error test functions we wrote before.
 </p>
 
 <p>
@@ -523,42 +622,54 @@ Success!  we are now able to distinguish between errors and act on them accordin
 </p>
 
 <p>
-the problem still is you <i>cannot distinguish the error types</i> in the function definition.  there is <i>no way</i> to type out what the function <i>throws</i>.
+There is still one problem.  It would be fantastic if our <code>getUser</code> function were able to tell us in it&rsquo;s type definition what kind of errors it <i>expects.</i>
 </p>
 
 <p>
-Put differently, <i>throwing</i> errors <i>always</i> results in the <i>never</i> type.  Typescript is supposed to allow for very specific type definitions of functions, but in this case you either get the defined type or&#x2026;. well, <i>never.</i>
+In typescript <i>throwing</i> errors <i>always</i> results in the <code>never</code> type.  Typescript is supposed to allow for very specific type definitions of functions, but in the case of functions that throw errors, you either get the defined success type or&#x2026;. well, <i>never.</i>
 </p>
 
 <p>
-Take another look at the function definition: <code>getUser: (id: string) =&gt; Promise&lt;User | never&gt;</code>
+Take another look at the function definition:
 </p>
 
 <p>
-In our small, simple function, it is pretty easy to look through the function, and see which errors it could throw, and that clients of the function should possibly test against. In cases where a function calls nested or imported sub-routines that might throw their own errors, this becomes difficult to handle.
+<code>getUser: (id: string) ==&gt; Promise&lt;User | never&gt;</code>
 </p>
 
 <p>
-Additionally, the creator of the <code>getUser</code> function might want to <i>force</i> it&rsquo;s clients and consumers to deal with particular cases.  Bad input springs to mind.
+In our small, simple function, it is pretty easy to manually look through the function to see which errors it might throw. However - In more complicated functions, where a function calls nested or imported sub-routines that might throw their own errors, this becomes difficult to track or handle.
 </p>
 
 <p>
 Realistically, what we want is the error <i>types</i> in the function definition.
 </p>
-</div>
-</div>
 
-<div id="outline-container-org136ae80" class="outline-3">
-<h3 id="org136ae80"><span class="section-number-3">2.3</span> <i>monads</i> to the rescue!</h3>
-<div class="outline-text-3" id="text-2-3">
 <p>
-this is similar to re-implementing promises, actually
+One method of dealing with this issue would be to <i>return</i> the errors instead of <i>throwing</i> them.
+In this solution, our function definition would look like this:
 </p>
 
+<p>
+<code>getUser: (id: string) ==&gt; Promise&lt;User | BadInputError | NoAuthError | NotFoundError&gt;</code>
+</p>
+
+<p>
+Personally, I don&rsquo;t like this solution, because it makes no distinction between the success case of the function and a failure, which may be the first type of test a consuming function might want to do.
+</p>
+
+<p>
+Ideally, we want to create an interface similare to <code>Promise.then/catch</code>, that will allow us to reason about the function&rsquo;s results elegantly.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org136ae80" class="outline-4">
+<h4 id="org136ae80"><span class="section-number-4">1.1.3</span> <i>monads</i> to the rescue!</h4>
+<div class="outline-text-4" id="text-1-1-3">
 <p>
 the change here is that <code>catch</code> is only used any more for <i>unexpected</i> results, everything else is handled as part of the new data-flow type.
 </p>
-
 
 <p>
 this would require our new <code>doThing</code> function to look a lot closer to this:
@@ -577,13 +688,18 @@ this would require our new <code>doThing</code> function to look a lot closer to
 
 </pre>
 </div>
+
+<p>
+&#x2026; to be continued
+</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-05 Tue 23:25</p>
+<p class="date">Created: 2021-01-06 Wed 03:20</p>
 </div>
 </body>
 </html>
