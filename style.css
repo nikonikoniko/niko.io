@@ -5,21 +5,31 @@
      src: url(source-serif.woff2) format('woff2');
      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
+   @font-face {
+     font-family: 'Source Serif Pro';
+     font-style: light;
+     font-weight: 300;
+     src: url(source-serif-light.woff2) format('woff2');
+     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
    body {
      font-family: "Source Serif Pro";
      background-color: #fbf8ef;
+     font-weight: 400;
      color: #222;
    }
    body p {
-     line-height: 1.2em;
+     line-height: 1.4em;
+     text-rendering: optimizeLegibility;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
    }
    a, a:visited {
      text-decoration: none;
      color: teal;
    }
    .content, #content {
-     max-width: 32em;
+     max-width: 35em;
      margin: 0 auto;
      background-color: #fbf8ef;
      border-left: 1px solid rgba(0,0,0,.05);
@@ -116,3 +126,7 @@ h1,h2,h3,h4,h5,h6{
 #postamble{
     display: none;
 }
+
+h2 { font-size: 2.0em; }
+h3 { font-size: 1.8em; }
+h4 { font-size: 1.5em; }
