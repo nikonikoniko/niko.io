@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-06 Wed 04:41 -->
+<!-- 2021-01-14 Thu 17:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>pattern matching</title>
@@ -227,42 +227,54 @@
  <a accesskey="H" href="/"> HOME </a>
 </div><div id="content">
 <h1 class="title">pattern matching</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge503ff8">1. In Javascript</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge503ff8" class="outline-2">
+<h2 id="orge503ff8"><span class="section-number-2">1</span> In Javascript</h2>
+<div class="outline-text-2" id="text-1">
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">isFunction</span> = f <span style="color: #666;">=&gt;</span>
-  !!<span style="color: #ccc8bc;">(</span>f &amp;&amp; f.<span style="color: #666;">constructor</span> &amp;&amp; f.call &amp;&amp; f.apply<span style="color: #ccc8bc;">)</span>;
+  !!<span style="color: #ccc8bc;">(</span>f &amp;&amp; f<span style="color: #bbb8ab;">.</span><span style="color: #666;">constructor</span> &amp;&amp; f<span style="color: #bbb8ab;">.</span>call &amp;&amp; f<span style="color: #bbb8ab;">.</span>apply<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">toPairs</span> = <span style="color: #ccc8bc;">(</span>arr<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
-  arr.<span style="color: #111; font-style: italic;">reduce</span><span style="color: #ccc8bc;">(</span>
-    <span style="color: #bbb8ab;">(</span>result, value, index, array<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">{</span>
-      <span style="color: #111; font-style: italic;">if</span> <span style="color: #666;">(</span>index % <span style="color: #ffa500;">2</span> === <span style="color: #ffa500;">0</span><span style="color: #666;">)</span>
-        result.<span style="color: #111; font-style: italic;">push</span><span style="color: #666;">(</span>array.<span style="color: #111; font-style: italic;">slice</span><span style="color: #ccc8bc;">(</span>index, index + <span style="color: #ffa500;">2</span><span style="color: #ccc8bc;">)</span><span style="color: #666;">)</span>;
-      <span style="color: #666;">return</span> result;
-    <span style="color: #bbb8ab;">}</span>, <span style="color: #bbb8ab;">[]</span><span style="color: #ccc8bc;">)</span>;
+  arr<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">reduce</span><span style="color: #ccc8bc;">(</span>
+    <span style="color: #ccc8bc;">(</span>result<span style="color: #bbb8ab;">,</span> value<span style="color: #bbb8ab;">,</span> index<span style="color: #bbb8ab;">,</span> array<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+      <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>index % <span style="color: #db7093;">2</span> === <span style="color: #db7093;">0</span><span style="color: #ccc8bc;">)</span>
+        result<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">push</span><span style="color: #ccc8bc;">(</span>array<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">slice</span><span style="color: #ccc8bc;">(</span>index<span style="color: #bbb8ab;">,</span> index + <span style="color: #db7093;">2</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+      <span style="color: #db7093;">return</span> result<span style="color: #bbb8ab;">;</span>
+    <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">,</span> <span style="color: #ccc8bc;">[]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">match</span> =
-  <span style="color: #ccc8bc;">(</span>...pairs<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">...</span>pairs<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
     <span style="color: #ccc8bc;">(</span>val<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
       <span style="color: #111; font-style: italic;">toPairs</span><span style="color: #ccc8bc;">(</span>pairs<span style="color: #ccc8bc;">)</span>
-        .<span style="color: #111; font-style: italic;">map</span><span style="color: #ccc8bc;">(</span>
-          <span style="color: #bbb8ab;">(</span><span style="color: #666;">[</span>pred, res<span style="color: #666;">]</span><span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">(</span>
-            <span style="color: #666;">(</span><span style="color: #111; font-style: italic;">isFunction</span><span style="color: #ccc8bc;">(</span>pred<span style="color: #ccc8bc;">)</span> ? <span style="color: #111; font-style: italic;">pred</span><span style="color: #ccc8bc;">(</span>val<span style="color: #ccc8bc;">)</span> : pred<span style="color: #666;">)</span>
-              ? <span style="color: #666;">(</span><span style="color: #111; font-style: italic;">isFunction</span><span style="color: #ccc8bc;">(</span>res<span style="color: #ccc8bc;">)</span> ? <span style="color: #111; font-style: italic;">res</span><span style="color: #ccc8bc;">(</span>val<span style="color: #ccc8bc;">)</span> : res<span style="color: #666;">)</span>
-              : <span style="color: #ffa500;">undefined</span>
-          <span style="color: #bbb8ab;">)</span>
+        <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">map</span><span style="color: #ccc8bc;">(</span>
+          <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>pred<span style="color: #bbb8ab;">,</span> res<span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span>
+            <span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">isFunction</span><span style="color: #ccc8bc;">(</span>pred<span style="color: #ccc8bc;">)</span> ? <span style="color: #111; font-style: italic;">pred</span><span style="color: #ccc8bc;">(</span>val<span style="color: #ccc8bc;">)</span> <span style="color: #bbb8ab;">:</span> pred<span style="color: #ccc8bc;">)</span>
+              ? <span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">isFunction</span><span style="color: #ccc8bc;">(</span>res<span style="color: #ccc8bc;">)</span> ? <span style="color: #111; font-style: italic;">res</span><span style="color: #ccc8bc;">(</span>val<span style="color: #ccc8bc;">)</span> <span style="color: #bbb8ab;">:</span> res<span style="color: #ccc8bc;">)</span>
+              <span style="color: #bbb8ab;">:</span> <span style="color: #db7093;">undefined</span>
+          <span style="color: #ccc8bc;">)</span>
         <span style="color: #ccc8bc;">)</span>
-        .<span style="color: #111; font-style: italic;">find</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">(</span>v<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span> !!v<span style="color: #ccc8bc;">)</span>
+        <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">find</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span>v<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> !!v<span style="color: #ccc8bc;">)</span>
 
 </pre>
 </div>
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">f</span> = <span style="color: #111; font-style: italic;">match</span><span style="color: #ccc8bc;">(</span>
-  v <span style="color: #666;">=&gt;</span> !!v.isSomething, v <span style="color: #666;">=&gt;</span> <span style="color: teal;">`${v} is something`</span>,
-  v <span style="color: #666;">=&gt;</span> !!v.someValue,   v <span style="color: #666;">=&gt;</span> <span style="color: teal;">"something else"</span>,
-  <span style="color: #666;">true</span>,            <span style="color: teal;">"default"</span>
+  v <span style="color: #666;">=&gt;</span> !!v<span style="color: #bbb8ab;">.</span>isSomething<span style="color: #bbb8ab;">,</span> v <span style="color: #666;">=&gt;</span> <span style="color: teal;">`${v} is something`</span><span style="color: #bbb8ab;">,</span>
+  v <span style="color: #666;">=&gt;</span> !!v<span style="color: #bbb8ab;">.</span>someValue<span style="color: #bbb8ab;">,</span>   v <span style="color: #666;">=&gt;</span> <span style="color: teal;">"something else"</span><span style="color: #bbb8ab;">,</span>
+  <span style="color: #666;">true</span><span style="color: #bbb8ab;">,</span>            <span style="color: teal;">"default"</span>
 <span style="color: #ccc8bc;">)</span>
 
-<span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">f</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">"hey"</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
-<span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span>  <span style="color: #111; font-style: italic;">f</span><span style="color: #bbb8ab;">(</span><span style="color: #666;">{</span> isSomething: <span style="color: #666;">true</span> <span style="color: #666;">}</span><span style="color: #bbb8ab;">)</span> <span style="color: #ccc8bc;">)</span>
+<span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">f</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"hey"</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span>  <span style="color: #111; font-style: italic;">f</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> isSomething<span style="color: #bbb8ab;">:</span> <span style="color: #666;">true</span> <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">)</span>
 </pre>
 </div>
 <pre class="example">
@@ -270,9 +282,11 @@ default
 [object Object] is something
 </pre>
 </div>
+</div>
+</div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-06 Wed 04:41</p>
+<p class="date">Created: 2021-01-14 Thu 17:55</p>
 </div>
 </body>
 </html>

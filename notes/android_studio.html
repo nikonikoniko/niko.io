@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-06 Wed 16:16 -->
+<!-- 2021-01-14 Thu 17:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>android studio</title>
@@ -309,9 +309,9 @@ yay -S android-emulator
 <pre class="src src-bash"><span style="color: #bbb8ab;">sudo</span> groupadd android-sdk
 <span style="color: #bbb8ab;">sudo</span> gpasswd -a YOUR_USERNAME android-sdk
 
-<span style="color: #bbb8ab;">sudo</span> setfacl -R -m g:android-sdk:rwx /opt/android-sdk
-<span style="color: #bbb8ab;">sudo</span> setfacl -d -m g:android-sdk:rwX /opt/android-sdk
-<span style="color: #bbb8ab;">newgrp</span> android-sdk
+<span style="color: #bbb8ab;">sudo</span> setfacl -R -m g<span style="color: #bbb8ab;">:</span>android-sdk<span style="color: #bbb8ab;">:</span>rwx /opt/android-sdk
+<span style="color: #bbb8ab;">sudo</span> setfacl -d -m g<span style="color: #bbb8ab;">:</span>android-sdk<span style="color: #bbb8ab;">:</span>rwX /opt/android-sdk
+<span style="color: #778899;">newgrp</span> android-sdk
 </pre>
 </div>
 </div>
@@ -364,7 +364,7 @@ and add the following lines.  In the example above we used the name <code>pixal<
 
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #bbbbbb; font-style: italic;"># </span><span style="color: #bbbbbb; font-style: italic;">~/.android/avd/[YOUR_AVD_NAME].avd/config.ini</span>
-hw.keyboard=yes
+hw<span style="color: #bbb8ab;">.</span>keyboard=yes
 </pre>
 </div>
 </div>
@@ -408,7 +408,7 @@ daemon not running; starting now at tcp:5037
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-06 Wed 16:16</p>
+<p class="date">Created: 2021-01-14 Thu 17:55</p>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-06 Wed 03:22 -->
+<!-- 2021-01-14 Thu 17:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Typescript typed error handling</title>
@@ -301,19 +301,19 @@ Let&rsquo;s put together a barebones, fake database application to run the rest 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">User</span> = <span style="color: #ccc8bc;">{</span> name: <span style="color: #666;">string</span> <span style="color: #ccc8bc;">}</span> <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">a dirt simple user type</span>
-<span style="color: #666;">type</span> <span style="color: #bbb8ab;">DB</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">[</span>id: <span style="color: #666;">string</span><span style="color: #bbb8ab;">]</span>: <span style="color: #bbb8ab;">User</span> <span style="color: #ccc8bc;">}</span> <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">a fake database as a data-object</span>
+<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">User</span> = <span style="color: #ccc8bc;">{</span> name<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span> <span style="color: #ccc8bc;">}</span> <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">a dirt simple user type</span>
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">DB</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #ccc8bc;">[</span>id<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">]</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">User</span> <span style="color: #ccc8bc;">}</span> <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">a fake database as a data-object</span>
 
-<span style="color: #666;">const</span> <span style="color: #333;">fakeDb</span>: <span style="color: #bbb8ab;">DB</span> = <span style="color: #ccc8bc;">{</span>
-  <span style="color: teal;">"1"</span>: <span style="color: #bbb8ab;">{</span> name: <span style="color: teal;">"pablo"</span> <span style="color: #bbb8ab;">}</span>,
-  <span style="color: teal;">"2"</span>: <span style="color: #bbb8ab;">{</span> name: <span style="color: teal;">"kristina"</span> <span style="color: #bbb8ab;">}</span>,
-  <span style="color: teal;">"3"</span>: <span style="color: #bbb8ab;">{</span> name: <span style="color: teal;">"hildegard von bingen"</span> <span style="color: #bbb8ab;">}</span>,
+<span style="color: #666;">const</span> <span style="color: #333;">fakeDb</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">DB</span> = <span style="color: #ccc8bc;">{</span>
+  <span style="color: teal;">"1"</span><span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">{</span> name<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"pablo"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">,</span>
+  <span style="color: teal;">"2"</span><span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">{</span> name<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"kristina"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">,</span>
+  <span style="color: teal;">"3"</span><span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">{</span> name<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"hildegard von bingen"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">,</span>
 <span style="color: #ccc8bc;">}</span>
 
 <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">fake a database getter function as a promise</span>
 <span style="color: #666;">const</span> <span style="color: #333;">db</span> = <span style="color: #ccc8bc;">{</span>
-  <span style="color: #666;">get</span>: <span style="color: #bbb8ab;">(</span>id: <span style="color: #666;">string</span><span style="color: #bbb8ab;">)</span>: <span style="color: #bbb8ab;">Promise</span>&lt;<span style="color: #bbb8ab;">User</span> | <span style="color: #bbb8ab;">undefined</span>&gt; <span style="color: #666;">=&gt;</span>
-    Promise.<span style="color: #111; font-style: italic;">resolve</span><span style="color: #bbb8ab;">(</span>fakeDb<span style="color: #666;">[</span>id<span style="color: #666;">]</span><span style="color: #bbb8ab;">)</span>,
+  <span style="color: #666;">get</span><span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>id<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Promise</span>&lt;<span style="color: #bbb8ab;">User</span> | <span style="color: #bbb8ab;">undefined</span>&gt; <span style="color: #666;">=&gt;</span>
+    Promise<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">resolve</span><span style="color: #ccc8bc;">(</span>fakeDb<span style="color: #ccc8bc;">[</span>id<span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
 <span style="color: #ccc8bc;">}</span>
 </pre>
 </div>
@@ -321,7 +321,7 @@ Let&rsquo;s put together a barebones, fake database application to run the rest 
 Now, we should be able to use our fake database like so:
 </p>
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"1"</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"1"</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console.</span>log<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
@@ -337,7 +337,7 @@ In a real world application, the <i>state</i> of the database would be constantl
 Our &rsquo;database&rsquo; will return <code>undefined</code> when queried for a user who does not exist:
 </p>
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"4"</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"4"</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console.</span>log<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
@@ -349,7 +349,7 @@ undefined
 and will also return <code>undefined</code> when you query with &rsquo;bad&rsquo; data:
 </p>
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #ccc8bc;">)</span>.<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console</span>.log<span style="color: #ccc8bc;">)</span>;
+<pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> db<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">console.</span>log<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
@@ -375,23 +375,23 @@ Especially coming from a python world, <i>throwing</i> errors and catching them 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">let</span> <span style="color: #333;">isLoggedIn</span> = <span style="color: #666;">true</span>; <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">a fake little state variable</span>
+<pre class="src src-jupyter-typescript"><span style="color: #666;">let</span> <span style="color: #333;">isLoggedIn</span> = <span style="color: #666;">true</span><span style="color: #bbb8ab;">;</span> <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">a fake little state variable</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">getUser</span>
-  : <span style="color: #ccc8bc;">(</span>id: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> Promise&lt;<span style="color: #bbb8ab;">User</span>&gt; <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">type definition</span>
+  <span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>id<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> Promise&lt;<span style="color: #bbb8ab;">User</span>&gt; <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">type definition</span>
   = <span style="color: #111; font-style: italic;">async</span> <span style="color: #ccc8bc;">(</span>id<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
-    <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!<span style="color: #666;">(</span><span style="color: #666;">typeof</span> id === <span style="color: teal;">`string`</span><span style="color: #666;">)</span><span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
-      <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #666;">(</span><span style="color: teal;">`bad query parameter`</span><span style="color: #666;">)</span>
-    <span style="color: #bbb8ab;">}</span>
-    <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!isLoggedIn<span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
-      <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #666;">(</span><span style="color: teal;">`bad user! that's illegal`</span><span style="color: #666;">)</span>;
-    <span style="color: #bbb8ab;">}</span>
-    <span style="color: #666;">const</span> <span style="color: #333;">user</span> = <span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #bbb8ab;">(</span>id<span style="color: #bbb8ab;">)</span>;
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>!<span style="color: #ccc8bc;">(</span><span style="color: #666;">typeof</span> id === <span style="color: teal;">`string`</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`bad query parameter`</span><span style="color: #ccc8bc;">)</span>
+    <span style="color: #ccc8bc;">}</span>
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>!isLoggedIn<span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`bad user! that's illegal`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+    <span style="color: #ccc8bc;">}</span>
+    <span style="color: #666;">const</span> <span style="color: #333;">user</span> = <span style="color: #666;">await</span> db<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span>id<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 
-    <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!user<span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
-      <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #666;">(</span><span style="color: teal;">`user ${id} not found`</span><span style="color: #666;">)</span>;
-    <span style="color: #bbb8ab;">}</span>
-    <span style="color: #666;">return</span> user
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>!user<span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Error</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`user ${id} not found`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+    <span style="color: #ccc8bc;">}</span>
+    <span style="color: #db7093;">return</span> user
   <span style="color: #ccc8bc;">}</span>
 
 </pre>
@@ -401,7 +401,7 @@ as we can see, the function will now throw a certain error when we hand it bad d
 </p>
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`caught: ${e}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>;
+  <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`caught: ${e}`</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
@@ -414,7 +414,7 @@ and will throw a different error when the user was not found:
 </p>
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">'76'</span><span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`caught: ${e}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>;
+  <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`caught: ${e}`</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
@@ -441,11 +441,11 @@ However, it is still difficult for the client application to <i>act</i> on the d
 <div class="org-src-container">
 <pre class="src src-typescript"><span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">pseudo-code</span>
 <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span>id<span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span>processResult<span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">{</span>
-    <span style="color: #111; font-style: italic;">if</span> <span style="color: #666;">(</span>e === notFoundError<span style="color: #666;">)</span> <span style="color: #111; font-style: italic;">goToNotFound</span><span style="color: #666;">()</span>;
-    <span style="color: #111; font-style: italic;">if</span> <span style="color: #666;">(</span>e === notLoggedInError<span style="color: #666;">)</span> <span style="color: #111; font-style: italic;">goToLogin</span><span style="color: #666;">()</span>;
-  <span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>;
+  <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span>processResult<span style="color: #ccc8bc;">)</span>
+  <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>e === notFoundError<span style="color: #ccc8bc;">)</span> <span style="color: #111; font-style: italic;">goToNotFound</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>e === notLoggedInError<span style="color: #ccc8bc;">)</span> <span style="color: #111; font-style: italic;">goToLogin</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
+  <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 
@@ -470,28 +470,24 @@ The advantage of typescript is in the name: typing.  We can easily make a few er
 The first thing we need to do is define a few error types.  In keeping with our very simple example, let&rsquo;s define three types, <code>BadInputError,</code> <code>NotFoundError</code> and <code>NoAuthError</code>.
 </p>
 
-<p>
-What I am actually doing below is using the <code>ReturnType</code> of the <i>error creator</i> functions (as const) to create the types, but this doesn&rsquo;t need to be worried about now, it simply reduces boilerplate.  At the end of the day you have two types of errors, and these can be tested against
-</p>
-
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">NotFoundError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type: <span style="color: teal;">"NotFoundError"</span>; msg: <span style="color: #666;">string</span>; <span style="color: #ccc8bc;">}</span>;
-<span style="color: #666;">type</span> <span style="color: #bbb8ab;">BadInputError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type: <span style="color: teal;">"BadInputError"</span>; msg: <span style="color: #666;">string</span>; <span style="color: #ccc8bc;">}</span>;
-<span style="color: #666;">type</span> <span style="color: #bbb8ab;">NoAuthError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type: <span style="color: teal;">"NoAuthError"</span>; msg: <span style="color: #666;">string</span> <span style="color: #ccc8bc;">}</span>;
+<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">NotFoundError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"NotFoundError"</span><span style="color: #bbb8ab;">;</span> msg<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">BadInputError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"BadInputError"</span><span style="color: #bbb8ab;">;</span> msg<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">NoAuthError</span> = <span style="color: #ccc8bc;">{</span> <span style="color: #666;">readonly</span> _type<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"NoAuthError"</span><span style="color: #bbb8ab;">;</span> msg<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">type</span> <span style="color: #bbb8ab;">Err</span> = NotFoundError | BadInputError | NoAuthError
 
 <span style="color: #666;">const</span> <span style="color: #333;">isNotFoundError</span> =
-  <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>: e is NotFoundError <span style="color: #666;">=&gt;</span>
-    e._type === <span style="color: teal;">"NotFoundError"</span>;
+  <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> e is NotFoundError <span style="color: #666;">=&gt;</span>
+    e<span style="color: #bbb8ab;">.</span>_type === <span style="color: teal;">"NotFoundError"</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">isNoAuthError</span> =
-  <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>: e is NoAuthError <span style="color: #666;">=&gt;</span>
-    e._type === <span style="color: teal;">"NoAuthError"</span>;
+  <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> e is NoAuthError <span style="color: #666;">=&gt;</span>
+    e<span style="color: #bbb8ab;">.</span>_type === <span style="color: teal;">"NoAuthError"</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">isBadInputError</span> =
-  <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>: e is BadInputError <span style="color: #666;">=&gt;</span>
-    e._type === <span style="color: teal;">"BadInputError"</span>;
+  <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> e is BadInputError <span style="color: #666;">=&gt;</span>
+    e<span style="color: #bbb8ab;">.</span>_type === <span style="color: teal;">"BadInputError"</span><span style="color: #bbb8ab;">;</span>
 
 </pre>
 </div>
@@ -501,16 +497,16 @@ We should also define some <i>error creators</i>, that will pass additional info
 
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">notFoundError</span>
-  : <span style="color: #ccc8bc;">(</span>msg: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> NotFoundError
-  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">{</span> _type: <span style="color: teal;">"NotFoundError"</span>, msg <span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>msg<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> NotFoundError
+  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> _type<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"NotFoundError"</span><span style="color: #bbb8ab;">,</span> msg <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">noAuthError</span>
-  : <span style="color: #ccc8bc;">(</span>msg: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> NoAuthError
-  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">{</span> _type: <span style="color: teal;">"NoAuthError"</span>, msg <span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>msg<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> NoAuthError
+  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> _type<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"NoAuthError"</span><span style="color: #bbb8ab;">,</span> msg <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">badInputError</span>
-  : <span style="color: #ccc8bc;">(</span>msg: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> BadInputError
-  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">{</span> _type: <span style="color: teal;">"BadInputError"</span>, msg <span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>msg<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> BadInputError
+  = <span style="color: #ccc8bc;">(</span>msg<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> _type<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"BadInputError"</span><span style="color: #bbb8ab;">,</span> msg <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 </pre>
 </div>
 <p>
@@ -522,7 +518,7 @@ We should now be able to create an error using one of the error creator function
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #111; font-style: italic;">badInputError</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`bad user! bad!`</span><span style="color: #ccc8bc;">)</span>;
+<pre class="src src-jupyter-typescript"><span style="color: #111; font-style: italic;">badInputError</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`bad user! bad!`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
@@ -546,20 +542,20 @@ Now, let&rsquo;s rewrite our little <code>getUser</code> function to actually th
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">rewrite our function to use error types</span>
 <span style="color: #666;">const</span> <span style="color: #333;">getUser</span>
-  : <span style="color: #ccc8bc;">(</span>id: <span style="color: #666;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> Promise&lt;<span style="color: #bbb8ab;">User</span> | <span style="color: #666;">never</span>&gt; <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">type definition</span>
+  <span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>id<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> Promise&lt;<span style="color: #bbb8ab;">User</span> | <span style="color: #bbb8ab;">never</span>&gt; <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">type definition</span>
   = <span style="color: #111; font-style: italic;">async</span> <span style="color: #ccc8bc;">(</span>id<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
-    <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!<span style="color: #666;">(</span><span style="color: #666;">typeof</span> id === <span style="color: teal;">`string`</span><span style="color: #666;">)</span><span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
-      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">badInputError</span><span style="color: #666;">(</span><span style="color: teal;">`bad query parameter`</span><span style="color: #666;">)</span>
-    <span style="color: #bbb8ab;">}</span>
-    <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!isLoggedIn<span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
-      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">noAuthError</span><span style="color: #666;">(</span><span style="color: teal;">`not logged in`</span><span style="color: #666;">)</span>
-    <span style="color: #bbb8ab;">}</span>
-    <span style="color: #666;">const</span> <span style="color: #333;">user</span> = <span style="color: #666;">await</span> db.<span style="color: #111; font-style: italic;">get</span><span style="color: #bbb8ab;">(</span>id<span style="color: #bbb8ab;">)</span>;
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>!<span style="color: #ccc8bc;">(</span><span style="color: #666;">typeof</span> id === <span style="color: teal;">`string`</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">badInputError</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`bad query parameter`</span><span style="color: #ccc8bc;">)</span>
+    <span style="color: #ccc8bc;">}</span>
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>!isLoggedIn<span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">noAuthError</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`not logged in`</span><span style="color: #ccc8bc;">)</span>
+    <span style="color: #ccc8bc;">}</span>
+    <span style="color: #666;">const</span> <span style="color: #333;">user</span> = <span style="color: #666;">await</span> db<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">get</span><span style="color: #ccc8bc;">(</span>id<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 
-    <span style="color: #111; font-style: italic;">if</span> <span style="color: #bbb8ab;">(</span>!user<span style="color: #bbb8ab;">)</span> <span style="color: #bbb8ab;">{</span>
-      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">notFoundError</span><span style="color: #666;">(</span><span style="color: teal;">`this user id: ${id} not found. silly you!`</span><span style="color: #666;">)</span>
-    <span style="color: #bbb8ab;">}</span>
-    <span style="color: #666;">return</span> user
+    <span style="color: #111; font-style: italic;">if</span> <span style="color: #ccc8bc;">(</span>!user<span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">{</span>
+      <span style="color: #666;">throw</span> <span style="color: #111; font-style: italic;">notFoundError</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`this user id: ${id} not found. silly you!`</span><span style="color: #ccc8bc;">)</span>
+    <span style="color: #ccc8bc;">}</span>
+    <span style="color: #db7093;">return</span> user
   <span style="color: #ccc8bc;">}</span>
 
 </pre>
@@ -569,7 +565,7 @@ we can still get a user that exists:
 </p>
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"2"</span><span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span>u <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`got user ${u.name}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span>u <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`got user ${u.name}`</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
 </pre>
 </div>
 <pre class="example">
@@ -582,7 +578,7 @@ and a failed try will still throw:
 </p>
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"27"</span><span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`caught: ${e._type}: ${e.msg}`</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>e <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`caught: ${e._type}: ${e.msg}`</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
 </pre>
 </div>
 <pre class="example">
@@ -595,15 +591,15 @@ however, because the <i>thrown</i> errors are now <i>typed</i>, we can easily te
 </p>
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">await</span> <span style="color: #111; font-style: italic;">getUser</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"666"</span><span style="color: #ccc8bc;">)</span>
-  .<span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>
-    <span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span> <span style="color: #666;">=&gt;</span>
-      <span style="color: #111; font-style: italic;">isNotFoundError</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span>
-      ? <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`do /something/ on not found`</span><span style="color: #bbb8ab;">)</span>
-      : <span style="color: #111; font-style: italic;">isNoAuthError</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span>
-      ? <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`you are not logged in, caught it`</span><span style="color: #bbb8ab;">)</span>
-      : <span style="color: #111; font-style: italic;">isBadInputError</span><span style="color: #bbb8ab;">(</span>e<span style="color: #bbb8ab;">)</span>
-      ? <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`bad input`</span><span style="color: #bbb8ab;">)</span>
-      : <span style="color: #bbb8ab;">console</span>.<span style="color: #111; font-style: italic;">log</span><span style="color: #bbb8ab;">(</span><span style="color: teal;">`something truly unexpected happened`</span><span style="color: #bbb8ab;">)</span>
+  <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">catch</span><span style="color: #ccc8bc;">(</span>
+    <span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+      <span style="color: #111; font-style: italic;">isNotFoundError</span><span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>
+      ? <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`do /something/ on not found`</span><span style="color: #ccc8bc;">)</span>
+      <span style="color: #bbb8ab;">:</span> <span style="color: #111; font-style: italic;">isNoAuthError</span><span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>
+      ? <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`you are not logged in, caught it`</span><span style="color: #ccc8bc;">)</span>
+      <span style="color: #bbb8ab;">:</span> <span style="color: #111; font-style: italic;">isBadInputError</span><span style="color: #ccc8bc;">(</span>e<span style="color: #ccc8bc;">)</span>
+      ? <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`bad input`</span><span style="color: #ccc8bc;">)</span>
+      <span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`something truly unexpected happened`</span><span style="color: #ccc8bc;">)</span>
   <span style="color: #ccc8bc;">)</span>
 
 </pre>
@@ -699,7 +695,7 @@ this would require our new <code>doThing</code> function to look a lot closer to
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-06 Wed 03:22</p>
+<p class="date">Created: 2021-01-14 Thu 17:56</p>
 </div>
 </body>
 </html>

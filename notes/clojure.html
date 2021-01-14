@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-06 Wed 16:14 -->
+<!-- 2021-01-14 Thu 17:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>clojure</title>
@@ -241,6 +241,21 @@
 </div>
 </div>
 <p>
+you call the library
+the framework calls you
+</p>
+
+<p>
+clojure speed
+<a href="https://tech.redplanetlabs.com/2020/09/02/clojure-faster/">https://tech.redplanetlabs.com/2020/09/02/clojure-faster/</a>
+</p>
+
+<p>
+routing
+<a href="https://github.com/metosin/reitit">https://github.com/metosin/reitit</a>
+</p>
+
+<p>
 left off the tutorial here:
 <a href="https://www.braveclojure.com/concurrency/">https://www.braveclojure.com/concurrency/</a>
 </p>
@@ -393,16 +408,16 @@ truthy: <i>everything else</i>
 <i>into</i>
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">=&gt; <span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">m</span> <span style="color: #bbb8ab;">{</span><span style="color: #ffa500;">:a</span> <span style="color: teal;">"jeu"</span><span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
-=&gt; <span style="color: #ccc8bc;">(</span>into m <span style="color: #bbb8ab;">{</span><span style="color: #ffa500;">:b</span> <span style="color: teal;">"kk"</span><span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
-<span style="color: #ccc8bc;">{</span><span style="color: #ffa500;">:a</span> <span style="color: teal;">"jeu"</span>, <span style="color: #ffa500;">:b</span> <span style="color: teal;">"kk"</span><span style="color: #ccc8bc;">}</span>
+<pre class="src src-clojure">=&gt; <span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">m</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: teal;">"jeu"</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+=&gt; <span style="color: #ccc8bc;">(</span>into m <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: teal;">"kk"</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: teal;">"jeu"</span><span style="color: #bbb8ab;">,</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: teal;">"kk"</span><span style="color: #ccc8bc;">}</span>
 </pre>
 </div>
 <p>
 also see <code>assoc</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span>assoc <span style="color: #bbb8ab;">{</span><span style="color: #ffa500;">:a</span> <span style="color: #ffa500;">1</span><span style="color: #bbb8ab;">}</span> <span style="color: #ffa500;">:b</span> <span style="color: #ffa500;">2</span><span style="color: #ccc8bc;">)</span>
+<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span>assoc <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: #db7093;">1</span><span style="color: #ccc8bc;">}</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: #db7093;">2</span><span style="color: #ccc8bc;">)</span>
 <span style="color: #bbbbbb; font-style: italic;">;</span><span style="color: #bbbbbb; font-style: italic;">f{:a 1 :b 2}</span>
 
 </pre>
@@ -417,9 +432,9 @@ also see <code>assoc</code>
 <code>(get VECTOR index)</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">=&gt; <span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">z</span> <span style="color: #bbb8ab;">[</span>m<span style="color: #bbb8ab;">]</span><span style="color: #ccc8bc;">)</span>
-=&gt; <span style="color: #ccc8bc;">(</span>into z #<span style="color: #bbb8ab;">{</span><span style="color: #666;">{</span><span style="color: #ffa500;">:b</span> <span style="color: teal;">"kk"</span><span style="color: #666;">}</span><span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
-<span style="color: #ccc8bc;">[</span><span style="color: #bbb8ab;">{</span><span style="color: #ffa500;">:a</span> <span style="color: teal;">"jeu"</span><span style="color: #bbb8ab;">}</span> <span style="color: #bbb8ab;">{</span><span style="color: #ffa500;">:b</span> <span style="color: teal;">"kk"</span><span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">]</span>
+<pre class="src src-clojure">=&gt; <span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">z</span> <span style="color: #ccc8bc;">[</span>m<span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span>
+=&gt; <span style="color: #ccc8bc;">(</span>into z #<span style="color: #ccc8bc;">{</span><span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: teal;">"kk"</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">[</span><span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: teal;">"jeu"</span><span style="color: #ccc8bc;">}</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: teal;">"kk"</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">]</span>
 </pre>
 </div>
 </div>
@@ -451,19 +466,19 @@ also see <code>assoc</code>
 <div class="org-src-container">
 <pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #666;">defn</span> <span style="color: #333;">function-name</span>
        <span style="color: #333;">"doc string"</span>
-       <span style="color: #bbb8ab;">[</span>args<span style="color: #bbb8ab;">]</span>
-       <span style="color: #bbb8ab;">(</span>res<span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
+       <span style="color: #ccc8bc;">[</span>args<span style="color: #ccc8bc;">]</span>
+       <span style="color: #ccc8bc;">(</span>res<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
 </pre>
 </div>
 <div class="org-src-container">
 <pre class="src src-clojure"><span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">multi arity</span>
 <span style="color: #ccc8bc;">(</span><span style="color: #666;">defn</span> <span style="color: #333;">funk</span>
-  <span style="color: #bbb8ab;">(</span><span style="color: #666;">[</span>arg1 arg3<span style="color: #666;">]</span> <span style="color: #666;">(</span>something<span style="color: #666;">)</span><span style="color: #bbb8ab;">)</span>
-  <span style="color: #bbb8ab;">(</span><span style="color: #666;">[</span>arg1<span style="color: #666;">]</span> <span style="color: #666;">(</span>something<span style="color: #666;">)</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>arg1 arg3<span style="color: #ccc8bc;">]</span> <span style="color: #ccc8bc;">(</span>something<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>arg1<span style="color: #ccc8bc;">]</span> <span style="color: #ccc8bc;">(</span>something<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #ccc8bc;">(</span><span style="color: #666;">defn</span> <span style="color: #333;">funk</span>
-  <span style="color: #bbb8ab;">[</span>arg &amp; rest<span style="color: #bbb8ab;">]</span>
-  <span style="color: #bbb8ab;">(</span>something<span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #ccc8bc;">[</span>arg &amp; rest<span style="color: #ccc8bc;">]</span>
+  <span style="color: #ccc8bc;">(</span>something<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
 </pre>
 </div>
 <p>
@@ -492,7 +507,7 @@ it&rsquo;s almost exactly like a function, that allows tail calling
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #666;">loop</span> <span style="color: #bbb8ab;">[</span>arg <span style="color: #ffa500;">0</span><span style="color: #bbb8ab;">]</span> <span style="color: #bbb8ab;">(</span><span style="color: #666;">recur</span> <span style="color: #666;">(</span>inc arg<span style="color: #666;">)</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span> <span style="color: #bbbbbb; font-style: italic;">; infinite loop.  =recur= calls the func</span>
+<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #666;">loop</span> <span style="color: #ccc8bc;">[</span>arg <span style="color: #db7093;">0</span><span style="color: #ccc8bc;">]</span> <span style="color: #ccc8bc;">(</span><span style="color: #666;">recur</span> <span style="color: #ccc8bc;">(</span>inc arg<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span> <span style="color: #bbbbbb; font-style: italic;">; infinite loop.  =recur= calls the func</span>
 </pre>
 </div>
 </div>
@@ -502,8 +517,8 @@ it&rsquo;s almost exactly like a function, that allows tail calling
 <div class="outline-text-6" id="text-1-1-0-6-1">
 <div class="org-src-container">
 <pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #666;">defn</span> <span style="color: #333;">my-first-fink</span>
-  <span style="color: #bbb8ab;">[</span><span style="color: #666;">[</span>first-thing second-thing<span style="color: #666;">]</span><span style="color: #bbb8ab;">]</span>
-  <span style="color: #bbb8ab;">[</span>first-thing second-thing<span style="color: #bbb8ab;">]</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #ccc8bc;">[</span><span style="color: #ccc8bc;">[</span>first-thing second-thing<span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">]</span>
+  <span style="color: #ccc8bc;">[</span>first-thing second-thing<span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span>
 </pre>
 </div>
 <p>
@@ -530,9 +545,9 @@ keep OG <code>{:keys [lat lng] :as treasure-location}</code>
 <li><a id="orgab5cfba"></a>reduce, map<br />
 <div class="outline-text-6" id="text-1-1-0-7-1">
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span>reduce + <span style="color: #ffa500;">15</span> <span style="color: #bbb8ab;">[</span><span style="color: #ffa500;">1</span> <span style="color: #ffa500;">2</span> <span style="color: #ffa500;">3</span> <span style="color: #ffa500;">4</span><span style="color: #bbb8ab;">]</span><span style="color: #ccc8bc;">)</span>
-<span style="color: #ccc8bc;">(</span>reduce + <span style="color: #bbb8ab;">[</span><span style="color: #ffa500;">1</span> <span style="color: #ffa500;">2</span> <span style="color: #ffa500;">3</span> <span style="color: #ffa500;">4</span><span style="color: #bbb8ab;">]</span><span style="color: #ccc8bc;">)</span>
-<span style="color: #ccc8bc;">(</span>map str <span style="color: #bbb8ab;">[</span><span style="color: teal;">"a"</span> <span style="color: teal;">"b"</span> <span style="color: teal;">"c"</span> <span style="color: teal;">"d"</span><span style="color: #bbb8ab;">]</span> <span style="color: #bbb8ab;">[</span><span style="color: teal;">"A"</span> <span style="color: teal;">"B"</span> <span style="color: teal;">"C"</span><span style="color: #bbb8ab;">]</span><span style="color: #ccc8bc;">)</span>
+<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span>reduce + <span style="color: #db7093;">15</span> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span> <span style="color: #db7093;">2</span> <span style="color: #db7093;">3</span> <span style="color: #db7093;">4</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span>reduce + <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span> <span style="color: #db7093;">2</span> <span style="color: #db7093;">3</span> <span style="color: #db7093;">4</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span>map str <span style="color: #ccc8bc;">[</span><span style="color: teal;">"a"</span> <span style="color: teal;">"b"</span> <span style="color: teal;">"c"</span> <span style="color: teal;">"d"</span><span style="color: #ccc8bc;">]</span> <span style="color: #ccc8bc;">[</span><span style="color: teal;">"A"</span> <span style="color: teal;">"B"</span> <span style="color: teal;">"C"</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span>
 <span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">=&gt; ("aA" "bB" "cC")</span>
 </pre>
 </div>
@@ -560,12 +575,12 @@ keep OG <code>{:keys [lat lng] :as treasure-location}</code>
 <li><a id="orge4ac0e7"></a><i>comp vs -&gt; (pipe)</i><br />
 <div class="outline-text-5" id="text-1-1-0-10">
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">m</span> <span style="color: #bbb8ab;">{</span><span style="color: #ffa500;">:a</span> <span style="color: #666;">{</span><span style="color: #ffa500;">:b</span> <span style="color: #ccc8bc;">{</span><span style="color: #ffa500;">:c</span> <span style="color: teal;">"hi!"</span><span style="color: #ccc8bc;">}</span><span style="color: #666;">}</span><span style="color: #bbb8ab;">}</span><span style="color: #ccc8bc;">)</span>
-<span style="color: #ccc8bc;">(</span><span style="color: #666;">-&gt;</span> m <span style="color: #ffa500;">:a</span> <span style="color: #ffa500;">:b</span> <span style="color: #ffa500;">:c</span><span style="color: #ccc8bc;">)</span>
+<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">m</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">c</span> <span style="color: teal;">"hi!"</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #666;">-&gt;</span> m <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">c</span><span style="color: #ccc8bc;">)</span>
 <span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">"hi!"</span>
-<span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">(</span>comp <span style="color: #ffa500;">:a</span> <span style="color: #ffa500;">:b</span> <span style="color: #ffa500;">:c</span><span style="color: #bbb8ab;">)</span> m<span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span>comp <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">c</span><span style="color: #ccc8bc;">)</span> m<span style="color: #ccc8bc;">)</span>
 <span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">nil</span>
-<span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">(</span>comp <span style="color: #ffa500;">:c</span> <span style="color: #ffa500;">:b</span> <span style="color: #ffa500;">:a</span><span style="color: #bbb8ab;">)</span> m<span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span>comp <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">c</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span><span style="color: #ccc8bc;">)</span> m<span style="color: #ccc8bc;">)</span>
 <span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">"hi!"</span>
 
 </pre>
@@ -606,10 +621,10 @@ conj(oin) an item
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">=&gt; <span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">m</span> <span style="color: #bbb8ab;">(</span>seq <span style="color: #666;">{</span><span style="color: #ffa500;">:a</span> <span style="color: #ffa500;">1</span> <span style="color: #ffa500;">:b</span> <span style="color: #ffa500;">2</span> <span style="color: #ffa500;">:c</span> <span style="color: #ffa500;">3</span><span style="color: #666;">}</span><span style="color: #bbb8ab;">)</span><span style="color: #ccc8bc;">)</span>
-<span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">[</span><span style="color: #ffa500;">:a</span> <span style="color: #ffa500;">1</span><span style="color: #bbb8ab;">]</span> <span style="color: #bbb8ab;">[</span><span style="color: #ffa500;">:b</span> <span style="color: #ffa500;">2</span><span style="color: #bbb8ab;">]</span> <span style="color: #bbb8ab;">[</span><span style="color: #ffa500;">:c</span> <span style="color: #ffa500;">3</span><span style="color: #bbb8ab;">]</span><span style="color: #ccc8bc;">)</span>
-=&gt; <span style="color: #ccc8bc;">(</span>into <span style="color: #bbb8ab;">{}</span> m<span style="color: #ccc8bc;">)</span>
-<span style="color: #ccc8bc;">{</span><span style="color: #ffa500;">:a</span> <span style="color: #ffa500;">1</span>, <span style="color: #ffa500;">:b</span> <span style="color: #ffa500;">2</span>, <span style="color: #ffa500;">:c</span> <span style="color: #ffa500;">3</span><span style="color: #ccc8bc;">}</span>
+<pre class="src src-clojure">=&gt; <span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">m</span> <span style="color: #ccc8bc;">(</span>seq <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: #db7093;">1</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: #db7093;">2</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">c</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: #db7093;">1</span><span style="color: #ccc8bc;">]</span> <span style="color: #ccc8bc;">[</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: #db7093;">2</span><span style="color: #ccc8bc;">]</span> <span style="color: #ccc8bc;">[</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">c</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span>
+=&gt; <span style="color: #ccc8bc;">(</span>into <span style="color: #ccc8bc;">{}</span> m<span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">a</span> <span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">b</span> <span style="color: #db7093;">2</span><span style="color: #bbb8ab;">,</span> <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">c</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">}</span>
 </pre>
 </div>
 </div>
@@ -697,7 +712,7 @@ this tutorial [seems very good about showing how core.async actually works](<a h
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-06 Wed 16:14</p>
+<p class="date">Created: 2021-01-14 Thu 17:55</p>
 </div>
 </body>
 </html>
