@@ -88,6 +88,13 @@
    code, pre, pre.src, pre.example {
     font-family: "Iosevka";
    }
+ul {
+  list-style-type: "\2192  "; /* one em arrow */
+  list-style-type: "\2e3a  "; /* two em dash */
+  list-style-type: "\2014  "; /* em dash */
+  list-style-position: outside;
+  padding: 1em;
+}
 
 
 .org-src-container pre.src {
@@ -109,9 +116,10 @@ pre.example {
     font-size: .8em;
 }
 pre.example:before {
-    content: "\2192  ";
+    content: "\21b3 ";
     background-color: rgba(255,255,255,.3);
-    margin-left: -1em;
+    font-size: 1.8em;
+    margin-left: -.8em;
 }
 
 p code{
