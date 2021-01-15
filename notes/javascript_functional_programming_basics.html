@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-15 Fri 06:06 -->
+<!-- 2021-01-15 Fri 16:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>typescript functional programming basics</title>
@@ -453,6 +453,43 @@ originalArray
 <pre class="example">
 [ 1, 2, 3, 4, 5, 6 ]
 </pre>
+
+
+<p>
+Moreover, does the spread mutation make a deep copy?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">plato</span> = <span style="color: #ccc8bc;">{</span>
+  name<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Plato"</span><span style="color: #bbb8ab;">,</span>
+  role<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Philosopher"</span><span style="color: #bbb8ab;">,</span>
+  location<span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">{</span> country<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Greece"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">,</span>
+<span style="color: #ccc8bc;">}</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">zizek</span> = <span style="color: #ccc8bc;">{</span>
+  <span style="color: #bbb8ab;">...</span>plato<span style="color: #bbb8ab;">,</span>
+  name<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Zizek"</span><span style="color: #bbb8ab;">,</span>
+<span style="color: #ccc8bc;">}</span>
+
+zizek<span style="color: #bbb8ab;">.</span>location<span style="color: #bbb8ab;">.</span>country = <span style="color: teal;">"Slovenia"</span>
+
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">now guess wich country plato is in?</span>
+plato
+</pre>
+</div>
+
+<pre class="example">
+{
+  name: 'Plato',
+  role: 'Philosopher',
+  location: { country: 'Slovenia' }
+}
+</pre>
+
+
+<p>
+in js, even when you <i>think</i> you are not mutating something, you might be somewhere, anyways.  this is why I avoid, at all costs, anything which <i>assigns</i> new values to anything, including object keys.  I try to use  a library for all setting and getting, which guarantees immutability.
+</p>
 </div>
 </div>
 
@@ -464,7 +501,9 @@ take the following example:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Hannah"</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Arendt"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
   <span style="color: #ccc8bc;">(</span>firstName<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> obj<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">void</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
     obj<span style="color: #bbb8ab;">.</span>first = firstName<span style="color: #bbb8ab;">;</span>
   <span style="color: #ccc8bc;">}</span>
@@ -475,14 +514,14 @@ person<span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
-{
-  first: 'Jennifer',
-  last: 'Jones',
-  occupation: 'programmer',
-  relationship: 'hitched'
-}
+8:26 - Argument of type '{ first: string; last: string; }' is not assignable to parameter of type 'Person'.
+8:26 - Type '{ first: string; last: string; }' is missing the following properties from type 'Person': occupation, relationship
 </pre>
 
+
+<p>
+This function <i>changes a value outside of it&rsquo;s scope,</i> in this case, the variable <code>person</code>. It takes a reference to the person it should change and a new name for that person, and finishes the function having changed a value outside of its state
+</p>
 
 <p>
 this can get pretty confusing when we add in any amount of asyncronous code
@@ -506,27 +545,10 @@ this can get pretty confusing when we add in any amount of asyncronous code
       <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">capitalizePerson</span><span style="color: #ccc8bc;">()</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
 <span style="color: #ccc8bc;">]</span>
 
-<span style="color: #666;">const</span> <span style="color: #333;">results</span> = <span style="color: #666;">await</span> Promise<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">all</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>functions<span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
-<span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span>results<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">results</span> = <span style="color: #666;">await</span> Promise<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">all</span><span style="color: #ccc8bc;">(</span>functions<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 person
 </pre>
 </div>
-<pre class="example">
-[
-  [
-    Promise { &lt;pending&gt; },
-    Promise { &lt;pending&gt; },
-    Promise { &lt;pending&gt; }
-  ]
-]
-{
-  first: 'Jennifer',
-  last: 'Jones',
-  occupation: 'programmer',
-  relationship: 'hitched'
-}
-</pre>
-
 <p>
 this snippet of code has wildly different outputs depending on:
 </p>
@@ -673,7 +695,7 @@ the classic, and simplest, example looks like this:
 </pre>
 </div>
 <pre class="example">
-hello dearest regina
+hello dearest bonnie
 </pre>
 
 
@@ -682,7 +704,7 @@ hello dearest regina
 </pre>
 </div>
 <pre class="example">
-ciao cacao regina
+ciao cacao bonnie
 </pre>
 
 
@@ -785,7 +807,7 @@ we could create a <i>specific greeter</i> by using the higher order function <i>
 </pre>
 </div>
 <pre class="example">
-hi regina
+hi bonnie
 </pre>
 
 
@@ -1166,7 +1188,7 @@ goodbye BONNIE Jones
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-15 Fri 06:06</p>
+<p class="date">Created: 2021-01-15 Fri 16:24</p>
 </div>
 </body>
 </html>
