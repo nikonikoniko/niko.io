@@ -1,0 +1,1172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-01-15 Fri 06:06 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>typescript functional programming basics</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="John Doe" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel='stylesheet' href='../style.css' />
+<link rel='stylesheet' href='/../res/main.css' />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href=""> UP </a>
+ |
+ <a accesskey="H" href="/"> HOME </a>
+</div><div id="content">
+<h1 class="title">typescript functional programming basics</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org068fbbf">1. Typescript functional programming basics</a>
+<ul>
+<li><a href="#org1a5c0d2">1.1. Functions are first class citizens</a></li>
+<li><a href="#org1b6fdf9">1.2. Mutation</a></li>
+<li><a href="#org6480da2">1.3. Purity</a></li>
+<li><a href="#org6090afb">1.4. Encapsulation / layers ((()))</a></li>
+<li><a href="#org6f06c95">1.5. Higher order functions</a></li>
+<li><a href="#org63df0cc">1.6. Function composition</a>
+<ul>
+<li><a href="#org65ce0d5">1.6.1. Partials</a></li>
+<li><a href="#orgb108842">1.6.2. Currying</a></li>
+<li><a href="#org0f2a7b1">1.6.3. composition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org068fbbf" class="outline-2">
+<h2 id="org068fbbf"><span class="section-number-2">1</span> Typescript functional programming basics</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+In this article, I go through how to do some of the basic things in functional programming in typescript, and how to start thinking in a functional programming way. In my mind, functional programming is more of a collection of concepts than a full abstraction and operation layer.  There is less &rsquo;a way to do things&rsquo;, and more a few grounding principles on how to keep code clean, understandable, and working well.
+</p>
+
+<p>
+this tutorial requires knowledge of the javascript <i>spread operator</i> (<code>[ ...things ]</code>) and <i>object destructuring</i> (<code>const { firstName } = person</code>), typescript <code>types</code> as well as rudimentary knowledge about <code>Promises</code>
+</p>
+</div>
+
+<div id="outline-container-org1a5c0d2" class="outline-3">
+<h3 id="org1a5c0d2"><span class="section-number-3">1.1</span> Functions are first class citizens</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+in javascript, functions are first class citizens.  This means that they are considered data, like variables and other things.
+</p>
+
+<p>
+In old school js, you would define named functions like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">function</span> <span style="color: #333;">add1</span><span style="color: #ccc8bc;">(</span><span style="color: #333;">x</span><span style="color: #ccc8bc;">)</span> <span style="color: #ccc8bc;">{</span>
+  <span style="color: #db7093;">return</span> x + <span style="color: #db7093;">1</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #ccc8bc;">}</span>
+</pre>
+</div>
+
+<p>
+we can then use that function&rsquo;s name by <i>calling</i> it:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #111; font-style: italic;">add1</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">2</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+3
+</pre>
+
+
+<p>
+javascript (esnext), however, allows us to define an <i>anonymous function</i> or a <i>lambda</i> like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #ccc8bc;">(</span>x<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+  <span style="color: #db7093;">return</span> x + <span style="color: #db7093;">1</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #ccc8bc;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+[Function: tsLastExpr]
+</pre>
+
+
+<p>
+without the brackets (<code>{}</code>), a <i>lambda function</i> return&rsquo;s it&rsquo;s only statement, allowing us to rewrite the function like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript">x <span style="color: #666;">=&gt;</span> x + <span style="color: #db7093;">1</span>
+</pre>
+</div>
+
+<pre class="example">
+[Function: tsLastExpr]
+</pre>
+
+
+<p>
+and we can even assign it to a variable, like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">add1</span> = x <span style="color: #666;">=&gt;</span> x + <span style="color: #db7093;">1</span>
+</pre>
+</div>
+
+<p>
+and then use it in the same way as a named function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #111; font-style: italic;">add1</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">2</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+3
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1b6fdf9" class="outline-3">
+<h3 id="org1b6fdf9"><span class="section-number-3">1.2</span> Mutation</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+mutation allows variables in memory to be reassigned and altered.  In purely functional languages, this is not allowed by the language, but in javascript it is allowed.  <code>js</code> functional programmers use <code>const</code> to signify that a value will not be reassigned, and <code>let</code>, or an old-school <code>var</code> to signify that it will change.
+</p>
+
+<p>
+<code>let</code> allows values to be reassigned:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">let</span> <span style="color: #333;">b</span> = <span style="color: #666;">null</span><span style="color: #bbb8ab;">;</span>
+b = <span style="color: teal;">"new value"</span><span style="color: #bbb8ab;">;</span>
+b<span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+new value
+</pre>
+
+
+<p>
+whereas <code>const</code> will throw an error:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">a</span> = <span style="color: teal;">"this value will not change"</span><span style="color: #bbb8ab;">;</span>
+a = <span style="color: #db7093;">3</span><span style="color: #bbb8ab;">;</span>
+a<span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+2:1 - Cannot assign to 'a' because it is a constant.
+</pre>
+
+
+<p>
+However, <code>const</code> does not save us completely from mutation, as it allows for mutating the <i>object references</i>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">Person</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span> last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span> <span style="color: #ccc8bc;">}</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Hannah"</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Arendt"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
+
+person<span style="color: #bbb8ab;">.</span>last = <span style="color: teal;">"new last name"</span>
+person
+</pre>
+</div>
+<p>
+in functional programming, we <i>avoid mutating objects at all costs</i>.  This includes all array functions that mutate the initial array including <code>pop</code>, <code>push</code>, <code>splice</code>,
+</p>
+
+<p>
+javascript is a particularly tricky language, because it is very unclear about which operations mutate and which do not.  It is just accumulated knowledge.  This is one of the reasons that I use functional libraries for most array and object operations, because they offer a measure of consistency about how they operate. In my experience, a huge percentage of bugs arise out of misunderstandings about mutation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">originalArray</span> = <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">2</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span>
+<span style="color: #666;">const</span> <span style="color: #333;">newArray</span> = originalArray<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">splice</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">1</span><span style="color: #ccc8bc;">)</span>
+originalArray
+</pre>
+</div>
+
+<pre class="example">
+[ 1 ]
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript">newArray
+</pre>
+</div>
+
+<pre class="example">
+[ 2, 3 ]
+</pre>
+
+
+<p>
+does concat mutate?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">originalArray</span> = <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">2</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span>
+<span style="color: #666;">const</span> <span style="color: #333;">newArray</span> = originalArray<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">concat</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span><span style="color: #db7093;">4</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">5</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">6</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span>
+originalArray
+</pre>
+</div>
+
+<pre class="example">
+[ 1, 2, 3 ]
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript">newArray
+</pre>
+</div>
+
+<pre class="example">
+[ 1, 2, 3, 4, 5, 6 ]
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6480da2" class="outline-3">
+<h3 id="org6480da2"><span class="section-number-3">1.3</span> Purity</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+take the following example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
+  <span style="color: #ccc8bc;">(</span>firstName<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> obj<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">void</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+    obj<span style="color: #bbb8ab;">.</span>first = firstName<span style="color: #bbb8ab;">;</span>
+  <span style="color: #ccc8bc;">}</span>
+
+<span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"Jennifer"</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
+person<span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+{
+  first: 'Jennifer',
+  last: 'Jones',
+  occupation: 'programmer',
+  relationship: 'hitched'
+}
+</pre>
+
+
+<p>
+this can get pretty confusing when we add in any amount of asyncronous code
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">capitalizePerson</span> = <span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+  person<span style="color: #bbb8ab;">.</span>first = person<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
+  person<span style="color: #bbb8ab;">.</span>last = person<span style="color: #bbb8ab;">.</span>last<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #ccc8bc;">}</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">delay</span> = <span style="color: #ccc8bc;">(</span>ms<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Promise</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span>resolve<span style="color: #bbb8ab;">,</span> reject<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setTimeout</span><span style="color: #ccc8bc;">(</span>resolve<span style="color: #bbb8ab;">,</span> ms<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">functions</span> = <span style="color: #ccc8bc;">[</span>
+    <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">500</span><span style="color: #ccc8bc;">)</span>
+      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"regina"</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">200</span><span style="color: #ccc8bc;">)</span>
+      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span>Math<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">random</span><span style="color: #ccc8bc;">()</span> * <span style="color: #db7093;">400</span><span style="color: #ccc8bc;">)</span>
+      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">capitalizePerson</span><span style="color: #ccc8bc;">()</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+<span style="color: #ccc8bc;">]</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">results</span> = <span style="color: #666;">await</span> Promise<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">all</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>functions<span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span>results<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+person
+</pre>
+</div>
+<pre class="example">
+[
+  [
+    Promise { &lt;pending&gt; },
+    Promise { &lt;pending&gt; },
+    Promise { &lt;pending&gt; }
+  ]
+]
+{
+  first: 'Jennifer',
+  last: 'Jones',
+  occupation: 'programmer',
+  relationship: 'hitched'
+}
+</pre>
+
+<p>
+this snippet of code has wildly different outputs depending on:
+</p>
+<ul class="org-ul">
+<li>how many times it was run</li>
+<li>the side effect of <code>Math.random</code></li>
+</ul>
+
+<p>
+both the functions <code>capitalizePerson</code> and <code>setFirstName</code> are <i>impure</i> functions, because they either rely on the existence of external values <i>or</i> change values outside of their scope.
+</p>
+
+<p>
+Giving them the same inputs will not always output the same results, as the function depends on the state of the external application
+</p>
+
+<p>
+impure functions are bad for a few reasons:
+</p>
+<ul class="org-ul">
+<li>they are hard to reason about</li>
+<li>it is hard to keep track of the state of the application</li>
+<li>the function relies on the state of the application</li>
+<li>you cannot test the functions</li>
+</ul>
+
+<p>
+a <b>pure</b> function has no <i>side-effects</i>, and does not change anything about the application.
+</p>
+
+<p>
+<code>setFirstName</code> and <code>capitalizePerson</code> should look like this, as a pure function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Hannah"</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Arendt"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
+  <span style="color: #ccc8bc;">(</span>first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> first <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">capitalizePerson</span> = <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span>
+    first<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">,</span>
+    last<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>last<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">,</span>
+  <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+
+<span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">none of these functions change person</span>
+<span style="color: #666;">await</span> Promise<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">all</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>
+  <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">300</span><span style="color: #ccc8bc;">)</span>
+    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"Jennifer"</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+  <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">400</span><span style="color: #ccc8bc;">)</span>
+    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">capitalizePerson</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+  <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">500</span><span style="color: #ccc8bc;">)</span>
+    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> person<span style="color: #ccc8bc;">)</span>
+  <span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+8:3 - Type '{ first: string; last: string; }' is missing the following properties from type 'Person': occupation, relationship
+16:42 - Argument of type '{ first: string; last: string; }' is not assignable to parameter of type 'Person'.
+16:42 - Type '{ first: string; last: string; }' is missing the following properties from type 'Person': occupation, relationship
+18:34 - Argument of type '{ first: string; last: string; }' is not assignable to parameter of type 'Person'.
+</pre>
+
+
+<p>
+as many functions as possible should be kept small, testable, and pure.  If a function <i>does</i> have side effects, keep the side effects in a wrapping function, as an example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">let</span> <span style="color: #333;">statePerson</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Britney"</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Spears"</span> <span style="color: #ccc8bc;">}</span>
+<span style="color: #666;">let</span> <span style="color: #333;">inputName</span> = <span style="color: teal;">"Jemima"</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">updateStateName</span> = <span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+  <span style="color: #666;">const</span> <span style="color: #333;">updatedPerson</span> = <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span>inputName<span style="color: #bbb8ab;">,</span> statePerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+  statePerson = updatedPerson<span style="color: #bbb8ab;">;</span>
+<span style="color: #ccc8bc;">}</span>
+
+<span style="color: #111; font-style: italic;">updateStateName</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
+statePerson<span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6090afb" class="outline-3">
+<h3 id="org6090afb"><span class="section-number-3">1.4</span> Encapsulation / layers ((()))</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+It is naturally <i>impossible</i> for an application to be completely pure.  The whole point of computer programs is to <i>have</i> side effects.  Add a user to the database, update the names, give a horoscope depending on the position of the stars, time, and life, changes.
+</p>
+
+<p>
+Any part of the application that deals with side effects should be encapsulated in a separate <b>layer</b> of the application, that lives separately from the <i>pure</i> part of the application. This reduces the amount of places that you have to deal with unknowns.  In an average application:
+</p>
+
+<pre class="example">
+User Interface (side effects)
+-&gt; validation (pure)
+-&gt; state layer (pure)
+-&gt; business logic (pure)
+-&gt; api layer (pure)
+-&gt; validation (pure)
+-&gt; Database (side effects)
+</pre>
+
+<p>
+this means - the pure black box of the application will <i>always</i> act the same given that the database and the user interface are in the same state.  Pure functions and Pure layers can be <span class="underline">combined</span> into pure applications.
+</p>
+
+<p>
+Encapsulation has another hidden advantage:
+You are able to change the database system you are using by only changing one layer of the application.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org6f06c95" class="outline-3">
+<h3 id="org6f06c95"><span class="section-number-3">1.5</span> Higher order functions</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Higher order functions either
+</p>
+<ul class="org-ul">
+<li>take a function as an argument, or,</li>
+<li>return a function</li>
+</ul>
+
+<p>
+the classic, and simplest, example looks like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">makeGreeter</span> =
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: #ccc8bc;">(</span>person<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+       <span style="color: teal;">`${greeting} ${person.first}`</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">sayHello</span> = <span style="color: #111; font-style: italic;">makeGreeter</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hello dearest`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">sayGoodbye</span> = <span style="color: #111; font-style: italic;">makeGreeter</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`ciao cacao`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #111; font-style: italic;">sayHello</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+hello dearest regina
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #111; font-style: italic;">sayGoodbye</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+ciao cacao regina
+</pre>
+
+
+<p>
+this sort of function is also called a <i>closure</i>
+</p>
+
+<p>
+you already know a few higher order functions from javascript maybe, speciffically <code>Array.map</code> and <code>Array.reduce</code> as they take functions for arguments.
+</p>
+
+<p>
+<code>map</code> could be implemented as following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">map</span> =
+  <span style="color: #ccc8bc;">(</span>
+   fn<span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>x<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">any</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">any</span><span style="color: #bbb8ab;">,</span>
+   arr<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">any</span><span style="color: #ccc8bc;">[]</span>
+  <span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+    <span style="color: #666;">const</span> <span style="color: #333;">newArr</span> = <span style="color: #ccc8bc;">[]</span><span style="color: #bbb8ab;">;</span>
+    arr<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">forEach</span><span style="color: #ccc8bc;">(</span>
+     <span style="color: #ccc8bc;">(</span>i<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> newArr<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">push</span><span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">fn</span><span style="color: #ccc8bc;">(</span>i<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+    <span style="color: #db7093;">return</span> newArr<span style="color: #bbb8ab;">;</span>
+  <span style="color: #ccc8bc;">}</span>
+
+<span style="color: #111; font-style: italic;">map</span><span style="color: #ccc8bc;">(</span>x <span style="color: #666;">=&gt;</span> x + <span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">2</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+[ 2, 3, 4 ]
+</pre>
+
+
+<p>
+&#x2026; error example
+</p>
+</div>
+</div>
+
+<div id="outline-container-org63df0cc" class="outline-3">
+<h3 id="org63df0cc"><span class="section-number-3">1.6</span> Function composition</h3>
+<div class="outline-text-3" id="text-1-6">
+</div>
+<div id="outline-container-org65ce0d5" class="outline-4">
+<h4 id="org65ce0d5"><span class="section-number-4">1.6.1</span> Partials</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<p>
+A classic <span class="underline">higher order function</span> is <i>partial application</i>
+</p>
+
+<p>
+This does not come built in to javascript, so we will use an external library <code>lodash</code> to do it.   Other, similar libraries exist, like rambda, underscore, but lodash should work just fine.  note that we use the <code>fp</code> version of <code>lodash</code> throughout this article, as it is auto-curried and makes function composition easier.
+</p>
+
+<p>
+let&rsquo;s go back to our greeter function from above.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">makeGreeter</span> =
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+      <span style="color: teal;">`${greeting} ${p}`</span>
+</pre>
+</div>
+<p>
+This works as a function creator, because it has a function nested inside of another function.
+</p>
+
+<p>
+Most of the time, we don&rsquo;t receive functions from external api&rsquo;s this way, and don&rsquo;t want our functions to always be called like this <code>fn(a)(b)</code>, instead of this: <code>fn(a, b)</code>
+</p>
+
+<p>
+this is where <i>partial application</i> comes in.
+</p>
+
+<p>
+assume we had a greeting function like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">greetPerson</span> =
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: teal;">`${greeting} ${p.first}`</span>
+</pre>
+</div>
+<p>
+we could create a <i>specific greeter</i> by using the higher order function <i>partial</i>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">import</span> <span style="color: #ccc8bc;">{</span> partial <span style="color: #ccc8bc;">}</span> <span style="color: #666;">from</span> <span style="color: teal;">"lodash/fp"</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">sayHi</span> = <span style="color: #111; font-style: italic;">partial</span><span style="color: #ccc8bc;">(</span>greetPerson<span style="color: #bbb8ab;">,</span> <span style="color: #ccc8bc;">[</span><span style="color: teal;">`hi`</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #111; font-style: italic;">sayHi</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+hi regina
+</pre>
+
+
+<p>
+also, we could do something similar like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">dollyParton</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`dolly`</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`parton`</span> <span style="color: #ccc8bc;">}</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">sayYeehawToDolly</span> = <span style="color: #111; font-style: italic;">partial</span><span style="color: #ccc8bc;">(</span>greetPerson<span style="color: #bbb8ab;">,</span> <span style="color: #ccc8bc;">[</span><span style="color: teal;">`yeehaw, says`</span><span style="color: #bbb8ab;">,</span> dollyParton<span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #111; font-style: italic;">sayYeehawToDolly</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+yeehaw, says dolly
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb108842" class="outline-4">
+<h4 id="orgb108842"><span class="section-number-4">1.6.2</span> Currying</h4>
+<div class="outline-text-4" id="text-1-6-2">
+<p>
+automatic partial application is called <i>currying</i>.
+</p>
+
+<p>
+currying a function allows that function to be called like this: <code>f(1, 2, 3)</code> , or this: <code>f(1)(2)(3)</code>
+</p>
+
+<p>
+to do this, we will import the function <code>curry</code> from lodash:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">import</span> <span style="color: #ccc8bc;">{</span> curry <span style="color: #ccc8bc;">}</span> <span style="color: #666;">from</span> <span style="color: teal;">"lodash/fp"</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<p>
+Use this function as an example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">Person</span> = <span style="color: #ccc8bc;">{</span>
+  first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span>
+  last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span>
+  occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #ccc8bc;">}</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">createPerson</span> = <span style="color: #ccc8bc;">(</span>
+  occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
+  first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
+  last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
+<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">,</span> occupation <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #111; font-style: italic;">createPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`police`</span><span style="color: #bbb8ab;">,</span> <span style="color: teal;">`silly`</span><span style="color: #bbb8ab;">,</span> <span style="color: teal;">`goose`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+{ first: 'silly', last: 'goose', occupation: 'police' }
+</pre>
+
+
+<p>
+if we wanted to create a function called <code>createPolice</code>, we could do it with partial application, or we could curry the function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">createPerson</span> =
+  <span style="color: #111; font-style: italic;">curry</span><span style="color: #ccc8bc;">(</span>
+    <span style="color: #ccc8bc;">(</span>
+      occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
+      first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
+      last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
+     <span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">,</span> occupation <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<p>
+this will now allow us to call <code>createPerson</code> with only partial arguments, which <i>returns a new function waiting for the rest</i>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">createPolice</span> = <span style="color: #111; font-style: italic;">createPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`police`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #111; font-style: italic;">createPolice</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`arnold`</span><span style="color: #bbb8ab;">,</span> <span style="color: teal;">`schwarzenegger`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+{ first: 'arnold', last: 'schwarzenegger', occupation: 'police' }
+</pre>
+
+
+<p>
+these examples might not seem particularly useful now, but they lend themselves extremely well to <span class="underline">encapsulation</span> , which we covered before, but also:
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0f2a7b1" class="outline-4">
+<h4 id="org0f2a7b1"><span class="section-number-4">1.6.3</span> composition</h4>
+<div class="outline-text-4" id="text-1-6-3">
+<p>
+composition allows us to chain functions together, where the output of one function becomes the input of the next.
+</p>
+
+<p>
+say that you are working on an application. Your application takes an input user, makes some changes when they join a new company, and outputs the changed user.
+</p>
+
+<p>
+In human language, what our application should do is:
+</p>
+<ol class="org-ol">
+<li>greet the user.</li>
+<li>fix the capitalization of the user, in case it was inputted wrong. then,</li>
+<li>we should hire them at our tech company by setting their occupation to &ldquo;programmer&rdquo;.  then,</li>
+<li>they get married, which should change their last name and update their relationship status.
+apparently this just naturally happens when you join this company. Lastly,</li>
+<li>we should say goodbye.</li>
+</ol>
+
+<p>
+Here are our types:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">Relationship</span> = <span style="color: teal;">`single`</span> | <span style="color: teal;">`very single`</span> | <span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">type</span> <span style="color: #bbb8ab;">Person</span> = <span style="color: #ccc8bc;">{</span>
+  first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span>
+  last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span>
+  occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span>
+  relationship<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Relationship;</span>
+<span style="color: #ccc8bc;">}</span>
+</pre>
+</div>
+
+<p>
+in an imperative programming style, without using functional programming, we might do something like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">person</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> = <span style="color: #ccc8bc;">{</span>
+  first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`bonnie`</span><span style="color: #bbb8ab;">,</span>
+  last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`billy`</span><span style="color: #bbb8ab;">,</span>
+  occupation<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`unemployed`</span><span style="color: #bbb8ab;">,</span>
+  relationship<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`single`</span> <span style="color: #666;">as</span> <span style="color: #666;">const</span>
+  <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">as const makes this type more specific than 'string'</span>
+<span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hi there! ${person.first}`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+person<span style="color: #bbb8ab;">.</span>first = person<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
+person<span style="color: #bbb8ab;">.</span>occupation = <span style="color: teal;">`programmer`</span><span style="color: #bbb8ab;">;</span>
+person<span style="color: #bbb8ab;">.</span>last = <span style="color: teal;">`Jones`</span><span style="color: #bbb8ab;">;</span>
+person<span style="color: #bbb8ab;">.</span>relationship = <span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye ${person.first}`</span><span style="color: #ccc8bc;">)</span>
+person
+</pre>
+</div>
+
+<pre class="example">
+hi there! bonnie
+goodbye BONNIE
+{
+  first: 'BONNIE',
+  last: 'Jones',
+  occupation: 'programmer',
+  relationship: 'hitched'
+}
+</pre>
+
+
+<p>
+while this code is quite legible, it suffers because none of it is refactored into smaller chunks.  If you had a similar function, with just one thing different, you would struggle to keep the different types of operations up to date. Imagine that you changed the type, and how the first name was updated, or the type of capitalization you wanted in your data.  If you were programming everywhere imperitavely like this, you would have a lot of places to try to find the changes.
+</p>
+
+<p>
+Additionally, if an external process would mutate <code>person</code> during the operation of this function, you would be in trouble.
+</p>
+
+<p>
+for these reasons, we separate the core functionality into smaller sized helper functions, that are pure, reusable, and closer to the data type:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
+  <span style="color: #ccc8bc;">(</span>first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> first <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">setLastName</span> =
+  <span style="color: #ccc8bc;">(</span>last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> last <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">setOccupation</span> =
+  <span style="color: #ccc8bc;">(</span>occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> occupation <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">fixCapitalization</span> =
+  <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> first<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span> <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">greetPerson</span> =
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+    <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`${greeting} ${p.first} ${p.last}`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+    <span style="color: #db7093;">return</span> p<span style="color: #bbb8ab;">;</span>
+  <span style="color: #ccc8bc;">}</span>
+
+<span style="color: #666;">const</span> <span style="color: #333;">setRelationshipStatus</span> =
+  <span style="color: #ccc8bc;">(</span>r<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Relationship,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+    <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> relationship<span style="color: #bbb8ab;">:</span> r <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<p>
+the business logic using these helpers could now be written like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span>
+  first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`bonnie`</span><span style="color: #bbb8ab;">,</span>
+  last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`billy`</span><span style="color: #bbb8ab;">,</span>
+  occupation<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`unemployed`</span><span style="color: #bbb8ab;">,</span>
+  relationship<span style="color: #bbb8ab;">:</span> <span style="color: teal;">`single`</span> <span style="color: #666;">as</span> <span style="color: #666;">const</span>
+  <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">as const makes this type more specific than 'string'</span>
+<span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
+
+<span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hi there!`</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">updatedPerson</span> = <span style="color: #111; font-style: italic;">fixCapitalization</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">occupiedPerson</span> = <span style="color: #111; font-style: italic;">setOccupation</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`programmer`</span><span style="color: #bbb8ab;">,</span> updatedPerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">marriedPerson</span> = <span style="color: #111; font-style: italic;">setLastName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`Jones`</span><span style="color: #bbb8ab;">,</span> occupiedPerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">marriedUpdatedPerson</span> = <span style="color: #111; font-style: italic;">setRelationshipStatus</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">,</span> marriedPerson<span style="color: #ccc8bc;">)</span>
+<span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye`</span><span style="color: #bbb8ab;">,</span> marriedUpdatedPerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+
+<pre class="example">
+hi there! bonnie billy
+goodbye BONNIE Jones
+{
+  first: 'BONNIE',
+  last: 'Jones',
+  occupation: 'programmer',
+  relationship: 'hitched'
+}
+</pre>
+
+
+<p>
+I don&rsquo;t know about you, but I find this code very very hard to read, and there are a lot of one-time-use variables in it.
+</p>
+
+<p>
+we could try to use the output of one function as the input of the next like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye`</span><span style="color: #bbb8ab;">,</span> <span style="color: #111; font-style: italic;">setRelationshipStatus</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">,</span> <span style="color: #111; font-style: italic;">setLastName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`Jones`</span><span style="color: #bbb8ab;">,</span> <span style="color: #111; font-style: italic;">setOccupation</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`programmer`</span><span style="color: #bbb8ab;">,</span> <span style="color: #111; font-style: italic;">fixCapitalization</span><span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hi there!`</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+<pre class="example">
+hi there! bonnie billy
+goodbye BONNIE Jones
+{
+  first: 'BONNIE',
+  last: 'Jones',
+  occupation: 'programmer',
+  relationship: 'hitched'
+}
+</pre>
+
+
+<p>
+this, I find even less legible.  Enter <i>function composition</i>, which allows you to take the pattern
+</p>
+
+<p>
+<code>f(g(n(x)))</code> into <code>(n | g | f)(x)</code>
+</p>
+
+<p>
+Function composition takes the output of one function and &rsquo;pipes&rsquo; it into the next
+</p>
+
+<p>
+Function composition is also not native to javascript.  It is found by default in functional languages such as haskell or clojure. in javascript, we can use a lodash function for it called <code>pipe</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">import</span> <span style="color: #ccc8bc;">{</span> pipe <span style="color: #ccc8bc;">}</span> <span style="color: #666;">from</span> <span style="color: teal;">"lodash/fp"</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<p>
+<code>pipe</code> will allow us to construct and name a function based off of a string of functions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript">
+<span style="color: #666;">const</span> <span style="color: #333;">onBoard</span> =
+  <span style="color: #111; font-style: italic;">pipe</span><span style="color: #ccc8bc;">(</span>
+    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hello`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">fixCapitalization</span><span style="color: #ccc8bc;">(</span>p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setOccupation</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`programmer`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setLastName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`Jones`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setRelationshipStatus</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+  <span style="color: #ccc8bc;">)</span>
+
+<span style="color: #111; font-style: italic;">onBoard</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+hello bonnie billy
+goodbye BONNIE Jones
+{
+  first: 'BONNIE',
+  last: 'Jones',
+  occupation: 'programmer',
+  relationship: 'hitched'
+}
+</pre>
+
+
+
+<p>
+<i>almost</i>.  we can make it better using partials!
+</p>
+
+<p>
+In javascript, <code>() ==&gt; fn()</code> is the same as <code>fn</code>, so we should curry all of our helper functions.  I will add a <code>_</code> after each function name to indicate currying.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">greetPerson_</span> = <span style="color: #111; font-style: italic;">curry</span><span style="color: #ccc8bc;">(</span>greetPerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">fixCapitalization_</span> = <span style="color: #111; font-style: italic;">curry</span><span style="color: #ccc8bc;">(</span>fixCapitalization<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">setOccupation_</span> = <span style="color: #111; font-style: italic;">curry</span><span style="color: #ccc8bc;">(</span>setOccupation<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">setLastName_</span> = <span style="color: #111; font-style: italic;">curry</span><span style="color: #ccc8bc;">(</span>setLastName<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">setRelationshipStatus_</span> = <span style="color: #111; font-style: italic;">curry</span><span style="color: #ccc8bc;">(</span>setRelationshipStatus<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<p>
+this small change will allow us to write our code like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">onBoard</span> =
+  <span style="color: #111; font-style: italic;">pipe</span><span style="color: #ccc8bc;">(</span>
+    <span style="color: #333;">greetPerson_</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hello`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    fixCapitalization_<span style="color: #bbb8ab;">,</span>
+    <span style="color: #333;">setOccupation_</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`programmer`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    <span style="color: #333;">setLastName_</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`Jones`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    <span style="color: #333;">setRelationshipStatus_</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hitched`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    <span style="color: #333;">greetPerson_</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+  <span style="color: #ccc8bc;">)</span>
+
+<span style="color: #111; font-style: italic;">onBoard</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+</pre>
+</div>
+<pre class="example">
+hello bonnie billy
+goodbye BONNIE Jones
+{
+  first: 'BONNIE',
+  last: 'Jones',
+  occupation: 'programmer',
+  relationship: 'hitched'
+}
+</pre>
+
+
+<p>
+&#x2026; excersize make a getMarried function, and add types to the function. add save to DB
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: John Doe</p>
+<p class="date">Created: 2021-01-15 Fri 06:06</p>
+</div>
+</body>
+</html>
