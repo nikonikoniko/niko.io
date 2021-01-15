@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-15 Fri 16:24 -->
+<!-- 2021-01-15 Fri 16:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>typescript functional programming basics</title>
@@ -387,7 +387,21 @@ a<span style="color: #bbb8ab;">;</span>
 
 
 <p>
-However, <code>const</code> does not save us completely from mutation, as it allows for mutating the <i>object references</i>.
+However, <code>const</code> does not save us completely from mutation, as it allows for mutating the <i>object references</i>, as well as in arrays.
+</p>
+
+<p>
+for example, you can mutate <code>const</code> arrays:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">k</span> = <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">2</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span><span style="color: #bbb8ab;">;</span>
+k<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">push</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">4</span><span style="color: #ccc8bc;">)</span>
+k
+</pre>
+</div>
+<p>
+and change <code>const</code> object properties:
 </p>
 
 <div class="org-src-container">
@@ -399,6 +413,11 @@ person<span style="color: #bbb8ab;">.</span>last = <span style="color: teal;">"n
 person
 </pre>
 </div>
+<pre class="example">
+{ first: 'Hannah', last: 'new last name' }
+</pre>
+
+
 <p>
 in functional programming, we <i>avoid mutating objects at all costs</i>.  This includes all array functions that mutate the initial array including <code>pop</code>, <code>push</code>, <code>splice</code>,
 </p>
@@ -514,8 +533,7 @@ person<span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
-8:26 - Argument of type '{ first: string; last: string; }' is not assignable to parameter of type 'Person'.
-8:26 - Type '{ first: string; last: string; }' is missing the following properties from type 'Person': occupation, relationship
+{ first: 'Jennifer', last: 'Arendt' }
 </pre>
 
 
@@ -549,6 +567,11 @@ this can get pretty confusing when we add in any amount of asyncronous code
 person
 </pre>
 </div>
+<pre class="example">
+{ first: 'regina', last: 'ARENDT' }
+</pre>
+
+
 <p>
 this snippet of code has wildly different outputs depending on:
 </p>
@@ -608,10 +631,11 @@ a <b>pure</b> function has no <i>side-effects</i>, and does not change anything 
 </pre>
 </div>
 <pre class="example">
-8:3 - Type '{ first: string; last: string; }' is missing the following properties from type 'Person': occupation, relationship
-16:42 - Argument of type '{ first: string; last: string; }' is not assignable to parameter of type 'Person'.
-16:42 - Type '{ first: string; last: string; }' is missing the following properties from type 'Person': occupation, relationship
-18:34 - Argument of type '{ first: string; last: string; }' is not assignable to parameter of type 'Person'.
+[
+  { first: 'Jennifer', last: 'Arendt' },
+  { first: 'HANNAH', last: 'ARENDT' },
+  { first: 'Hannah', last: 'Arendt' }
+]
 </pre>
 
 
@@ -632,6 +656,9 @@ as many functions as possible should be kept small, testable, and pure.  If a fu
 statePerson<span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
+<pre class="example">
+{ first: 'Jemima', last: 'Spears' }
+</pre>
 </div>
 </div>
 
@@ -695,7 +722,7 @@ the classic, and simplest, example looks like this:
 </pre>
 </div>
 <pre class="example">
-hello dearest bonnie
+hello dearest Hannah
 </pre>
 
 
@@ -704,7 +731,7 @@ hello dearest bonnie
 </pre>
 </div>
 <pre class="example">
-ciao cacao bonnie
+ciao cacao Hannah
 </pre>
 
 
@@ -807,7 +834,7 @@ we could create a <i>specific greeter</i> by using the higher order function <i>
 </pre>
 </div>
 <pre class="example">
-hi bonnie
+hi Hannah
 </pre>
 
 
@@ -1188,7 +1215,7 @@ goodbye BONNIE Jones
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-15 Fri 16:24</p>
+<p class="date">Created: 2021-01-15 Fri 16:30</p>
 </div>
 </body>
 </html>
