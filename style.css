@@ -1,3 +1,6 @@
+
+
+
    @font-face {
      font-family: 'Source Serif Pro';
      font-style: normal;
@@ -44,13 +47,23 @@
   src: url(spectral-italic.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
+:root {
+    --color-dark: rgba(0,0,0,1);
+    --color-gray: #999;
+    --color-faint: rgba(0,0,0,.05);
+    --color-highlight: teal;
+    --color-light:  #fbf8ef;
+    --color-light:  #fefaf3;
+    --color-faint-light: rgba(255,255,255,.3);
+    --serif: "Spectral";
+    --mono: "Iosevka"
+}
 
    body {
-     font-family: "Spectral";
-     background-color: #fbf8ef;
+     font-family: var(--serif);
+     background-color:var(--color-light);
      font-weight: 400;
-     color: #222;
+     color: var(--color-dark);
    }
    body p {
      line-height: 1.6em;
@@ -62,31 +75,31 @@
    }
    a, a:visited {
      text-decoration: none;
-     color: teal;
+     color: var(--color-highlight);
    }
    .content, #content {
      max-width: 35em;
      margin: 0 auto;
-     background-color: #fbf8ef;
-     border-left: 1px solid rgba(0,0,0,.05);
+     background-color: var(--color-light);
+     border-left: 1px solid var(--color-faint);
    }
    .mono {
-     font-family: "Iosevka";
-     color: #999;
+     font-family: var(--mono);
+     color: var(--color-gray);
      font-size: .6em;
    }
    marquee pre {
      font-size: 8px;
      line-height: 8px;
-     font-color: #999;
+     font-color: var(--color-gray);
    }
 
    p i {
-     color: #000;
+     color: var(--color-dark);
    }
 
    code, pre, pre.src, pre.example {
-    font-family: "Iosevka";
+    font-family: var(--mono);
    }
 ul {
   list-style-type: "\2192  "; /* one em arrow */
@@ -96,18 +109,25 @@ ul {
   padding: 1em;
 }
 
+.org-left {
+    text-align: left;
+    border-left: 1px solid var(--color-faint);
+    border-right: 1px solid var(--color-faint);
+    border-bottom: 1px solid var(--color-faint);
+}
+
 
 .org-src-container pre.src {
     margin: 0;
     padding: 0;
     border: 0;
     box-shadow: 0 0 0 0;
-    border-top: 1px solid rgba(0,0,0,.05);
+    border-top: 1px solid var(--color-faint);
     font-size: .8em;
-    background-color: rgba(255,255,255,.3);
+    background-color: var(--color-faint-light);
 }
 pre.example {
-    background-color: rgba(255,255,255,.3);
+    background-color: var(--color-faint-light);
     margin: 0;
     padding: 0;
     border: 0;
@@ -117,13 +137,13 @@ pre.example {
 }
 pre.example:before {
     content: "\21b3 ";
-    background-color: rgba(255,255,255,.3);
+    background-color: var(--color-faint-light);
     font-size: 1.8em;
     margin-left: -.8em;
 }
 
 p code{
-    background-color: rgba(255,255,255,.05);
+    background-color: var(--color-faint-light);
     font-size: .8em;
     font-weight: bold;
 }
@@ -134,8 +154,21 @@ pre.example {
     overflow: visible;
 }
 
+
+
+
+/* table */
+table .org-left {
+    text-align: left !important;
+    border-left: 1px solid var(--color-faint);
+    border-right: 1px solid var(--color-faint);
+    border-bottom: 1px solid var(--color-faint);
+}
+
+
+
 .section-number-1, .section-number-2, .section-number-3, .section-number-4 {
-    color: #aaa;
+    color: var(--color-faint);
     font-size: .6em;
 }
 .section-number-2 {
@@ -151,22 +184,22 @@ pre.example {
     font-size: 1em;
     text-align: left;
     font-weight: normal;
-    color: #999;
-    font-family: "Iosevka";
+    color: var(--color-grey);
+    font-family: var(--mono);
 }
 #table-of-contents {
-    font-family: "Iosevka";
+    font-family: var(--mono);
     font-size: .5em;
 }
 
 #table-of-contents h2{
     font-size: .8em;
     font-weight: normal;
-    color: #999;
+    color: var(--color-grey);
     display: none;
 }
 #table-of-contents a{
-    color:#999;
+    color:var(--color-grey);
 }
 #table-of-contents ul {
     margin: 0;
@@ -180,7 +213,7 @@ pre.example {
 }
 
 h1,h2,h3,h4,h5,h6{
-    border-bottom: 1px solid rgba(0,0,0,.05);
+    border-bottom: 1px solid var(--color-faint);
     font-weight:normal;
 }
 #postamble{
