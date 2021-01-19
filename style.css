@@ -134,6 +134,7 @@ ul {
     font-size: .8em;
     background-color: var(--color-faint-light);
     padding-left:1em;
+    padding-top:1em;
 }
 pre.example {
     background-color: var(--color-faint-light);
