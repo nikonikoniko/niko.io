@@ -125,6 +125,7 @@ ul {
     border-top: 1px solid var(--color-faint);
     font-size: .8em;
     background-color: var(--color-faint-light);
+    margin-left:1em;
 }
 pre.example {
     background-color: var(--color-faint-light);
@@ -134,6 +135,7 @@ pre.example {
     box-shadow: 0 0 0 0;
     padding-top: .5em;
     font-size: .8em;
+    margin-left:1em;
 }
 pre.example:before {
     content: "\21b3 ";
