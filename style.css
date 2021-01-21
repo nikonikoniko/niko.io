@@ -1,36 +1,26 @@
-
-
-
    @font-face {
-     font-family: 'Source Serif Pro';
+     font-family: 'PT Serif';
      font-style: normal;
      font-weight: 400;
-     src: url(source-serif.woff2) format('woff2');
+     src: url(pt-serif.woff2) format('woff2');
      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
    @font-face {
-     font-family: 'Source Serif Pro';
-     font-style: light;
-     font-weight: 300;
-     src: url(source-serif-light.woff2) format('woff2');
+     font-family: 'PT Serif';
+     font-style: italic;
+     font-weight: 400;
+     src: url(pt-serif-italic.woff2) format('woff2');
      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face {
-  font-family: 'Spectral';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url(spectral-light.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+   @font-face {
+     font-family: 'PT Serif';
+     font-style: normal;
+     font-weight: 700;
+     src: url(pt-serif-bold.woff2) format('woff2');
+     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face {
-  font-family: 'Spectral';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(spectral.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+
+
 @font-face {
   font-family: 'Iosevka';
   font-style: normal;
@@ -47,24 +37,31 @@
   src: url(iosevka-light.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face {
-  font-family: 'Spectral';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url(spectral-italic.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+
 :root {
-    --color-dark: rgba(0,0,0,1);
+    --color-dark: rgba(0,0,0,.9);
     --color-gray: #999;
-    --color-faint: rgba(0,0,0,.05);
+    --color-faint: rgba(0,0,0,.01);
     --color-highlight: teal;
     --color-light:  #fbf8ef;
-    --color-light:  #fefaf3;
-    --color-faint-light: rgba(255,255,255,.3);
-    --serif: "Spectral";
-    --mono: "Iosevka Light"
+    --color-light:  #fffdf8;
+    --color-faint-light: rgba(255,255,255,.8);
+    --serif: "PT Serif";
+    --mono: "Iosevka Light";
+    --spacing: 1.3rem;
+    --spacing-double: 2.6rem;
+    --spacing-half: .7rem;
+}
+
+p, h1, h2, h3, h4, h5 {
+    margin: 0; padding: 0;
+}
+p {
+    margin-top: var(--spacing);
+}
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: var(--spacing);
+    margin-top: var(--spacing-double);
 }
 
    body {
@@ -74,23 +71,35 @@
      color: var(--color-dark);
    }
    body p {
-     line-height: 1.6em;
+     line-height: 1.4em;
      font-kerning: auto;
      text-rendering: optimizeLegibility;
      -webkit-font-smoothing: antialiased;
-     -moz-osx-font-smoothing: grayscale;
-     margin-top: 1.5em;
+     -moz-osx-font-smoothing: grayscale;    
+     font-size: .9em;
    }
+
    a, a:visited {
      text-decoration: none;
+     text-decoration: underline;
      color: var(--color-highlight);
    }
    .content, #content {
-     max-width: 35em;
+     max-width: 45em;
      margin: 0 auto;
      background-color: var(--color-light);
      border-left: 1px solid var(--color-faint);
    }
+   .content p, #content p {
+     max-width: 35em;
+     padding-left: 1em;
+     padding-left: var(--spacing);
+
+ }
+
+   h1.sitetitle{
+     font-size: 3em;
+ }
    .mono {
      font-family: var(--mono);
      color: var(--color-gray);
@@ -114,7 +123,14 @@ ul {
   list-style-type: "\2e3a  "; /* two em dash */
   list-style-type: "\2014  "; /* em dash */
   list-style-position: outside;
-  padding: 1em;
+  padding-top: 0;
+  margin:0;
+  padding-left: var(--spacing-double);
+  font-size: .9rem;
+}
+ul li {
+    margin-top: .3rem;
+    margin-bottom: .3rem;
 }
 
 .org-left {
@@ -131,29 +147,26 @@ ul {
     border: 0;
     box-shadow: 0 0 0 0;
     border-top: 1px solid var(--color-faint);
-    font-size: .8em;
-    background-color: var(--color-faint-light);
-    padding-left:1em;
-    padding-top:1em;
+    font-size: .7em;
+    padding-left: var(--spacing);
+    padding-top: var(--spacing-half);
 }
 pre.example {
-    background-color: var(--color-faint-light);
     margin: 0;
     padding: 0;
     border: 0;
     box-shadow: 0 0 0 0;
     padding-top: .5em;
-    font-size: .8em;
-    padding-left:1em;
+    font-size: .7em;
+    padding-left: var(--spacing);
+    padding-bottom: var(--spacing-half);
 }
 pre.example:before {
     content: "\21b3 ";
-    background-color: var(--color-faint-light);
 }
 
 p code{
-    background-color: var(--color-faint-light);
-    font-size: .8em;
+    font-size: .7em;
     font-weight: bold;
 }
 
@@ -179,16 +192,18 @@ table .org-left {
 .section-number-1, .section-number-2, .section-number-3, .section-number-4 {
     color: var(--color-faint);
     font-size: .6em;
+    display: none;
+    width: 0;
 }
-.section-number-2 {
-    margin-left: -.7em;
-}
-.section-number-3 {
-    margin-left: -1.6em;
-}
-.section-number-4 {
-    margin-left: -2.4em;
-}
+/* .section-number-2 { */
+/*     margin-left: -1em; */
+/* } */
+/* .section-number-3 { */
+/*     margin-left: -1.9em; */
+/* } */
+/* .section-number-4 { */
+/*     margin-left: -2.4em; */
+/* } */
 .title {
     font-size: 1em;
     text-align: left;
@@ -199,36 +214,29 @@ table .org-left {
 #table-of-contents {
     font-family: var(--mono);
     font-size: .5em;
-}
-
-#table-of-contents h2{
-    font-size: .8em;
-    font-weight: normal;
-    color: var(--color-grey);
     display: none;
 }
-#table-of-contents a{
-    color:var(--color-grey);
-}
-#table-of-contents ul {
-    margin: 0;
-    padding: 0;
-}
-#table-of-contents li{
-    list-style: none;
-}
+
 #org-div-home-and-up {
     position: fixed;
+    width: "100%";
+    background-color: var(--color-light);
 }
 
 h1,h2,h3,h4,h5,h6{
     border-bottom: 1px solid var(--color-faint);
-    font-weight:normal;
+    font-weight:400;
+    line-height: .8em;
+    padding-left: var(--spacing);
+}
+h1:before, h2:before, h3:before, h4:before{
+  content: "\2e3a  "; /* two em dash */
+  margin-left: -2.2em;
 }
 #postamble{
     display: none;
 }
 
-h2 { font-size: 2.0em; }
+h2 { font-size: 3.0em; }
 h3 { font-size: 1.8em; }
 h4 { font-size: 1.5em; }
