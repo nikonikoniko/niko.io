@@ -103,6 +103,9 @@ html {
      font-weight: 400;
      color: var(--color-dark);
      font-size: 16px;
+     position:relative;
+     max-width: 65rem;
+     margin: 0 auto;
    }
    body p {
      font-kerning: auto;
@@ -118,7 +121,7 @@ html {
      color: var(--color-highlight);
    }
    .content, #content {
-     max-width: 50em;
+     max-width: 40em;
      background-color: var(--color-light);
      border-left: 1px solid var(--color-faint);
      margin-right:0;
