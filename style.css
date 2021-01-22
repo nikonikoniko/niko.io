@@ -73,6 +73,7 @@ src: url('font/charter_bold_italic.woff2') format('woff2');
     --color-dark: rgba(0,0,0,.9);
     --color-gray: #999;
     --color-faint: rgba(0,0,0,.01);
+    --color-less-faint: rgba(0,0,0,.05);
     --color-highlight: teal;
     --color-light:  #fbf8ef;
     --color-light:  #fffdf8;
@@ -126,10 +127,9 @@ html {
      border-left: 1px solid var(--color-faint);
      margin-right:0;
      margin-left: auto;
-
+     padding-left: var(--spacing);
    }
    .content p, #content p {
-     padding-left: var(--spacing);
      max-width: 28rem !important;
      margin-left: .1rem;
      font-size: .98rem;
@@ -173,12 +173,14 @@ ul, ol {
   list-style-position: outside;
   padding-top: 0;
   margin:0;
-  padding-left: var(--spacing-double);
+  padding-left: var(--spacing);
   font-size: .9rem;
+  max-width: 28rem;
 }
 ul li, ol li {
-    margin-top: .2rem;
-    margin-bottom: .2rem;
+    margin-top: .3rem;
+    margin-bottom: .3rem;
+    line-height: 1rem;
 }
 
 .org-left {
@@ -196,7 +198,6 @@ ul li, ol li {
     box-shadow: 0 0 0 0;
     border-top: 1px solid var(--color-faint);
     font-size: .8rem;
-    padding-left: var(--spacing);
     padding-top: var(--spacing-half);
     margin-left:.2rem;
 }
@@ -206,7 +207,6 @@ pre.example {
     border: 0;
     box-shadow: 0 0 0 0;
     font-size: .8rem;
-    padding-left: var(--spacing);
     padding-bottom: var(--spacing-half);
     padding-top: var(--spacing-half);
     color: orangered;
@@ -224,11 +224,17 @@ p code{
 
 
 /* table */
+table {
+    margin-top: var(--spacing);
+}
+table tbody {
+}
 table .org-left {
     text-align: left !important;
-    border-left: 1px solid var(--color-faint);
-    border-right: 1px solid var(--color-faint);
-    border-bottom: 1px solid var(--color-faint);
+    border-left: 1px solid var(--color-less-faint);
+    border-right: 1px solid var(--color-less-faint);
+    border-bottom: 1px solid var(--color-less-faint);
+    padding: var(--spacing-half);
 }
 
 
@@ -299,7 +305,6 @@ h1,h2,h3,h4,h5,h6{
     border-bottom: 1px solid var(--color-faint);
     font-weight:700;
     line-height: .8em;
-    margin-left: var(--spacing);
 }
 h1:before, h2:before, h3:before, h4:before{
   content: "\2e3a  "; /* two em dash */
