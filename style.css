@@ -164,7 +164,7 @@ html {
    code, pre, pre.src, pre.example {
     font-family: var(--mono);
    }
-ul {
+ul, ol {
   list-style-type: "\2192  "; /* one em arrow */
   list-style-type: "\2e3a  "; /* two em dash */
   list-style-type: "\2014  "; /* em dash */
@@ -174,7 +174,7 @@ ul {
   padding-left: var(--spacing-double);
   font-size: .9rem;
 }
-ul li {
+ul li, ol li {
     margin-top: .5rem;
     margin-bottom: .5rem;
 }
