@@ -177,8 +177,8 @@ ul, ol {
   font-size: .9rem;
 }
 ul li, ol li {
-    margin-top: .5rem;
-    margin-bottom: .5rem;
+    margin-top: .2rem;
+    margin-bottom: .2rem;
 }
 
 .org-left {
