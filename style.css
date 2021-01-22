@@ -107,6 +107,7 @@ html {
      position:relative;
      max-width: 65rem;
      margin: 0 auto;
+     padding-bottom: 10em;
    }
    body p {
      font-kerning: auto;
