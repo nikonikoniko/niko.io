@@ -130,17 +130,14 @@ html {
      max-width: 28rem !important;
      margin-left: .1rem;
      font-size: .98rem;
-     line-height: 1.2rem;
      letter-spacing: .020rem;
      word-spacing: .03rem;
  }
    .content p code, #content p code {
-     line-height: 1.2rem;
      font-size: .9rem;
    }
    p:first-of-type, #content .outline-text-2 p:first-child {
      font-size: 1.1rem;
-     line-height: 1.4rem;
    }
 
    h1.sitetitle{
@@ -153,7 +150,6 @@ html {
    }
    marquee pre {
      font-size: 8px;
-     line-height: 8px;
      font-color: var(--color-gray);
    }
 
@@ -266,7 +262,6 @@ table .org-left {
     font-size: 1rem !important;
     padding: .5rem;
     padding-left: 1rem;
-    line-height: 1rem;
     top: 0;
     z-index: 999;
     background-color: var(--color-light);
@@ -295,7 +290,6 @@ h1.title {
 h1,h2,h3,h4,h5,h6{
     border-bottom: 1px solid var(--color-faint);
     font-weight:700;
-    line-height: .8em;
     margin-left: var(--spacing);
 }
 h1:before, h2:before, h3:before, h4:before{
