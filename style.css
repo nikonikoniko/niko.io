@@ -142,7 +142,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1:before, h2:before, h3:before, h4:before{
   content: "\2e3a  "; /* two em dash */
-  margin-left: -2.2em;
+  /*  margin-left: -2.2em; */
 }
 html {
 }
@@ -177,6 +177,7 @@ html {
      margin-right:0;
      margin-left: auto;
      padding-left: var(--spacing);
+     padding-right: var(--spacing);
    }
    .content p, #content p {
      max-width: 28rem !important;
