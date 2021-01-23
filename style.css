@@ -151,7 +151,7 @@ html {
      background-color:var(--color-light);
      font-weight: 400;
      color: var(--color-dark);
-     font-size: 18px;
+     font-size: 16px;
      position:relative;
      max-width: 65rem;
      margin: 0 auto;
