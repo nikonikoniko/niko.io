@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-15 Fri 16:30 -->
+<!-- 2021-01-24 Sun 00:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>typescript functional programming basics</title>
@@ -300,7 +300,7 @@ javascript (esnext), however, allows us to define an <i>anonymous function</i> o
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #ccc8bc;">(</span>x<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+<pre class="src src-jupyter-typescript"><span style="color: #ccc8bc;">(</span>x<span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">{</span>
   <span style="color: #db7093;">return</span> x + <span style="color: #db7093;">1</span><span style="color: #bbb8ab;">;</span>
 <span style="color: #ccc8bc;">}</span>
 </pre>
@@ -316,7 +316,7 @@ without the brackets (<code>{}</code>), a <i>lambda function</i> return&rsquo;s 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript">x <span style="color: #666;">=&gt;</span> x + <span style="color: #db7093;">1</span>
+<pre class="src src-jupyter-typescript">x =<span style="color: #bbb8ab;">&gt;</span> x + <span style="color: #db7093;">1</span>
 </pre>
 </div>
 
@@ -330,7 +330,7 @@ and we can even assign it to a variable, like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">add1</span> = x <span style="color: #666;">=&gt;</span> x + <span style="color: #db7093;">1</span>
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">add1</span> = x =<span style="color: #bbb8ab;">&gt;</span> x + <span style="color: #db7093;">1</span>
 </pre>
 </div>
 
@@ -458,7 +458,6 @@ does concat mutate?
 originalArray
 </pre>
 </div>
-
 <pre class="example">
 [ 1, 2, 3 ]
 </pre>
@@ -482,7 +481,7 @@ Moreover, does the spread mutation make a deep copy?
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">plato</span> = <span style="color: #ccc8bc;">{</span>
   name<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Plato"</span><span style="color: #bbb8ab;">,</span>
   role<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Philosopher"</span><span style="color: #bbb8ab;">,</span>
-  location<span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">{</span> country<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Greece"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">,</span>
+  location<span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">2</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span><span style="color: #bbb8ab;">,</span>
 <span style="color: #ccc8bc;">}</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">zizek</span> = <span style="color: #ccc8bc;">{</span>
@@ -490,19 +489,14 @@ Moreover, does the spread mutation make a deep copy?
   name<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Zizek"</span><span style="color: #bbb8ab;">,</span>
 <span style="color: #ccc8bc;">}</span>
 
-zizek<span style="color: #bbb8ab;">.</span>location<span style="color: #bbb8ab;">.</span>country = <span style="color: teal;">"Slovenia"</span>
+zizek<span style="color: #bbb8ab;">.</span>location<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">push</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">4</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">now guess wich country plato is in?</span>
 plato
 </pre>
 </div>
-
 <pre class="example">
-{
-  name: 'Plato',
-  role: 'Philosopher',
-  location: { country: 'Slovenia' }
-}
+{ name: 'Plato', role: 'Philosopher', location: [ 1, 2, 3, 4 ] }
 </pre>
 
 
@@ -523,7 +517,7 @@ take the following example:
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Hannah"</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Arendt"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
-  <span style="color: #ccc8bc;">(</span>firstName<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> obj<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">void</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+  <span style="color: #ccc8bc;">(</span>firstName<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> obj<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">void</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">{</span>
     obj<span style="color: #bbb8ab;">.</span>first = firstName<span style="color: #bbb8ab;">;</span>
   <span style="color: #ccc8bc;">}</span>
 
@@ -546,21 +540,21 @@ this can get pretty confusing when we add in any amount of asyncronous code
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">capitalizePerson</span> = <span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+<pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">capitalizePerson</span> = <span style="color: #ccc8bc;">()</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">{</span>
   person<span style="color: #bbb8ab;">.</span>first = person<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
   person<span style="color: #bbb8ab;">.</span>last = person<span style="color: #bbb8ab;">.</span>last<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
 <span style="color: #ccc8bc;">}</span>
 
-<span style="color: #666;">const</span> <span style="color: #333;">delay</span> = <span style="color: #ccc8bc;">(</span>ms<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
-  <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Promise</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span>resolve<span style="color: #bbb8ab;">,</span> reject<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setTimeout</span><span style="color: #ccc8bc;">(</span>resolve<span style="color: #bbb8ab;">,</span> ms<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">delay</span> = <span style="color: #ccc8bc;">(</span>ms<span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span>
+  <span style="color: #666;">new</span> <span style="color: #111; font-style: italic;">Promise</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span>resolve<span style="color: #bbb8ab;">,</span> reject<span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">setTimeout</span><span style="color: #ccc8bc;">(</span>resolve<span style="color: #bbb8ab;">,</span> ms<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">functions</span> = <span style="color: #ccc8bc;">[</span>
     <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">500</span><span style="color: #ccc8bc;">)</span>
-      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"regina"</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"regina"</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
     <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">200</span><span style="color: #ccc8bc;">)</span>
-      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: #666;">null</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
     <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span>Math<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">random</span><span style="color: #ccc8bc;">()</span> * <span style="color: #db7093;">400</span><span style="color: #ccc8bc;">)</span>
-      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">capitalizePerson</span><span style="color: #ccc8bc;">()</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+      <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">capitalizePerson</span><span style="color: #ccc8bc;">()</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
 <span style="color: #ccc8bc;">]</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">results</span> = <span style="color: #666;">await</span> Promise<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">all</span><span style="color: #ccc8bc;">(</span>functions<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
@@ -610,10 +604,10 @@ a <b>pure</b> function has no <i>side-effects</i>, and does not change anything 
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Hannah"</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Arendt"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
-  <span style="color: #ccc8bc;">(</span>first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span>first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
     <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> first <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
-<span style="color: #666;">const</span> <span style="color: #333;">capitalizePerson</span> = <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">capitalizePerson</span> = <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
   <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span>
     first<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">,</span>
     last<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>last<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">,</span>
@@ -622,11 +616,11 @@ a <b>pure</b> function has no <i>side-effects</i>, and does not change anything 
 <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">none of these functions change person</span>
 <span style="color: #666;">await</span> Promise<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">all</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>
   <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">300</span><span style="color: #ccc8bc;">)</span>
-    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"Jennifer"</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">"Jennifer"</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
   <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">400</span><span style="color: #ccc8bc;">)</span>
-    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">capitalizePerson</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">capitalizePerson</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
   <span style="color: #111; font-style: italic;">delay</span><span style="color: #ccc8bc;">(</span><span style="color: #db7093;">500</span><span style="color: #ccc8bc;">)</span>
-    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> person<span style="color: #ccc8bc;">)</span>
+    <span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">then</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">()</span> =<span style="color: #bbb8ab;">&gt;</span> person<span style="color: #ccc8bc;">)</span>
   <span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
@@ -639,6 +633,7 @@ a <b>pure</b> function has no <i>side-effects</i>, and does not change anything 
 </pre>
 
 
+
 <p>
 as many functions as possible should be kept small, testable, and pure.  If a function <i>does</i> have side effects, keep the side effects in a wrapping function, as an example:
 </p>
@@ -647,7 +642,7 @@ as many functions as possible should be kept small, testable, and pure.  If a fu
 <pre class="src src-jupyter-typescript"><span style="color: #666;">let</span> <span style="color: #333;">statePerson</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Britney"</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Spears"</span> <span style="color: #ccc8bc;">}</span>
 <span style="color: #666;">let</span> <span style="color: #333;">inputName</span> = <span style="color: teal;">"Jemima"</span><span style="color: #bbb8ab;">;</span>
 
-<span style="color: #666;">const</span> <span style="color: #333;">updateStateName</span> = <span style="color: #ccc8bc;">()</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+<span style="color: #666;">const</span> <span style="color: #333;">updateStateName</span> = <span style="color: #ccc8bc;">()</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">{</span>
   <span style="color: #666;">const</span> <span style="color: #333;">updatedPerson</span> = <span style="color: #111; font-style: italic;">setFirstName</span><span style="color: #ccc8bc;">(</span>inputName<span style="color: #bbb8ab;">,</span> statePerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
   statePerson = updatedPerson<span style="color: #bbb8ab;">;</span>
 <span style="color: #ccc8bc;">}</span>
@@ -674,13 +669,13 @@ Any part of the application that deals with side effects should be encapsulated 
 </p>
 
 <pre class="example">
-User Interface (side effects)
+User Interface (side effects) (impure)
 -&gt; validation (pure)
 -&gt; state layer (pure)
 -&gt; business logic (pure)
 -&gt; api layer (pure)
 -&gt; validation (pure)
--&gt; Database (side effects)
+-&gt; Database (side effects) (impure)
 </pre>
 
 <p>
@@ -711,8 +706,8 @@ the classic, and simplest, example looks like this:
 </p>
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">makeGreeter</span> =
-  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
-    <span style="color: #ccc8bc;">(</span>person<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span>
+    <span style="color: #ccc8bc;">(</span>person<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span>
        <span style="color: teal;">`${greeting} ${person.first}`</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">sayHello</span> = <span style="color: #111; font-style: italic;">makeGreeter</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hello dearest`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
@@ -750,16 +745,16 @@ you already know a few higher order functions from javascript maybe, speciffical
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">map</span> =
   <span style="color: #ccc8bc;">(</span>
-   fn<span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>x<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">any</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #bbb8ab;">any</span><span style="color: #bbb8ab;">,</span>
+   fn<span style="color: #bbb8ab;">:</span> <span style="color: #ccc8bc;">(</span>x<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">any</span><span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #bbb8ab;">any</span><span style="color: #bbb8ab;">,</span>
    arr<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">any</span><span style="color: #ccc8bc;">[]</span>
-  <span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+  <span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">{</span>
     <span style="color: #666;">const</span> <span style="color: #333;">newArr</span> = <span style="color: #ccc8bc;">[]</span><span style="color: #bbb8ab;">;</span>
     arr<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">forEach</span><span style="color: #ccc8bc;">(</span>
-     <span style="color: #ccc8bc;">(</span>i<span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span> newArr<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">push</span><span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">fn</span><span style="color: #ccc8bc;">(</span>i<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+     <span style="color: #ccc8bc;">(</span>i<span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span> newArr<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">push</span><span style="color: #ccc8bc;">(</span><span style="color: #111; font-style: italic;">fn</span><span style="color: #ccc8bc;">(</span>i<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
     <span style="color: #db7093;">return</span> newArr<span style="color: #bbb8ab;">;</span>
   <span style="color: #ccc8bc;">}</span>
 
-<span style="color: #111; font-style: italic;">map</span><span style="color: #ccc8bc;">(</span>x <span style="color: #666;">=&gt;</span> x + <span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">2</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #111; font-style: italic;">map</span><span style="color: #ccc8bc;">(</span>x =<span style="color: #bbb8ab;">&gt;</span> x + <span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">2</span><span style="color: #bbb8ab;">,</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
@@ -794,8 +789,8 @@ let&rsquo;s go back to our greeter function from above.
 
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">makeGreeter</span> =
-  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
-    <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span>
+    <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span>
       <span style="color: teal;">`${greeting} ${p}`</span>
 </pre>
 </div>
@@ -804,7 +799,9 @@ This works as a function creator, because it has a function nested inside of ano
 </p>
 
 <p>
-Most of the time, we don&rsquo;t receive functions from external api&rsquo;s this way, and don&rsquo;t want our functions to always be called like this <code>fn(a)(b)</code>, instead of this: <code>fn(a, b)</code>
+Most of the time, we don&rsquo;t receive functions from external api&rsquo;s this way, and don&rsquo;t want our functions to always be called like this
+<code>fn(a)(b)</code>, instead of this:
+<code>fn(a, b)</code>
 </p>
 
 <p>
@@ -817,8 +814,8 @@ assume we had a greeting function like this:
 
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">greetPerson</span> =
-  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span> <span style="color: #666;">=&gt;</span>
-    <span style="color: teal;">`${greeting} ${p.first}`</span>
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> extra<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span> =<span style="color: #bbb8ab;">&gt;</span>
+    <span style="color: teal;">`${greeting} ${extra} ${p.first}`</span>
 </pre>
 </div>
 <p>
@@ -828,13 +825,13 @@ we could create a <i>specific greeter</i> by using the higher order function <i>
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">import</span> <span style="color: #ccc8bc;">{</span> partial <span style="color: #ccc8bc;">}</span> <span style="color: #666;">from</span> <span style="color: teal;">"lodash/fp"</span><span style="color: #bbb8ab;">;</span>
 
-<span style="color: #666;">const</span> <span style="color: #333;">sayHi</span> = <span style="color: #111; font-style: italic;">partial</span><span style="color: #ccc8bc;">(</span>greetPerson<span style="color: #bbb8ab;">,</span> <span style="color: #ccc8bc;">[</span><span style="color: teal;">`hi`</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #666;">const</span> <span style="color: #333;">sayHi</span> = <span style="color: #111; font-style: italic;">partial</span><span style="color: #ccc8bc;">(</span>greetPerson<span style="color: #bbb8ab;">,</span> <span style="color: #ccc8bc;">[</span><span style="color: teal;">`hi`</span><span style="color: #bbb8ab;">,</span> <span style="color: teal;">`exxxttrraaa`</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #111; font-style: italic;">sayHi</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
-hi Hannah
+hi exxxttrraaa Hannah
 </pre>
 
 
@@ -851,7 +848,21 @@ also, we could do something similar like this:
 </pre>
 </div>
 <pre class="example">
-yeehaw, says dolly
+evalmachine.&lt;anonymous&gt;:3
+const greetPerson = (greeting, extra, p) =&gt; `${greeting} ${extra} ${p.first}`;
+                                                                      ^
+
+TypeError: Cannot read property 'first' of undefined
+    at greetPerson (evalmachine.&lt;anonymous&gt;:3:71)
+    at n (/home/uer/f/notes/roam/node_modules/lodash/lodash.min.js:9:117)
+    at i (/home/uer/f/notes/roam/node_modules/lodash/lodash.min.js:59:8)
+    at evalmachine.&lt;anonymous&gt;:7:22
+    at evalmachine.&lt;anonymous&gt;:9:3
+    at sigintHandlersWrap (node:vm:273:12)
+    at Script.runInThisContext (node:vm:131:14)
+    at Object.runInThisContext (node:vm:310:38)
+    at Object.execute (/usr/lib/node_modules/tslab/dist/executor.js:162:38)
+    at JupyterHandlerImpl.handleExecuteImpl (/usr/lib/node_modules/tslab/dist/jupyter.js:219:38)
 </pre>
 </div>
 </div>
@@ -864,7 +875,10 @@ automatic partial application is called <i>currying</i>.
 </p>
 
 <p>
-currying a function allows that function to be called like this: <code>f(1, 2, 3)</code> , or this: <code>f(1)(2)(3)</code>
+currying a function allows that function to be called like this:
+<code>f(1, 2, 3)</code> , or this:
+<code>f(1)(2)(3)</code>
+<code>f(1)(2, 3)</code>
 </p>
 
 <p>
@@ -890,7 +904,7 @@ Use this function as an example:
   occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
   first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
   last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
-<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">,</span> occupation <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">,</span> occupation <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #111; font-style: italic;">createPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`police`</span><span style="color: #bbb8ab;">,</span> <span style="color: teal;">`silly`</span><span style="color: #bbb8ab;">,</span> <span style="color: teal;">`goose`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
@@ -911,10 +925,15 @@ if we wanted to create a function called <code>createPolice</code>, we could do 
       occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
       first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
       last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span>
-     <span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">,</span> occupation <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+     <span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">,</span> occupation <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
   <span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
+<pre class="example">
+2:3 - Cannot find name 'curry'.
+</pre>
+
+
 <p>
 this will now allow us to call <code>createPerson</code> with only partial arguments, which <i>returns a new function waiting for the rest</i>
 </p>
@@ -922,14 +941,9 @@ this will now allow us to call <code>createPerson</code> with only partial argum
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">createPolice</span> = <span style="color: #111; font-style: italic;">createPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`police`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 
-<span style="color: #111; font-style: italic;">createPolice</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`arnold`</span><span style="color: #bbb8ab;">,</span> <span style="color: teal;">`schwarzenegger`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<span style="color: #111; font-style: italic;">createPolice</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`arnold`</span><span style="color: #ccc8bc;">)(</span><span style="color: teal;">`schwarzenegger`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
-<pre class="example">
-{ first: 'arnold', last: 'schwarzenegger', occupation: 'police' }
-</pre>
-
-
 <p>
 these examples might not seem particularly useful now, but they lend themselves extremely well to <span class="underline">encapsulation</span> , which we covered before, but also:
 </p>
@@ -950,6 +964,7 @@ say that you are working on an application. Your application takes an input user
 <p>
 In human language, what our application should do is:
 </p>
+
 <ol class="org-ol">
 <li>greet the user.</li>
 <li>fix the capitalization of the user, in case it was inputted wrong. then,</li>
@@ -964,7 +979,7 @@ Here are our types:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">Relationship</span> = <span style="color: teal;">`single`</span> | <span style="color: teal;">`very single`</span> | <span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">;</span>
+<pre class="src src-jupyter-typescript"><span style="color: #666;">type</span> <span style="color: #bbb8ab;">Relationship</span> = <span style="color: teal;">`single`</span> <span style="color: #bbb8ab;">|</span> <span style="color: teal;">`very single`</span> <span style="color: #bbb8ab;">|</span> <span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">;</span>
 <span style="color: #666;">type</span> <span style="color: #bbb8ab;">Person</span> = <span style="color: #ccc8bc;">{</span>
   first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span>
   last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">;</span>
@@ -988,11 +1003,17 @@ in an imperative programming style, without using functional programming, we mig
 <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hi there! ${person.first}`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
 person<span style="color: #bbb8ab;">.</span>first = person<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">;</span>
+
 person<span style="color: #bbb8ab;">.</span>occupation = <span style="color: teal;">`programmer`</span><span style="color: #bbb8ab;">;</span>
+
 person<span style="color: #bbb8ab;">.</span>last = <span style="color: teal;">`Jones`</span><span style="color: #bbb8ab;">;</span>
+
 person<span style="color: #bbb8ab;">.</span>relationship = <span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">;</span>
+
 <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye ${person.first}`</span><span style="color: #ccc8bc;">)</span>
+
 person
 </pre>
 </div>
@@ -1023,29 +1044,29 @@ for these reasons, we separate the core functionality into smaller sized helper 
 
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
-  <span style="color: #ccc8bc;">(</span>first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span>first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
     <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> first <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">setLastName</span> =
-  <span style="color: #ccc8bc;">(</span>last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span>last<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
     <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> last <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">setOccupation</span> =
-  <span style="color: #ccc8bc;">(</span>occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span>occupation<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
     <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> occupation <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">fixCapitalization</span> =
-  <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
     <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> first<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span> <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">greetPerson</span> =
-  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span> <span style="color: #ccc8bc;">{</span>
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">{</span>
     <span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`${greeting} ${p.first} ${p.last}`</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
     <span style="color: #db7093;">return</span> p<span style="color: #bbb8ab;">;</span>
   <span style="color: #ccc8bc;">}</span>
 
 <span style="color: #666;">const</span> <span style="color: #333;">setRelationshipStatus</span> =
-  <span style="color: #ccc8bc;">(</span>r<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Relationship,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> <span style="color: #666;">=&gt;</span>
+  <span style="color: #ccc8bc;">(</span>r<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Relationship,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
     <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> relationship<span style="color: #bbb8ab;">:</span> r <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
@@ -1063,10 +1084,15 @@ the business logic using these helpers could now be written like this:
 <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
 
 <span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hi there!`</span><span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
 <span style="color: #666;">const</span> <span style="color: #333;">updatedPerson</span> = <span style="color: #111; font-style: italic;">fixCapitalization</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
 <span style="color: #666;">const</span> <span style="color: #333;">occupiedPerson</span> = <span style="color: #111; font-style: italic;">setOccupation</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`programmer`</span><span style="color: #bbb8ab;">,</span> updatedPerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
 <span style="color: #666;">const</span> <span style="color: #333;">marriedPerson</span> = <span style="color: #111; font-style: italic;">setLastName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`Jones`</span><span style="color: #bbb8ab;">,</span> occupiedPerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+
 <span style="color: #666;">const</span> <span style="color: #333;">marriedUpdatedPerson</span> = <span style="color: #111; font-style: italic;">setRelationshipStatus</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">,</span> marriedPerson<span style="color: #ccc8bc;">)</span>
+
 <span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye`</span><span style="color: #bbb8ab;">,</span> marriedUpdatedPerson<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
@@ -1135,12 +1161,12 @@ Function composition is also not native to javascript.  It is found by default i
 <pre class="src src-jupyter-typescript">
 <span style="color: #666;">const</span> <span style="color: #333;">onBoard</span> =
   <span style="color: #111; font-style: italic;">pipe</span><span style="color: #ccc8bc;">(</span>
-    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hello`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
-    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">fixCapitalization</span><span style="color: #ccc8bc;">(</span>p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
-    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setOccupation</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`programmer`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
-    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setLastName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`Jones`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
-    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">setRelationshipStatus</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
-    p <span style="color: #666;">=&gt;</span> <span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hello`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">fixCapitalization</span><span style="color: #ccc8bc;">(</span>p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">setOccupation</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`programmer`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">setLastName</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`Jones`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">setRelationshipStatus</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`hitched`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
+    p =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #111; font-style: italic;">greetPerson</span><span style="color: #ccc8bc;">(</span><span style="color: teal;">`goodbye`</span><span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">,</span>
   <span style="color: #ccc8bc;">)</span>
 
 <span style="color: #111; font-style: italic;">onBoard</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
@@ -1175,6 +1201,15 @@ In javascript, <code>() ==&gt; fn()</code> is the same as <code>fn</code>, so we
 <span style="color: #666;">const</span> <span style="color: #333;">setRelationshipStatus_</span> = <span style="color: #111; font-style: italic;">curry</span><span style="color: #ccc8bc;">(</span>setRelationshipStatus<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
+<pre class="example">
+1:22 - Cannot find name 'curry'.
+2:28 - Cannot find name 'curry'.
+3:24 - Cannot find name 'curry'.
+4:22 - Cannot find name 'curry'.
+5:32 - Cannot find name 'curry'.
+</pre>
+
+
 <p>
 this small change will allow us to write our code like this:
 </p>
@@ -1193,18 +1228,6 @@ this small change will allow us to write our code like this:
 <span style="color: #111; font-style: italic;">onBoard</span><span style="color: #ccc8bc;">(</span>person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
-<pre class="example">
-hello bonnie billy
-goodbye BONNIE Jones
-{
-  first: 'BONNIE',
-  last: 'Jones',
-  occupation: 'programmer',
-  relationship: 'hitched'
-}
-</pre>
-
-
 <p>
 &#x2026; excersize make a getMarried function, and add types to the function. add save to DB
 </p>
@@ -1215,7 +1238,7 @@ goodbye BONNIE Jones
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-15 Fri 16:30</p>
+<p class="date">Created: 2021-01-24 Sun 00:25</p>
 </div>
 </body>
 </html>
