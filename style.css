@@ -156,13 +156,13 @@ html {
      max-width: 65rem;
      margin: 0 auto;
      padding-bottom: 10em;
+     font-variant-numeric: oldstyle-nums;
    }
    body p {
      font-kerning: auto;
      text-rendering: optimizeLegibility;
      -webkit-font-smoothing: antialiased;
      -moz-osx-font-smoothing: grayscale;      
-     font-variant-numeric: oldstyle-nums;
    }
 
    a, a:visited {
@@ -218,16 +218,32 @@ html {
    code, pre, pre.src, pre.example {
     font-family: var(--mono);
    }
-ul, ol {
-  list-style-type: "\2192  "; /* one em arrow */
-  list-style-type: "\2e3a  "; /* two em dash */
-  list-style-type: "\2014  "; /* em dash */
+   ul, ol {
   list-style-position: outside;
   padding-top: 0;
   margin:0;
   padding-left: var(--spacing);
   font-size: .9rem;
   max-width: 28rem;
+ }
+ul {
+  list-style-type: "\2192  "; /* one em arrow */
+  list-style-type: "\2e3a  "; /* two em dash */
+  list-style-type: "\2014  "; /* em dash */
+}
+ol {
+
+}
+ol { counter-reset: list;}
+ol > li { list-style: none; }
+ol > li:before {
+  content: counter(list, number) " - ";
+  width: 2rem;
+  margin-left: -2.2rem;
+  display: block;
+  position: absolute;
+  counter-increment: list;
+  text-align: right;
 }
 ul li, ol li {
     margin-top: .3rem;
