@@ -116,7 +116,7 @@ src: url('font/charter_bold_italic.woff2') format('woff2');
     --color-light:  #fbf8ef;
     --color-light:  #fffdf8;
     --color-faint-light: rgba(255,255,255,.8);
-    --headline: "YoungSerif", Serif;
+    --headline: "YoungSerif", serif;
     --serif: Junicode;
     --mono: "Iosevka";
     --spacing: 1.3rem;
