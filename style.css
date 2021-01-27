@@ -377,14 +377,18 @@ margin: 2.3rem auto;
     line-height: 1rem;
     top: 0;
     z-index: 999;
-    color: var(--color-light)
+    color: var(--color-light);
+    left: 0;
 }
 #org-div-home-and-up a:first-of-type {
     display: none;
 }
 a[accesskey="H"] {
     text-decoration: none;
-    color: var(--color-light)
+    color: var(--color-light);
+    max-width: 45rem;
+    margin: 0 auto;
+    display: block;
 }
 a[accesskey="H"]:before {
     text-decoration: none;
