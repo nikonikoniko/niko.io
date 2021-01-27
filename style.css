@@ -329,9 +329,43 @@ table .org-left {
 #table-of-contents {
     font-family: var(--mono);
     font-size: .5em;
-    display: none;
+    position: fixed;
+    width: 100%;
+    left: 0;
 }
-
+@media only screen and (max-width: 900px) {
+  #table-of-contents {
+      display: none;
+  }
+}
+#table-of-contents ul {
+    list-style: none;
+    margin-left: -2rem;
+    padding-left: 2rem;
+}
+#text-table-of-contents > ul > li > a{
+    padding-top: .5rem;
+}
+#table-of-contents a {
+    text-decoration: none;
+    font-size: .7rem;
+    line-heigh: .7rem;
+}
+#text-table-of-contents {
+max-width: 45rem;
+margin: 2.3rem auto;
+}
+#table-of-contents h2 {
+    display:block;
+    max-width: 55rem;
+    margin: 1.4rem auto;
+    font-size: 1rem;
+    display:none;
+}
+.outline-2, .outline-1, .outline-3 {
+    background-color: var(--color-light);
+    position: relative;
+}
 #org-div-home-and-up {
     position: fixed;
     width: 100%;
@@ -343,7 +377,6 @@ table .org-left {
     line-height: 1rem;
     top: 0;
     z-index: 999;
-    background-color: var(--color-light);
     color: var(--color-light)
 }
 #org-div-home-and-up a:first-of-type {
@@ -357,6 +390,8 @@ a[accesskey="H"]:before {
     text-decoration: none;
     content: "\219E  niko.io";
     color:teal;
+    padding-left: 1rem;
+    background-color: var(--color-light);
 }
 
 h1.title {
