@@ -345,6 +345,7 @@ table .org-left {
     list-style: none;
     margin-left: -2rem;
     padding-left: 2rem;
+    max-width: 15rem;
 }
 #text-table-of-contents > ul > li > a{
     padding-top: .5rem;
