@@ -170,7 +170,7 @@ html {
      color: var(--color-highlight);
      transition: .3s;
  }
-   a:hover {
+   p a:hover, li a:hover {
      background-color: #FDFF32;
  }
    .content, #content {
