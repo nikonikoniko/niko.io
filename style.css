@@ -173,9 +173,9 @@ html {
      transition: .3s;
  }
    p a:hover, li a:hover {
-     background-color: #fee400;
-     background-color: burlywood;
+     color: orangered;
  }
+
    .content, #content {
      max-width: 35em;
      background-color: var(--color-light);
