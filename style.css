@@ -297,6 +297,7 @@ pre.example {
     padding-top: var(--spacing-half);
     color: burlywood;
     overflow: visible;
+    max-width: 33em;
 }
 pre.example:before {
     content: "\21b3 ";
