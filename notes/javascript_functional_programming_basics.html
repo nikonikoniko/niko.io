@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-03 Wed 04:40 -->
+<!-- 2021-02-03 Wed 04:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>javascript functional programming basics</title>
@@ -437,11 +437,6 @@ k<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: ita
 k
 </pre>
 </div>
-<pre class="example">
-[ 1, 2, 3, 4 ]
-</pre>
-
-
 <p>
 In this case, the variable <code>k</code> has been <i>mutated</i>.
 </p>
@@ -661,7 +656,16 @@ person
 </pre>
 </div>
 <pre class="example">
-{ first: 'regina', last: 'ARENDT' }
+TypeError: Cannot read property 'toUpperCase' of null
+    at capitalizePerson (evalmachine.&lt;anonymous&gt;:4:49)
+    at evalmachine.&lt;anonymous&gt;:17:21
+    at async Promise.all (index 2)
+    at async evalmachine.&lt;anonymous&gt;:20:17
+    at async Object.execute (/usr/lib/node_modules/tslab/dist/executor.js:175:17)
+    at async JupyterHandlerImpl.handleExecuteImpl (/usr/lib/node_modules/tslab/dist/jupyter.js:219:18)
+    at async JupyterHandlerImpl.handleExecute (/usr/lib/node_modules/tslab/dist/jupyter.js:177:21)
+    at async ZmqServer.handleExecute (/usr/lib/node_modules/tslab/dist/jupyter.js:375:25)
+    at async ZmqServer.handleShellMessage (/usr/lib/node_modules/tslab/dist/jupyter.js:320:21)
 </pre>
 
 
@@ -701,15 +705,12 @@ We can rewrite <code>setFirstName</code> and <code>capitalizePerson</code> as <i
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">person</span> = <span style="color: #ccc8bc;">{</span> first<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Hannah"</span><span style="color: #bbb8ab;">,</span> last<span style="color: #bbb8ab;">:</span> <span style="color: teal;">"Arendt"</span> <span style="color: #ccc8bc;">}</span><span style="color: #bbb8ab;">;</span>
 
-<span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> =
-  <span style="color: #ccc8bc;">(</span>first<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span><span style="color: #bbb8ab;">,</span> p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
-    <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> first <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #666;">const</span> <span style="color: #333;">setFirstName</span> = <span style="color: #ccc8bc;">(</span>first<span style="color: #bbb8ab;">,</span> p<span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span> <span style="color: #bbb8ab;">...</span>p<span style="color: #bbb8ab;">,</span> first <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
-<span style="color: #666;">const</span> <span style="color: #333;">capitalizePerson</span> = <span style="color: #ccc8bc;">(</span>p<span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">Person</span> =<span style="color: #bbb8ab;">&gt;</span>
-  <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span>
-    first<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">,</span>
-    last<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>last<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">,</span>
-  <span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #666;">const</span> <span style="color: #333;">capitalizePerson</span> = p =<span style="color: #bbb8ab;">&gt;</span> <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">{</span>
+  first<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>first<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">,</span>
+  last<span style="color: #bbb8ab;">:</span> p<span style="color: #bbb8ab;">.</span>last<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">toUpperCase</span><span style="color: #ccc8bc;">()</span><span style="color: #bbb8ab;">,</span>
+<span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
 
 <span style="color: #bbbbbb; font-style: italic;">// </span><span style="color: #bbbbbb; font-style: italic;">none of these functions change person</span>
 <span style="color: #666;">await</span> Promise<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: italic;">all</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>
@@ -1398,7 +1399,7 @@ Have a good evening!
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-02-03 Wed 04:40</p>
+<p class="date">Created: 2021-02-03 Wed 04:47</p>
 </div>
 </body>
 </html>
