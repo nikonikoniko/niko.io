@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-06 Wed 16:16 -->
+<!-- 2021-02-03 Wed 04:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>emacs</title>
@@ -231,14 +231,49 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge3c5c8a">1. always open emacs client</a>
+<li><a href="#org1f5f58e">1. emacs</a>
 <ul>
-<li><a href="#org2634628">1.1. magit</a></li>
+<li>
+<ul>
+<li><a href="#org9e6a564">1.0.1. still todo</a></li>
+</ul>
+</li>
+<li><a href="#orge3c5c8a">1.1. always open emacs client</a>
+<ul>
+<li><a href="#org2634628">1.1.1. magit</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
+
+<div id="outline-container-org1f5f58e" class="outline-2">
+<h2 id="org1f5f58e"><span class="section-number-2">1</span> emacs</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org9e6a564" class="outline-4">
+<h4 id="org9e6a564"><span class="section-number-4">1.0.1</span> still todo</h4>
+<div class="outline-text-4" id="text-1-0-1">
+</div>
+<ol class="org-ol">
+<li><a id="org440fea1"></a><span class="done DONE">DONE</span> learn dired fully and look at the key commands<br />
+<div class="outline-text-7" id="text-1-0-1-0-0-1">
+</div>
+</li>
+<li><a id="orgf3ef1d9"></a><span class="done DONE">DONE</span> evaluate the real usefulness of doom emacs<br />
+<div class="outline-text-7" id="text-1-0-1-0-0-2">
+</div>
+</li>
+</ol>
+
+<li><a id="org2ed1ffa"></a>useful articles<br />
+<div class="outline-text-5" id="text-1-0-1-1">
+<p>
+<a href="https://tecosaur.github.io/emacs-config/">https://tecosaur.github.io/emacs-config/</a>
+</p>
+
 <p>
 macs 27 does a <span class="underline">lot</span> better with font rendering than 26 for some reason
 </p>
@@ -247,10 +282,14 @@ macs 27 does a <span class="underline">lot</span> better with font rendering tha
 see <a href="org_agenda.html">org agenda</a>
 see <a href="org_mode.html">org mode</a>
 </p>
+</div>
+</li>
+</ol>
+</div>
 
-<div id="outline-container-orge3c5c8a" class="outline-2">
-<h2 id="orge3c5c8a"><span class="section-number-2">1</span> always open emacs client</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orge3c5c8a" class="outline-3">
+<h3 id="orge3c5c8a"><span class="section-number-3">1.1</span> always open emacs client</h3>
+<div class="outline-text-3" id="text-1-1">
 <p>
 you can make a new command that always opens emacs in client mode by putting the following in <code>usr/local/bin</code>
 </p>
@@ -260,7 +299,7 @@ a file called <code>e</code>
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #bbb8ab;">sudo</span> <span style="color: #bbb8ab;">touch</span> /usr/local/bin/e
-<span style="color: #bbb8ab;">sudo</span> <span style="color: #bbb8ab;">echo</span> <span style="color: teal;">"(/usr/bin/emacsclient -c)"</span> &gt; /usr/local/bin/e
+<span style="color: #bbb8ab;">sudo</span> <span style="color: #bbb8ab;">echo</span> <span style="color: teal;">"(/usr/bin/emacsclient -c)"</span> <span style="color: #bbb8ab;">&gt;</span> /usr/local/bin/e
 <span style="color: #bbb8ab;">sudo</span> <span style="color: #bbb8ab;">chmod</span> +x /usr/local/bin/e
 </pre>
 </div>
@@ -273,8 +312,8 @@ now, a command called <code>e</code> should show up in <code>dmenu</code> that w
 additionally, for opening up files from terminal, i place the following in my own <code>~/.bashrc</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #bbb8ab;">alias</span> <span style="color: #333;">e</span>=<span style="color: teal;">'emacsclient'</span>
-<span style="color: #bbb8ab;">alias</span> <span style="color: #333;">ee</span>=<span style="color: teal;">'emacsclient -c'</span>
+<pre class="src src-bash"><span style="color: #778899;">alias</span> <span style="color: #333;">e</span>=<span style="color: teal;">'emacsclient'</span>
+<span style="color: #778899;">alias</span> <span style="color: #333;">ee</span>=<span style="color: teal;">'emacsclient -c'</span>
 </pre>
 </div>
 
@@ -287,9 +326,9 @@ now, from wherever i am i can open an emacs
 </p>
 </div>
 
-<div id="outline-container-org2634628" class="outline-3">
-<h3 id="org2634628"><span class="section-number-3">1.1</span> magit</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-org2634628" class="outline-4">
+<h4 id="org2634628"><span class="section-number-4">1.1.1</span> magit</h4>
+<div class="outline-text-4" id="text-1-1-1">
 <p>
 often the keybindings for magit are a little different in doom emacs.  Here is a cheatsheet for the magit keybindings:
 keybindings: <a href="https://github.com/emacs-evil/evil-magit">https://github.com/emacs-evil/evil-magit</a>
@@ -298,9 +337,10 @@ keybindings: <a href="https://github.com/emacs-evil/evil-magit">https://github.c
 </div>
 </div>
 </div>
+</div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-06 Wed 16:16</p>
+<p class="date">Created: 2021-02-03 Wed 04:40</p>
 </div>
 </body>
 </html>

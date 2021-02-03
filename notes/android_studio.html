@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-14 Thu 17:55 -->
+<!-- 2021-02-03 Wed 04:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>android studio</title>
@@ -266,7 +266,20 @@ there&rsquo;s some interesting vocabulary in android world that is totally worth
 
 <p>
 <code>avd</code> : Android Virtual Device, also known as <i>emulator</i>
+</p>
+
+<p>
 <code>adb</code> : Android Debug Bridge:  a cli utility to conenct to the devices over cli
+</p>
+
+<p>
+log <i>all android</i> things:
+</p>
+<p>
+log <i>just a few modules</i>
+</p>
+<p>
+set an env variable in the <code>avd</code> :
 </p>
 </div>
 </div>
@@ -337,7 +350,15 @@ sdkmanager --install <span style="color: teal;">"system-images;android-29;google
 
 <span style="color: #bbbbbb; font-style: italic;"># </span><span style="color: #bbbbbb; font-style: italic;">then create an _emulator_ of that system image, notice the --name option here,</span>
 <span style="color: #bbbbbb; font-style: italic;"># </span><span style="color: #bbbbbb; font-style: italic;">this is how you will run the emulator in the future</span>
-avdmanager --verbose create avd --force --name <span style="color: teal;">"pixal"</span> --device <span style="color: teal;">"pixel"</span> --package <span style="color: teal;">"system-images;android-29;google_apis;x86"</span> --tag <span style="color: teal;">"google_apis"</span> --abi <span style="color: teal;">"x86"</span>
+avdmanager <span style="color: teal;">\</span>
+    --verbose <span style="color: teal;">\</span>
+    create avd <span style="color: teal;">\</span>
+    --force <span style="color: teal;">\</span>
+    --name <span style="color: teal;">"pixal"</span> <span style="color: teal;">\</span>
+    --device <span style="color: teal;">"pixel"</span> <span style="color: teal;">\</span>
+    --package <span style="color: teal;">"system-images;android-29;google_apis;x86"</span> <span style="color: teal;">\</span>
+    --tag <span style="color: teal;">"google_apis"</span> <span style="color: teal;">\</span>
+    --abi <span style="color: teal;">"x86"</span>
 
 <span style="color: #bbbbbb; font-style: italic;"># </span><span style="color: #bbbbbb; font-style: italic;">SWITCH BACK TO JAVA 13</span>
 <span style="color: #bbbbbb; font-style: italic;"># </span><span style="color: #bbbbbb; font-style: italic;">for running other things</span>
@@ -345,7 +366,6 @@ avdmanager --verbose create avd --force --name <span style="color: teal;">"pixal
 
 <span style="color: #bbbbbb; font-style: italic;"># </span><span style="color: #bbbbbb; font-style: italic;">project RM, as well as many react-native projects need</span>
 <span style="color: #bbb8ab;">sudo</span> archlinux-java set java-10-openjdk
-
 </pre>
 </div>
 </div>
@@ -408,7 +428,7 @@ daemon not running; starting now at tcp:5037
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-14 Thu 17:55</p>
+<p class="date">Created: 2021-02-03 Wed 04:40</p>
 </div>
 </body>
 </html>
