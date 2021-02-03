@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-03 Wed 04:47 -->
+<!-- 2021-02-03 Wed 04:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>javascript functional programming basics</title>
@@ -437,6 +437,11 @@ k<span style="color: #bbb8ab;">.</span><span style="color: #111; font-style: ita
 k
 </pre>
 </div>
+<pre class="example">
+[ 1, 2, 3, 4 ]
+</pre>
+
+
 <p>
 In this case, the variable <code>k</code> has been <i>mutated</i>.
 </p>
@@ -723,15 +728,6 @@ We can rewrite <code>setFirstName</code> and <code>capitalizePerson</code> as <i
   <span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
-<pre class="example">
-[
-  { first: 'Jennifer', last: 'Arendt' },
-  { first: 'HANNAH', last: 'ARENDT' },
-  { first: 'Hannah', last: 'Arendt' }
-]
-</pre>
-
-
 <p>
 Although this might be an oversimplified example, I hope that you can already see how this concept can be helpful.  Each of the promises return <i>replicatable</i> results, that do not really rely on the current state of <code>person</code>.  <code>person</code> remains unchaged afer the <code>setFirstName</code> and <code>capitalizePerson</code> functions.
 </p>
@@ -755,7 +751,7 @@ statePerson<span style="color: #bbb8ab;">;</span>
 </pre>
 </div>
 <pre class="example">
-{ first: 'Jemima', last: 'Spears' }
+6:3 - Type 'void' is not assignable to type '{ first: string; last: string; }'.
 </pre>
 
 
@@ -833,7 +829,7 @@ The classic, and possibly simplest, example looks like this:
 </pre>
 </div>
 <pre class="example">
-hello dearest Hannah
+hello dearest regina
 </pre>
 
 
@@ -848,7 +844,7 @@ hello dearest Hannah
 </pre>
 </div>
 <pre class="example">
-ciao cacao Hannah
+ciao cacao regina
 </pre>
 
 
@@ -952,7 +948,7 @@ Assume our greeting function was written like this, instead, but we still wanted
 
 <div class="org-src-container">
 <pre class="src src-jupyter-typescript"><span style="color: #666;">const</span> <span style="color: #333;">greetPerson</span> =
-  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">:</span> <span style="color: #bbb8ab;">string</span> =<span style="color: #bbb8ab;">&gt;</span>
+  <span style="color: #ccc8bc;">(</span>greeting<span style="color: #bbb8ab;">,</span> person<span style="color: #ccc8bc;">)</span> =<span style="color: #bbb8ab;">&gt;</span>
     <span style="color: teal;">`${greeting} ${person.first}`</span>
 </pre>
 </div>
@@ -980,7 +976,7 @@ Then, apply our greeting &ldquo;hi&rdquo; to our function from before:
 </pre>
 </div>
 <pre class="example">
-hi Hannah
+hi regina
 </pre>
 
 
@@ -1399,7 +1395,7 @@ Have a good evening!
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-02-03 Wed 04:47</p>
+<p class="date">Created: 2021-02-03 Wed 04:52</p>
 </div>
 </body>
 </html>
