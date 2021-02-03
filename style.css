@@ -129,9 +129,9 @@ src: url('font/neue-haas-medium.woff2') format('woff2');
     --headline: Haas, serif;
     --serif: Junicode;
     --mono: "Iosevka";
-    --spacing: 1.3rem;
-    --spacing-double: 2.6rem;
-    --spacing-half: .7rem;
+    --spacing: 1.7rem;
+    --spacing-double: 3.4rem;
+    --spacing-half: .85rem;
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -200,8 +200,6 @@ html {
      margin-left: .1rem;
      font-size: 1rem;
      line-height: 1.15rem;
-     letter-spacing: .020rem;
-     word-spacing: .03rem;
  }
    .content p code, #content p code {
      font-size: .85rem;
