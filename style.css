@@ -284,6 +284,7 @@ ul li, ol li {
     font-size: .8rem;
     padding-top: var(--spacing);
     margin-left:.2rem;
+    overflow: auto;
 }
 pre.example {
     margin: 0;
