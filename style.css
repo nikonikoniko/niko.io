@@ -285,6 +285,7 @@ ul li, ol li {
     padding-top: var(--spacing);
     margin-left:.2rem;
     overflow: auto;
+    max-width: 33em;
 }
 pre.example {
     margin: 0;
