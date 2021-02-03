@@ -227,7 +227,6 @@ html {
   padding-top: 0;
   margin:0;
   padding-left: var(--spacing);
-  font-size: .9rem;
   max-width: 28rem;
  }
 ul {
