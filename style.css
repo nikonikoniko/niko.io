@@ -129,9 +129,9 @@ src: url('font/neue-haas-medium.woff2') format('woff2');
     --headline: Haas, serif;
     --serif: Junicode;
     --mono: "Iosevka";
-    --spacing: 1.7rem;
-    --spacing-double: 3.4rem;
-    --spacing-half: .85rem;
+    --spacing: 1.9rem;
+    --spacing-double: 3.8rem;
+    --spacing-half: .9rem;
 }
 
 p, h1, h2, h3, h4, h5 {
@@ -142,7 +142,7 @@ p {
 }
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: var(--spacing-half);
-    margin-top: var(--spacing-double);
+    padding-top: var(--spacing-double);
     display: inline-block;
     font-family: var(--headline);
     border-bottom: 1px solid var(--color-faint);
@@ -200,6 +200,9 @@ html {
      margin-left: .1rem;
      font-size: 1rem;
      line-height: 1.15rem;
+ }
+   #content h1, #content h2, #content h3, #content h4, #content h5 {
+     max-width: 28rem !important;
  }
    .content p code, #content p code {
      font-size: .85rem;
@@ -300,6 +303,8 @@ pre.example {
 }
 pre.example:before {
     content: "\21b3 ";
+    position: absolute;
+    margin-left: -1rem;
 }
 
 
@@ -351,6 +356,11 @@ table .org-left {
     width: 100%;
     left: 0;
 }
+
+#table-of-contents li {
+    padding: 0;
+    margin: 0;
+}
 @media only screen and (max-width: 900px) {
   #table-of-contents {
       display: none;
@@ -362,13 +372,15 @@ table .org-left {
     padding-left: 2rem;
     max-width: 15rem;
 }
-#text-table-of-contents > ul > li > a{
-    padding-top: .5rem;
-}
 #table-of-contents a {
     text-decoration: none;
     font-size: .7rem;
     line-heigh: .7rem;
+    opacity: .5;
+}
+#table-of-contents a:hover{
+    color: orangered;
+    opacity: 1;
 }
 #text-table-of-contents {
 max-width: 45rem;
