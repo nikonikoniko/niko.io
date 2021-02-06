@@ -153,7 +153,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1:before, h2:before, h3:before, h4:before{
   content: "\2e3a  "; /* two em dash */
-  font-family: var(--serif);
+  font-family: var(--serif), "sans", "Sans";
   /*  margin-left: -2.2em; */
 }
 html {
