@@ -6,7 +6,7 @@
 <!-- 2021-02-16 Tue 20:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>org mode</title>
+<title>chromium</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="John Doe" />
 <style type="text/css">
@@ -226,105 +226,88 @@
  |
  <a accesskey="H" href="/"> HOME </a>
 </div><div id="content">
-<h1 class="title">org mode</h1>
+<h1 class="title">chromium</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0c7a80a">1. making org mode look nicer</a>
+<li><a href="#org1864329">1. Chromium</a>
 <ul>
-<li>
-<ul>
-<li><a href="#org27aa6bb">1.0.1. org roam</a></li>
-</ul>
-</li>
-<li><a href="#org88575a4">1.1. org source blocks - typescript</a></li>
+<li><a href="#org8f93a84">1.1. Separate profiles (instances) for separate organizations</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-
-<div id="outline-container-org0c7a80a" class="outline-2">
-<h2 id="org0c7a80a"><span class="section-number-2">1</span> making org mode look nicer</h2>
+<div id="outline-container-org1864329" class="outline-2">
+<h2 id="org1864329"><span class="section-number-2">1</span> Chromium</h2>
 <div class="outline-text-2" id="text-1">
-<p>
-an article on how to rice things up:
-<a href="https://lepisma.xyz/2017/10/28/ricing-org-mode/">https://lepisma.xyz/2017/10/28/ricing-org-mode/</a>
-</p>
 </div>
-
-<div id="outline-container-org27aa6bb" class="outline-4">
-<h4 id="org27aa6bb"><span class="section-number-4">1.0.1</span> org roam</h4>
-<div class="outline-text-4" id="text-1-0-1">
-<p>
-<a href="https://www.ianjones.us/own-your-second-brain">https://www.ianjones.us/own-your-second-brain</a>
-</p>
-</div>
-</div>
-
-
-<div id="outline-container-org88575a4" class="outline-3">
-<h3 id="org88575a4"><span class="section-number-3">1.1</span> org source blocks - typescript</h3>
+<div id="outline-container-org8f93a84" class="outline-3">
+<h3 id="org8f93a84"><span class="section-number-3">1.1</span> Separate profiles (instances) for separate organizations</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-originally i thought i would have to add in <a href="jupyter_emacs.html">jupyter emacs</a> to excecute src blocks, but it really turns out i can do it inside of emacs org mode already
+The goal of this is to be able to excecute a command to open an instance of chromium for an organization or a set of tasks.  For me, specifically, It is to allow being logged in to two instances of microsoft 365, asana, bitbucket, and other similar softwares for two separate organizations, in two separate browsers.
 </p>
 
 <p>
-for typescript in simple cases, <i>all</i> you have to do is install the package called <code>ob-typescript</code>
+Technically, the best way to do something similar would be to use <b>Qubes</b> OS, but this is an intermediate measure for that.
 </p>
 
-
 <p>
-then, you could excecute the following code with a good old <code>C-c C-c</code>
+<b>First</b>, install chromium, if you do not already have it:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #666;">const</span> <span style="color: #333;">a</span> = <span style="color: #db7093;">3</span><span style="color: #bbb8ab;">;</span>
-<span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span>a<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
+<pre class="src src-bash">&#8594; <span style="color: #bbb8ab;">sudo</span> pacman -S chromium
 </pre>
 </div>
 
 <p>
-However, it seems like <code>ob-typescript</code> does <i>not</i> allow the <code>:session</code> variable, as we can see working in python below.  This means, for typescript, you should still use <a href="jupyter_emacs.html">jupyter emacs</a> for technical documentation for now
+<b>Then</b>, decide where you want your organization chromium data to be stored.  I have chosen, for a mythical organization of <code>Company X</code> and <code>Company Y</code>, the locations of <code>/home/uer/.chromium-cx</code> and <code>/home/uer/.chromium-cy</code>
 </p>
 
 <p>
-here is how it <i>should</i> work, for python:
+you can then start an instance of chromium by running this command in the terminal:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #333;">x</span> = <span style="color: #db7093;">5</span>
-x
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-python">x
-</pre>
-</div>
-</div>
-
-<ol class="org-ol">
-<li><a id="org449b589"></a>customizing<br />
-<div class="outline-text-5" id="text-1-1-0-1">
-<p>
-add this to your emacs config
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #ccc8bc;">(</span><span style="color: #666;">setq</span> <span style="color: #333;">org-babel-default-header-args</span> <span style="color: #666;">'</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">:</span>exports <span style="color: #bbb8ab;">.</span> <span style="color: #bbb8ab;">:</span>both<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+<pre class="src src-bash">&#8594; chromium --user-data-dir=/home/uer/<span style="color: #bbb8ab;">.</span>chromium-cx
 </pre>
 </div>
 
 <p>
-it will allow your results as well as the code to be exported if you want to export rechnical documentation
+<b>Then</b>, we should make a command that can be excecuted and found by things like <code>dmenu</code> or <code>rofi</code>
+</p>
+
+<p>
+to do this I make a file in <code>/usr/local/bin</code> for each company, and place the above command in it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">&#8594; <span style="color: #bbb8ab;">sudo</span> vim /usr/local/bin/cx-chromium
+<span style="color: #bbbbbb; font-style: italic;"># </span><span style="color: #bbbbbb; font-style: italic;">paste the chromium --user-data-dir=/home/uer/.chromium-cx command from above</span>
+</pre>
+</div>
+
+<p>
+We will now have to make this new file executable.  to do this, I
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">&#8594; <span style="color: #bbb8ab;">sudo</span> <span style="color: #bbb8ab;">chmod</span> +x /usr/local/bin/cx-chromium
+</pre>
+</div>
+
+<p>
+and, done!  I now have a separate chromium instance (profile) for two separate organizations.
+</p>
+
+<p>
+I always add a theme through the chromium settings to each browser to be able to visually tell them apart.
 </p>
 </div>
-</li>
-</ol>
 </div>
 </div>
 </div>

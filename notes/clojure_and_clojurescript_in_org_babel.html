@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-02-16 Tue 21:32 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>clojure and clojurescript in org-babel</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="John Doe" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel='stylesheet' href='../style.css' />
+<link rel='stylesheet' href='/../res/main.css' />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href=""> UP </a>
+ |
+ <a accesskey="H" href="/"> HOME </a>
+</div><div id="content">
+<h1 class="title">clojure and clojurescript in org-babel</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1e209b6">1. Clojure and Clojurescript in Org-Babel</a>
+<ul>
+<li><a href="#org79d3a78">1.1. Installation</a>
+<ul>
+<li><a href="#org9376c02">1.1.1. Clojurescript</a></li>
+<li><a href="#org378bf59">1.1.2. Clojure</a></li>
+</ul>
+</li>
+<li><a href="#orga49ec14">1.2. Running</a></li>
+<li><a href="#org65558e0">1.3. Notes</a>
+<ul>
+<li><a href="#org096fe4d">1.3.1. use <code>:eval no-exports</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1e209b6" class="outline-2">
+<h2 id="org1e209b6"><span class="section-number-2">1</span> Clojure and Clojurescript in Org-Babel</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+TLDR: your <code>org-directory</code> needs to have a <code>project.clj</code> for <code>lein</code> and <code>Clojure</code>, and a <code>deps.edn</code> and <code>dev.cljs.edn</code> for <code>Clojurescript</code>.
+</p>
+
+<p>
+Note: this is specifically for doom emacs, but should work on other emacs&rsquo; as well.  This is partially based off <a href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-clojure.html">the official docs</a>, but has been extended to work with the <code>clj</code> tool as well as <code>lein</code>.  I use <code>lein</code> for <code>clojure</code> and <code>clj</code> for <code>clojurescript</code>.  <code>Clojurescript</code> through cider should also pop open a browser, which you should be able to interact with from your org file, using <code>figwheel</code>.
+</p>
+
+<p>
+I had attempted using clojupyter and other jupyter solutions, but they were all so complicated to install that I stuck with this current version.  I had also attempted <code>ob-clojurescript</code>, but this simply directly evaluated <code>src</code> blocks as opposed to sending them to the repl, which is my desired behaviour.  My hope is to do exploratory programming and learn while using the repl, while also taking notes and documenting the process.  So here&rsquo;s how to get it set up:
+</p>
+</div>
+
+<div id="outline-container-org79d3a78" class="outline-3">
+<h3 id="org79d3a78"><span class="section-number-3">1.1</span> Installation</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+We assume we have set <code>org-directory</code> like so.  This is the root directory of where you will be writing your <code>org</code> files that will have executable <code>clojure</code> in them.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">config.el</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #666;">setq</span> <span style="color: #333;">org-directory</span> <span style="color: teal;">"~/f/notes"</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+
+<p>
+Also inside of your emacs <code>config.el</code>, you need to have:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">config.el</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #db7093;">require</span> <span style="color: #666;">'</span><span style="color: #db7093;">ob-clojure</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #666;">setq</span> <span style="color: #333;">org-babel-clojure-backend</span> <span style="color: #666;">'</span><span style="color: #778899;">cider</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #db7093;">require</span> <span style="color: #666;">'</span><span style="color: #db7093;">cider</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org9376c02" class="outline-4">
+<h4 id="org9376c02"><span class="section-number-4">1.1.1</span> Clojurescript</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+Then, I add my clojurescript files.  First, add the dependencies.  Here you can add any dependencies you might want available to the <code>clojurescript</code> repl in your org files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">org-directory/deps.edn</span>
+<span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">deps</span> <span style="color: #ccc8bc;">{</span>org<span style="color: #bbb8ab;">.</span>clojure/clojure <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:mvn</span><span style="color: #333; background-color: #fbf8ef;">/</span><span style="color: #db7093;">version</span> <span style="color: teal;">"1.9.0"</span><span style="color: #ccc8bc;">}</span>
+        org<span style="color: #bbb8ab;">.</span>clojure/clojurescript <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:mvn</span><span style="color: #333; background-color: #fbf8ef;">/</span><span style="color: #db7093;">version</span> <span style="color: teal;">"1.10.773"</span><span style="color: #ccc8bc;">}</span>
+        org<span style="color: #bbb8ab;">.</span>clojure/test<span style="color: #bbb8ab;">.</span>check <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:mvn</span><span style="color: #333; background-color: #fbf8ef;">/</span><span style="color: #db7093;">version</span> <span style="color: teal;">"0.9.0"</span><span style="color: #ccc8bc;">}</span> <span style="color: #bbbbbb; font-style: italic;">; this enables spec</span>
+        com<span style="color: #bbb8ab;">.</span>bhauman/figwheel-main <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:mvn</span><span style="color: #333; background-color: #fbf8ef;">/</span><span style="color: #db7093;">version</span> <span style="color: teal;">"0.2.12"</span><span style="color: #ccc8bc;">}</span>
+        reagent <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:mvn</span><span style="color: #333; background-color: #fbf8ef;">/</span><span style="color: #db7093;">version</span> <span style="color: teal;">"1.0.0"</span><span style="color: #ccc8bc;">}</span>
+        <span style="color: #bbbbbb; font-style: italic;">;; </span><span style="color: #bbbbbb; font-style: italic;">optional but recommended</span>
+        com<span style="color: #bbb8ab;">.</span>bhauman/rebel-readline-cljs <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:mvn</span><span style="color: #333; background-color: #fbf8ef;">/</span><span style="color: #db7093;">version</span> <span style="color: teal;">"0.1.4"</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">}</span>
+
+ <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">aliases</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">fig</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">main-opts</span> <span style="color: #ccc8bc;">[</span><span style="color: teal;">"-m"</span> <span style="color: teal;">"figwheel.main"</span>
+                             <span style="color: teal;">"-b"</span> <span style="color: teal;">"dev"</span> <span style="color: #bbbbbb; font-style: italic;">;references file dev.cljs.edn</span>
+                             <span style="color: teal;">"-r"</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">}</span> <span style="color: #bbbbbb; font-style: italic;">; repl i guess</span>
+
+ <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">paths</span> <span style="color: #ccc8bc;">[</span><span style="color: teal;">"src"</span><span style="color: #ccc8bc;">]</span><span style="color: #ccc8bc;">}</span>
+</pre>
+</div>
+
+<p>
+Then, for figwheel, I will add the following file. I will be honest, I am not entirely sure why or how all of this is needed, but it works for me.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #bbbbbb; font-style: italic;">; </span><span style="color: #bbbbbb; font-style: italic;">org-directory/dev.cljs.edn</span>
+<span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">main</span> clojurescriptexamples<span style="color: #bbb8ab;">.</span>core<span style="color: #ccc8bc;">}</span>
+</pre>
+</div>
+
+<p>
+additionally I add the file <code>src/clojurescriptexamples/core.cljs</code> in the org directory to have the main file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org378bf59" class="outline-4">
+<h4 id="org378bf59"><span class="section-number-4">1.1.2</span> Clojure</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+I add the file for leiningen like so:
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga49ec14" class="outline-3">
+<h3 id="orga49ec14"><span class="section-number-3">1.2</span> Running</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Now, we should be able to add a code block, like so
+</p>
+
+<pre class="example">
+#+BEGIN_SRC clojure :eval no-exports
+  [1 2 3]
+/ #+END_SRC
+</pre>
+<div class="org-src-container">
+<pre class="src src-clojure"> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span> <span style="color: #db7093;">2</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span>
+</pre>
+</div>
+
+<p>
+now, when you <code>C-c C-c</code> in that block, you should be confronted with a menu. where you can choose between:
+</p>
+
+<pre class="example">
+cider-jack-in-clj
+cider-jack-incljs
+....
+</pre>
+
+<p>
+With this, I make the decision to start the <code>clojure</code> or <code>clojurescript</code> repl.  I will now choose <code>cider-jack-in-cljs</code>. I now have to choose between
+</p>
+
+<pre class="example">
+lein
+clojure-cli
+</pre>
+
+<p>
+I will choose <code>clojure-cli</code> for clojurescript.  then, choose <code>figwheel-main</code> to have hot reloading and more in your browser.  You should also be able to choose your <code>dev.cljs.edn</code> build from earlier. A repl window should also open up, as well as the browser running the compiled, hot reloaded javascript.
+</p>
+
+<p>
+Note, as the <code>cider</code> repl is starting, you should see:
+</p>
+
+<pre class="example">
+Please reevaluate when nREPL is connected
+</pre>
+
+
+<p>
+And you will have to evaluate the block again later, like so.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span> <span style="color: #db7093;">2</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span>
+</pre>
+</div>
+
+<p>
+If you open the console in the browser and evaluate the following block
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">js</span>/console<span style="color: #bbb8ab;">.</span>log <span style="color: teal;">"hello world"</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+
+<p>
+You should see &ldquo;hello world&rdquo; there.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org65558e0" class="outline-3">
+<h3 id="org65558e0"><span class="section-number-3">1.3</span> Notes</h3>
+<div class="outline-text-3" id="text-1-3">
+</div>
+<div id="outline-container-org096fe4d" class="outline-4">
+<h4 id="org096fe4d"><span class="section-number-4">1.3.1</span> use <code>:eval no-exports</code></h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+For each <code>clojure</code> source block, I do not want to make the decision when I am exporting my org notes to pdf or html which repl to use.  Since all of them simply define <code>BEGIN_SRC clojure</code>, It would not make sense to excecute them every single time I export the page.  With this in mind, I add <code>:eval no-exports</code> to each block, so it &rsquo;stores&rsquo; the results for export.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: John Doe</p>
+<p class="date">Created: 2021-02-16 Tue 21:32</p>
+</div>
+</body>
+</html>

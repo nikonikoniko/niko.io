@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-24 Sun 00:25 -->
+<!-- 2021-02-16 Tue 20:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>clojure</title>
@@ -231,7 +231,8 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4db2311">0.1. spec</a></li>
+<li><a href="#orgb55c9d2">0.1. questions</a></li>
+<li><a href="#org4db2311">0.2. spec</a></li>
 </ul>
 </li>
 <li><a href="#org8257021">1. emacs key commandx</a>
@@ -242,7 +243,13 @@
 <li><a href="#org8936439">2. previous</a></div>
 </div>
 <p>
+macchiato server
+<a href="https://dev.solita.fi/2020/05/26/clojurescript-web-serverwith-macchiato-shadowcljs-and-reitit.html">https://dev.solita.fi/2020/05/26/clojurescript-web-serverwith-macchiato-shadowcljs-and-reitit.html</a>
+</p>
+
+<p>
 articles to read:
+<a href="https://www.infoq.com/articles/clojure-donkey-http-stack/">https://www.infoq.com/articles/clojure-donkey-http-stack/</a> http stack
 <a href="https://purelyfunctional.tv/article/react-vs-re-frame/">https://purelyfunctional.tv/article/react-vs-re-frame/</a> react vs reframe
 </p>
 
@@ -300,9 +307,35 @@ clj kondo
 </pre>
 </div>
 
-<div id="outline-container-org4db2311" class="outline-3">
-<h3 id="org4db2311"><span class="section-number-3">0.1</span> spec</h3>
+<div id="outline-container-orgb55c9d2" class="outline-3">
+<h3 id="orgb55c9d2"><span class="section-number-3">0.1</span> questions</h3>
 <div class="outline-text-3" id="text-0-1">
+<ol class="org-ol">
+<li>how to make the following less verbose?</li>
+</ol>
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">s</span>/fdef named-note
+  <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">args</span> <span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">s</span>/cat <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">step</span> <span style="color: #bbb8ab;">::</span><span style="color: #db7093;">step</span>
+               <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">range</span> <span style="color: #bbb8ab;">::</span><span style="color: #db7093;">range</span>
+               <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">name</span> <span style="color: #bbb8ab;">::</span><span style="color: #db7093;">name</span>
+               <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">flat-of-name</span> <span style="color: #bbb8ab;">::</span><span style="color: #db7093;">flat-of-name</span>
+               <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">sharp-of-name</span> <span style="color: #bbb8ab;">::</span><span style="color: #db7093;">sharp-of-name</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #666;">defn</span> <span style="color: #333;">named-note</span>
+  <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>step range name<span style="color: #ccc8bc;">]</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">step</span> step
+                      <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">range</span> range
+                      <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">name</span> name<span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span>
+  <span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">[</span>step range name flat-of-name sharp-of-name<span style="color: #ccc8bc;">]</span> <span style="color: #ccc8bc;">{</span><span style="color: #bbb8ab;">:</span><span style="color: #db7093;">step</span> step
+                                           <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">range</span> range
+                                           <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">name</span> name
+                                           <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">flat-of-name</span> flat-of-name
+                                           <span style="color: #bbb8ab;">:</span><span style="color: #db7093;">sharp-of-name</span> sharp-of-name<span style="color: #ccc8bc;">}</span><span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4db2311" class="outline-3">
+<h3 id="org4db2311"><span class="section-number-3">0.2</span> spec</h3>
+<div class="outline-text-3" id="text-0-2">
 <p>
 <a href="https://blog.jeaye.com/2017/05/31/clojure-spec/">https://blog.jeaye.com/2017/05/31/clojure-spec/</a>
 </p>
@@ -752,7 +785,7 @@ this tutorial [seems very good about showing how core.async actually works](<a h
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-01-24 Sun 00:25</p>
+<p class="date">Created: 2021-02-16 Tue 20:29</p>
 </div>
 </body>
 </html>

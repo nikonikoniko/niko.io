@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-16 Tue 20:28 -->
+<!-- 2021-02-16 Tue 21:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>org mode</title>
+<title>understanding core async</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="John Doe" />
 <style type="text/css">
@@ -226,111 +226,62 @@
  |
  <a accesskey="H" href="/"> HOME </a>
 </div><div id="content">
-<h1 class="title">org mode</h1>
+<h1 class="title">understanding core async</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0c7a80a">1. making org mode look nicer</a>
-<ul>
-<li>
-<ul>
-<li><a href="#org27aa6bb">1.0.1. org roam</a></li>
-</ul>
-</li>
-<li><a href="#org88575a4">1.1. org source blocks - typescript</a></li>
-</ul>
-</li>
+<li><a href="#org7d428a1">1. Understanding Core Async</a></li>
 </ul>
 </div>
 </div>
 
-
-<div id="outline-container-org0c7a80a" class="outline-2">
-<h2 id="org0c7a80a"><span class="section-number-2">1</span> making org mode look nicer</h2>
+<div id="outline-container-org7d428a1" class="outline-2">
+<h2 id="org7d428a1"><span class="section-number-2">1</span> Understanding Core Async</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-an article on how to rice things up:
-<a href="https://lepisma.xyz/2017/10/28/ricing-org-mode/">https://lepisma.xyz/2017/10/28/ricing-org-mode/</a>
-</p>
-</div>
-
-<div id="outline-container-org27aa6bb" class="outline-4">
-<h4 id="org27aa6bb"><span class="section-number-4">1.0.1</span> org roam</h4>
-<div class="outline-text-4" id="text-1-0-1">
-<p>
-<a href="https://www.ianjones.us/own-your-second-brain">https://www.ianjones.us/own-your-second-brain</a>
-</p>
-</div>
-</div>
-
-
-<div id="outline-container-org88575a4" class="outline-3">
-<h3 id="org88575a4"><span class="section-number-3">1.1</span> org source blocks - typescript</h3>
-<div class="outline-text-3" id="text-1-1">
-<p>
-originally i thought i would have to add in <a href="jupyter_emacs.html">jupyter emacs</a> to excecute src blocks, but it really turns out i can do it inside of emacs org mode already
-</p>
-
-<p>
-for typescript in simple cases, <i>all</i> you have to do is install the package called <code>ob-typescript</code>
-</p>
-
-
-<p>
-then, you could excecute the following code with a good old <code>C-c C-c</code>
+Here I play with core async a little bit. and try something
 </p>
 
 <div class="org-src-container">
-<pre class="src src-typescript"><span style="color: #666;">const</span> <span style="color: #333;">a</span> = <span style="color: #db7093;">3</span><span style="color: #bbb8ab;">;</span>
-<span style="color: #bbb8ab;">console.</span><span style="color: #111; font-style: italic;">log</span><span style="color: #ccc8bc;">(</span>a<span style="color: #ccc8bc;">)</span><span style="color: #bbb8ab;">;</span>
-</pre>
-</div>
-
-<p>
-However, it seems like <code>ob-typescript</code> does <i>not</i> allow the <code>:session</code> variable, as we can see working in python below.  This means, for typescript, you should still use <a href="jupyter_emacs.html">jupyter emacs</a> for technical documentation for now
-</p>
-
-<p>
-here is how it <i>should</i> work, for python:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #333;">x</span> = <span style="color: #db7093;">5</span>
+<pre class="src src-clojure"><span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">x</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">)</span>
+<span style="color: #ccc8bc;">(</span><span style="color: #666;">def</span> <span style="color: #333;">y</span> <span style="color: #db7093;">2</span><span style="color: #ccc8bc;">)</span>
 x
+<span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">js</span>/console<span style="color: #bbb8ab;">.</span>log <span style="color: teal;">"hiiii"</span><span style="color: #ccc8bc;">)</span>
 </pre>
 </div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">#&rsquo;cljs.user/x</td>
+</tr>
+
+<tr>
+<td class="org-left">#&rsquo;cljs.user/y</td>
+</tr>
+
+<tr>
+<td class="org-left">3</td>
+</tr>
+</tbody>
+</table>
 
 <div class="org-src-container">
-<pre class="src src-python">x
+<pre class="src src-clojure">x
 </pre>
 </div>
-</div>
-
-<ol class="org-ol">
-<li><a id="org449b589"></a>customizing<br />
-<div class="outline-text-5" id="text-1-1-0-1">
-<p>
-add this to your emacs config
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #ccc8bc;">(</span><span style="color: #666;">setq</span> <span style="color: #333;">org-babel-default-header-args</span> <span style="color: #666;">'</span><span style="color: #ccc8bc;">(</span><span style="color: #ccc8bc;">(</span><span style="color: #bbb8ab;">:</span>exports <span style="color: #bbb8ab;">.</span> <span style="color: #bbb8ab;">:</span>both<span style="color: #ccc8bc;">)</span><span style="color: #ccc8bc;">)</span>
-</pre>
-</div>
-
-<p>
-it will allow your results as well as the code to be exported if you want to export rechnical documentation
-</p>
-</div>
-</li>
-</ol>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-02-16 Tue 20:28</p>
+<p class="date">Created: 2021-02-16 Tue 21:32</p>
 </div>
 </body>
 </html>
