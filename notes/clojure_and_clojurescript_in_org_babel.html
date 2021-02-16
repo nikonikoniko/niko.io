@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-02-16 Tue 21:32 -->
+<!-- 2021-02-16 Tue 21:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>clojure and clojurescript in org-babel</title>
@@ -242,7 +242,8 @@
 <li><a href="#orga49ec14">1.2. Running</a></li>
 <li><a href="#org65558e0">1.3. Notes</a>
 <ul>
-<li><a href="#org096fe4d">1.3.1. use <code>:eval no-exports</code></a></li>
+<li><a href="#org43ae048">1.3.1. use <code>:exports both</code></a></li>
+<li><a href="#org096fe4d">1.3.2. use <code>:eval no-exports</code></a></li>
 </ul>
 </li>
 </ul>
@@ -352,7 +353,7 @@ Now, we should be able to add a code block, like so
 </p>
 
 <pre class="example">
-#+BEGIN_SRC clojure :eval no-exports
+#+BEGIN_SRC clojure :eval no-exports :exports both
   [1 2 3]
 / #+END_SRC
 </pre>
@@ -360,6 +361,25 @@ Now, we should be able to add a code block, like so
 <pre class="src src-clojure"> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span> <span style="color: #db7093;">2</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span>
 </pre>
 </div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+</tr>
+</tbody>
+</table>
 
 <p>
 now, when you <code>C-c C-c</code> in that block, you should be confronted with a menu. where you can choose between:
@@ -401,6 +421,24 @@ And you will have to evaluate the block again later, like so.
 <pre class="src src-clojure"> <span style="color: #ccc8bc;">[</span><span style="color: #db7093;">1</span> <span style="color: #db7093;">2</span> <span style="color: #db7093;">3</span><span style="color: #ccc8bc;">]</span>
 </pre>
 </div>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+</tr>
+</tbody>
+</table>
 
 <p>
 If you open the console in the browser and evaluate the following block
@@ -421,9 +459,18 @@ You should see &ldquo;hello world&rdquo; there.
 <h3 id="org65558e0"><span class="section-number-3">1.3</span> Notes</h3>
 <div class="outline-text-3" id="text-1-3">
 </div>
-<div id="outline-container-org096fe4d" class="outline-4">
-<h4 id="org096fe4d"><span class="section-number-4">1.3.1</span> use <code>:eval no-exports</code></h4>
+<div id="outline-container-org43ae048" class="outline-4">
+<h4 id="org43ae048"><span class="section-number-4">1.3.1</span> use <code>:exports both</code></h4>
 <div class="outline-text-4" id="text-1-3-1">
+<p>
+This will export your results blocks
+</p>
+</div>
+</div>
+
+<div id="outline-container-org096fe4d" class="outline-4">
+<h4 id="org096fe4d"><span class="section-number-4">1.3.2</span> use <code>:eval no-exports</code></h4>
+<div class="outline-text-4" id="text-1-3-2">
 <p>
 For each <code>clojure</code> source block, I do not want to make the decision when I am exporting my org notes to pdf or html which repl to use.  Since all of them simply define <code>BEGIN_SRC clojure</code>, It would not make sense to excecute them every single time I export the page.  With this in mind, I add <code>:eval no-exports</code> to each block, so it &rsquo;stores&rsquo; the results for export.
 </p>
@@ -434,7 +481,7 @@ For each <code>clojure</code> source block, I do not want to make the decision w
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Doe</p>
-<p class="date">Created: 2021-02-16 Tue 21:32</p>
+<p class="date">Created: 2021-02-16 Tue 21:37</p>
 </div>
 </body>
 </html>
